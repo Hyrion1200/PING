@@ -19,6 +19,15 @@ public class ExecReport implements Feature.ExecutionReport {
 		this.message = message;
 	}
 
+	public ExecReport(Status status) {
+		this.status = status;
+
+		if (status == Status.SUCCESS)
+			this.message = "Success";
+		else
+			this.message = "Error";
+	}
+
 	// - Getters
 	public Status getStatus() { return status; }
 	public String getMessage() { return message; }
