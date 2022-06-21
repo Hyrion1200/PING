@@ -5,23 +5,18 @@ import fr.epita.assistants.myide.domain.entity.Project;
 
 // TODO
 // Classe mere pour les features
-public class Features implements Feature {
+public abstract class Features implements Feature {
     private Type type;
 
     Features(Type type) {
         this.type = type;
     }
 
-    @Override
-    public ExecutionReport execute(Project project, Object... params) {
-        // TODO
-        return null;
-    }
+    public abstract ExecutionReport execute(Project project, Object... params);
 
     @Override
     public Feature.Type type() {
-        // TODO
-        return null;
+        return type;
     }
 
     public enum FeaturesTypes {

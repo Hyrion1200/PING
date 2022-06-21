@@ -7,7 +7,7 @@ import java.util.List;
 
 // TODO
 // Classe mere pour les aspect
-public class Aspects implements Aspect {
+public abstract class Aspects implements Aspect {
     private Type type;
     private List<Feature> features;
 
