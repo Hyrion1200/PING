@@ -5,7 +5,11 @@ import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
 
 public
-class Add implements Feature {
+class Add extends Features {
+
+  public Add() {
+    super(FeaturesTypes.Git.ADD);
+  }
   @Override public ExecutionReport execute(Project project, Object... params) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Not supported yet."); // To
@@ -15,11 +19,5 @@ class Add implements Feature {
                                                                    // generated
                                                                    // methods,
                                                                    // choose
-  }
-
-  @Override public Type type() {
-    // Are we not supposed to change any @Given file ? If so how do I return a
-    // Type.GIT ?
-    return Type.GIT;
   }
 }

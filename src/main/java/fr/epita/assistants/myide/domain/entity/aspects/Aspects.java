@@ -1,0 +1,33 @@
+package fr.epita.assistants.myide.domain.entity.aspects;
+
+import fr.epita.assistants.myide.domain.entity.Aspect;
+import fr.epita.assistants.myide.domain.entity.Feature;
+
+import java.util.List;
+
+// TODO
+// Classe mere pour les aspect
+public class Aspects implements Aspect {
+    private Type type;
+    private List<Feature> features;
+
+    Aspects(Type type) {
+        this.type = type;
+    }
+
+    public enum Type implements Aspect.Type {
+        ANY,
+        GIT,
+        MAVEN,
+    }
+
+    @Override
+    public Aspect.Type getType() {
+        return type;
+    }
+
+    @Override
+    public List<Feature> getFeatureList() {
+        return features;
+    }
+}
