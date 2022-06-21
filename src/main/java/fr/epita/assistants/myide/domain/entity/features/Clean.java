@@ -5,7 +5,10 @@ import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
 
 public
-class Clean implements Feature {
+class Clean extends Features {
+  public Clean() {
+    super(FeaturesTypes.Git.CLEAN);
+  }
   @Override public ExecutionReport execute(Project project, Object... params) {
     // Execute mvn clean
     try {
@@ -25,11 +28,5 @@ class Clean implements Feature {
         return false;
       }
     };
-  }
-
-  @Override public Type type() {
-    // Are we not supposed to change any @Given file ? If so how do I return a
-    // Type.MAVEN ?
-    return Type.MAVEN;
   }
 }

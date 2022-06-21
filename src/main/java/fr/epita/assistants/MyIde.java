@@ -18,6 +18,7 @@ public class MyIde {
      * @return An implementation of {@link ProjectService}.
      */
     public static ProjectService init(final Configuration configuration) {
+        // TODO
         throw new UnsupportedOperationException("FIXME");
     }
 
@@ -27,6 +28,7 @@ public class MyIde {
      */
     public record Configuration(Path indexFile,
                                 Path tempFolder) {
+        // TODO
     }
 
 }
