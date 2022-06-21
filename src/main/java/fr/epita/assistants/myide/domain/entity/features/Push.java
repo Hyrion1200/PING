@@ -13,6 +13,10 @@ import java.io.IOException;
 
 public
 class Push extends Git_features {
+  Push() {
+    super(FeaturesTypes.Git.PUSH);
+  }
+
   @Override public ExecutionReport execute(Project project, Object... params) {
     // DONE
 
@@ -33,11 +37,5 @@ class Push extends Git_features {
         return false;
       }
     };
-  }
-
-  @Override public Type type() {
-    // Are we not supposed to change any @Given file ? If so how do I return a
-    // Type.GIT ?
-    return Type.GIT;
   }
 }

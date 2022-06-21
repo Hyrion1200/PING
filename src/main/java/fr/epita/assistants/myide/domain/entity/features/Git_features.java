@@ -10,13 +10,12 @@ import java.io.File;
 import java.io.IOException;
 
 public
-class Git_features implements Feature {
-    @Override public Feature.ExecutionReport execute(Project project, Object... params) {
-        return null;
+class Git_features extends Features {
+    Git_features(Type type) {
+        super(type);
     }
 
-    @Override
-    public Type type() {
+    @Override public Feature.ExecutionReport execute(Project project, Object... params) {
         return null;
     }
 

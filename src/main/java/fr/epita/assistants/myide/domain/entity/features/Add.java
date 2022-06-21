@@ -15,6 +15,10 @@ import java.util.Collection;
 public
 class Add extends Git_features {
 
+  Add() {
+    super(FeaturesTypes.Git.ADD);
+  }
+
   @Override public ExecutionReport execute(Project project, Object... params) {
     StringBuilder args = new StringBuilder();
     for (Object param : params) {
@@ -41,11 +45,5 @@ class Add extends Git_features {
         return false;
       }
     };
-  }
-
-  @Override public Type type() {
-    // Are we not supposed to change any @Given file ? If so how do I return a
-    // Type.GIT ?
-    return Feature.Type.GIT.ADD;
   }
 }

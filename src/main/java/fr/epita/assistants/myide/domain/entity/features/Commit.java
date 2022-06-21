@@ -14,6 +14,10 @@ import java.io.IOException;
 
 public
 class Commit extends Git_features {
+  Commit() {
+    super(FeaturesTypes.Git.COMMIT);
+  }
+
   @Override public ExecutionReport execute(Project project, Object... params) {
     // DONE
     StringBuilder args = new StringBuilder();
@@ -37,11 +41,5 @@ class Commit extends Git_features {
         return false;
       }
     };
-  }
-
-  @Override public Type type() {
-    // Are we not supposed to change any @Given file ? If so how do I return a
-    // Type.GIT ?
-    return Type.GIT;
   }
 }
