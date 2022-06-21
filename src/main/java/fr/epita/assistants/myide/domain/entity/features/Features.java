@@ -3,8 +3,6 @@ package fr.epita.assistants.myide.domain.entity.features;
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
 
-// TODO
-// Classe mere pour les features
 public abstract class Features implements Feature {
     private Type type;
 
@@ -110,5 +108,4 @@ public abstract class Features implements Feature {
         }
 
     }
-
 }
