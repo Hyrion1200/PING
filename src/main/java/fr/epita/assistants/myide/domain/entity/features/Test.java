@@ -7,14 +7,24 @@ import fr.epita.assistants.myide.domain.entity.Project;
 public
 class Test implements Feature {
   @Override public ExecutionReport execute(Project project, Object... params) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                   // change
-                                                                   // body
-                                                                   // of
-                                                                   // generated
-                                                                   // methods,
-                                                                   // choose
+    // Execute mvn test
+    try {
+      final int exitCode = Runtime.getRuntime().exec("mvn test").waitFor();
+      return new ExecutionReport() {
+        @Override public boolean isSuccess() {
+          return exitCode == 0;
+        }
+      };
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (java.io.IOException e) {
+      e.printStackTrace();
+    }
+    return new ExecutionReport() {
+      @Override public boolean isSuccess() {
+        return false;
+      }
+    };
   }
 
   @Override public Type type() {
