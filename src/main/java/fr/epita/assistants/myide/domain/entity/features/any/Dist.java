@@ -17,9 +17,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.zip.Deflater;
-import java.util.zip.ZipEntry;
 
 public class Dist extends Features {
     // - Constructor
@@ -28,20 +29,25 @@ public class Dist extends Features {
     }
 
     // - Private methods
+    private Path getEntryPath(String rootName, File file) {
+        List<String> filePathSplitted = Arrays.stream(file.getPath().split(rootName)).toList();
+        return Paths.get(rootName + "/" + filePathSplitted.get(filePathSplitted.size() - 1));
+    }
+
     private void zipFolder(Node rootNode) throws IOException {
+        String rootName = rootNode.getPath().getFileName().toString();
         String zipName = FileNameUtils.getBaseName(rootNode.getPath().toString()) + ".zip";
         ZipArchiveOutputStream archive = new ZipArchiveOutputStream(new FileOutputStream(zipName));
-
-        archive.setLevel(Deflater.BEST_SPEED);
-        archive.setMethod(ZipEntry.DEFLATED);
 
         File direcotryToArchive = new File(rootNode.getPath().toString());
 
         for (Path path : Files.walk(direcotryToArchive.toPath()).toList()) {
             File file = path.toFile();
 
-            if (!file.isDirectory()) {
-                ZipArchiveEntry entry = new ZipArchiveEntry(file, file.toString());
+            if (!file.isDirectory() && !FileNameUtils.getExtension(file.getName()).equals("zip")) {
+                Path entry_path = getEntryPath(rootName, file);
+
+                ZipArchiveEntry entry = new ZipArchiveEntry(file, entry_path.toString());
                 FileInputStream fis = new FileInputStream(file);
 
                 archive.putArchiveEntry(entry);
@@ -49,6 +55,8 @@ public class Dist extends Features {
                 archive.closeArchiveEntry();
             }
         }
+
+        archive.finish();
     }
 
     private boolean callCleanUp(Project project) {

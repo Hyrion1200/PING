@@ -27,3 +27,9 @@ hs_err_pid*
 
 # Main
 Main.java
+
+# Tests
+.myideignore
+
+# Compilation
+target
