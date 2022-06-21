@@ -1,11 +1,13 @@
 package fr.epita.assistants.myide.domain.service;
 
 import fr.epita.assistants.myide.domain.entity.*;
+import fr.epita.assistants.myide.domain.entity.aspects.Aspects;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +40,14 @@ public class ProjectServ implements ProjectService{
     }
 
     private Set<Aspect> get_aspect(File root){
-        //TODO (waiting for type architecture)
+        Set<Aspect> aspects = new HashSet<>();
+        if (root.isDirectory()){
+            for (File cur : root.listFiles()){
+                if (cur.getName().compareTo(".git") == 0){
+                    aspects.add(new Aspects());
+                }
+            }
+        }
         return null;
     }
     @Override
@@ -48,7 +57,7 @@ public class ProjectServ implements ProjectService{
        }
     @Override
     public Feature.ExecutionReport execute(Project project, Feature.Type featureType, Object... params) {
-        
+        project.getFeature(featureType).get().execute(project,params);
     }
 
     @Override
