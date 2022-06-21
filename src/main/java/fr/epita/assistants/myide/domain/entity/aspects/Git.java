@@ -9,6 +9,10 @@ import fr.epita.assistants.myide.domain.entity.Feature;
 
 public
 class Git extends Aspects {
+
+  Git() {
+    super(Type.GIT);
+  }
   @Override public Type getType() {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Not supported yet."); // To
@@ -18,10 +22,5 @@ class Git extends Aspects {
                                                                    // generated
                                                                    // methods,
                                                                    // choose
-  }
-  @Override public @NotNull List<Feature> getFeatureList() {
-    // TODO Return all feature from the Git aspect
-    // For now return an empty list
-    return Aspect.super.getFeatureList();
   }
 }
