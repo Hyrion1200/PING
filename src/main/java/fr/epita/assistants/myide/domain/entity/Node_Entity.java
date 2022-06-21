@@ -28,6 +28,9 @@ public
     return children;
   }
 
+  public @NotNull void addChildren(Node child) {
+    children.add(child);
+  }
   // Fields
 private
   Path path;
