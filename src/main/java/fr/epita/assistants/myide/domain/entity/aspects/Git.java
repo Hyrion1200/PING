@@ -8,7 +8,11 @@ import fr.epita.assistants.myide.domain.entity.Aspect;
 import fr.epita.assistants.myide.domain.entity.Feature;
 
 public
-class Git implements Aspect {
+class Git extends Aspects {
+
+  Git() {
+    super(Type.GIT);
+  }
 
   @Override public Type getType() {
     // TODO Auto-generated method stub
@@ -19,10 +23,5 @@ class Git implements Aspect {
                                                                    // generated
                                                                    // methods,
                                                                    // choose
-  }
-  @Override public @NotNull List<Feature> getFeatureList() {
-    // TODO Return all feature from the Git aspect
-    // For now return an empty list
-    return Aspect.super.getFeatureList();
   }
 }
