@@ -3,6 +3,7 @@ package fr.epita.assistants.myide.domain.entity.aspects;
 import fr.epita.assistants.myide.domain.entity.Aspect;
 import fr.epita.assistants.myide.domain.entity.Feature;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // TODO
@@ -13,6 +14,7 @@ public abstract class Aspects implements Aspect {
 
     Aspects(Type type) {
         this.type = type;
+        this.features = new ArrayList<Feature>();
     }
 
     public enum Type implements Aspect.Type {
