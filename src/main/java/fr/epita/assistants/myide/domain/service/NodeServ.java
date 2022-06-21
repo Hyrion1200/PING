@@ -6,10 +6,7 @@ import fr.epita.assistants.myide.domain.entity.Node_Entity;
 import org.apache.commons.io.FileUtils;
 
 import javax.validation.constraints.NotNull;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,17 +26,15 @@ public class NodeServ implements NodeService{
             throw new IllegalArgumentException("Node is of type folder, file expected");
         }
         try {
-            RandomAccessFile file = new RandomAccessFile(node.getPath().toFile(), "rw");
-            file.seek(from);
-            file.write(insertedContent);
-            return node;
-        }
-        catch (FileNotFoundException e){
-            throw new IllegalArgumentException("File could not be opened");
+            FileWriter fw = new FileWriter(node.getPath().toString());
+            String content = new String(Files.readAllBytes(node.getPath()));
+            String new_content = content.substring(0,from - 1) + insertedContent + content.substring(to);
+            fw.write(new_content);
         }
         catch (IOException e){
-            throw new IllegalArgumentException("from is less than 0 or I/O error");
+            e.printStackTrace();
         }
+        return node;
     }
 
     @Override
@@ -47,7 +42,7 @@ public class NodeServ implements NodeService{
         if (node.getType() == FOLDER){
             List<Node> children = node.getChildren();
             for (Node child : children){
-                this.delete(node);
+                this.delete(child);
             }
             try{
                 FileUtils.deleteDirectory(new File(node.getPath().toString()));
@@ -72,6 +67,7 @@ public class NodeServ implements NodeService{
                 Files.createFile(paths);
         }
         catch (IOException e){
+            e.printStackTrace();
             throw new IllegalArgumentException("IO Error");
         }
         Node NewNode = new Node_Entity( paths,type,null);
@@ -86,7 +82,7 @@ public class NodeServ implements NodeService{
             if (nodeToMove.getType() != FILE){
                 List<Node> children = nodeToMove.getChildren();
                 for (Node child : children){
-                    this.move(child,destinationFolder);
+                    this.move(child,nodeToMove);
                 }
             }
             else {
@@ -94,9 +90,12 @@ public class NodeServ implements NodeService{
             }
         }
         catch (IOException e) {
+            e.printStackTrace();
             throw new IllegalArgumentException("IO error when moving a file");
         }
         String newpath = destinationFolder.getPath().toString() + nodeToMove.getPath().getFileName().toString();
-        return new Node_Entity(Paths.get(newpath),nodeToMove.getType(),nodeToMove.getChildren());
+        Node_Entity nde = (Node_Entity) nodeToMove;
+        nde.setPath(Paths.get(newpath));
+        return nde;
     }
 }

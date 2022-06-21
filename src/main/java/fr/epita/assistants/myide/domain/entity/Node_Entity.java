@@ -15,6 +15,10 @@ public
   }
 
   // Methods
+  public void setPath(Path path) {
+    this.path = path;
+  }
+
   @Override public @NotNull Path getPath() {
     return path;
   }
