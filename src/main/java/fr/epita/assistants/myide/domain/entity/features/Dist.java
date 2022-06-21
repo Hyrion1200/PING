@@ -4,7 +4,13 @@ import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
 
 public
-class Dist implements Feature {
+class Dist extends Features {
+  // - Constructor
+  public Dist() {
+    super(FeaturesTypes.Any.DIST);
+  }
+
+  // - Execute function implementation
   @Override public ExecutionReport execute(Project project, Object... params) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Not supported yet."); // To
@@ -14,11 +20,5 @@ class Dist implements Feature {
                                                                    // generated
                                                                    // methods,
                                                                    // choose
-  }
-
-  @Override public Type type() {
-    // Are we not supposed to change any @Given file ? If so how do I return a
-    // Type.Any ?
-    return Type.Any;
   }
 }

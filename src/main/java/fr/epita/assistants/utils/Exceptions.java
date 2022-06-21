@@ -1,5 +1,8 @@
 package fr.epita.assistants.utils;
 
+import fr.epita.assistants.myide.domain.entity.Feature;
+import fr.epita.assistants.myide.domain.entity.features.Features;
+
 import static lombok.Lombok.sneakyThrow;
 
 @Given()
@@ -18,8 +21,7 @@ public class Exceptions {
         try {
             return supplier.get();
         } catch (final Exception throwable) {
-            sneakyThrow(throwable);
-            return null; // never reached.
+            return new Features.ExecutionReport(Feature)
         }
     }
 }
