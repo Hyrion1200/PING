@@ -1,8 +1,8 @@
-package fr.epita.assistants.myide.domain.entity.features.execution_report;
+package fr.epita.assistants.myide.domain.entity.features.exec_report;
 
 import fr.epita.assistants.myide.domain.entity.Feature;
 
-public class ExecutionReport implements Feature.ExecutionReport {
+public class ExecReport implements Feature.ExecutionReport {
 	// - Execution enum
 	public enum Status {
 		SUCCESS,
@@ -14,7 +14,7 @@ public class ExecutionReport implements Feature.ExecutionReport {
 	private String message;
 
 	// - Constructor
-	public ExecutionReport(Status status, String message) {
+	public ExecReport(Status status, String message) {
 		this.status = status;
 		this.message = message;
 	}
