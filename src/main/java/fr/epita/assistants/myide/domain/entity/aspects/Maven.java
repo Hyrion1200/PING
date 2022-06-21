@@ -6,23 +6,10 @@ import javax.validation.constraints.NotNull;
 
 import fr.epita.assistants.myide.domain.entity.Aspect;
 import fr.epita.assistants.myide.domain.entity.Feature;
+import fr.epita.assistants.myide.domain.entity.features.Features.FeaturesTypes;
 
 public
-class Maven implements Aspect {
-
-  @Override public Type getType() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                   // change
-                                                                   // body
-                                                                   // of
-                                                                   // generated
-                                                                   // methods,
-                                                                   // choose
-  }
-  @Override public @NotNull List<Feature> getFeatureList() {
-    // TODO Return all feature from the Maven aspect
-    // For now return an empty list
-    return Aspect.super.getFeatureList();
-  }
+class Maven extends Aspects {
+public
+  Maven() { super(Type.MAVEN); }
 }

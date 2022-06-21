@@ -5,110 +5,106 @@ import fr.epita.assistants.myide.domain.entity.Project;
 
 // TODO
 // Classe mere pour les features
-public abstract class Features implements Feature {
-    private Type type;
+public
+abstract class Features implements Feature {
+protected
+  Type type;
 
-    Features(Type type) {
-        this.type = type;
-    }
+  Features(Type type) { this.type = type; }
 
-    public abstract ExecutionReport execute(Project project, Object... params);
+public
+  abstract ExecutionReport execute(Project project, Object... params);
 
-    @Override
-    public Feature.Type type() {
-        return type;
-    }
+  @Override public Feature.Type type() {
+    return type;
+  }
 
-    public enum FeaturesTypes {
-        ;
+public
+  enum FeaturesTypes {
+    ;
 
-        /**
-         * Features for all projects.
-         */
-        public enum Any implements Feature.Type {
-            /**
-             * Remove all trash files.
-             * Trash files are listed, line by line,
-             * in a ".myideignore" file at the root of the project.
-             */
-            CLEANUP,
+    /**
+     * Features for all projects.
+     */
+    public enum Any implements Feature
+        .Type{/**
+               * Remove all trash files.
+               * Trash files are listed, line by line,
+               * in a ".myideignore" file at the root of the project.
+               */
+              CLEANUP,
 
-            /**
-             * Remove all trash files and create an archive.
-             */
-            DIST,
+              /**
+               * Remove all trash files and create an archive.
+               */
+              DIST,
 
-            /**
-             * Fulltext search over project files.
-             */
-            SEARCH
-        }
+              /**
+               * Fulltext search over project files.
+               */
+              SEARCH}
 
-        /**
-         * Features for the git project type.
-         */
-        public enum Git implements Feature.Type {
-            /**
-             * Git pull, fast forward if possible.
-             */
-            PULL,
+    /**
+     * Features for the git project type.
+     */
+    public enum Git implements Feature
+        .Type{/**
+               * Git pull, fast forward if possible.
+               */
+              PULL,
 
-            /**
-             * Git add.
-             */
-            ADD,
+              /**
+               * Git add.
+               */
+              ADD,
 
-            /**
-             * Git commit.
-             */
-            COMMIT,
+              /**
+               * Git commit.
+               */
+              COMMIT,
 
-            /**
-             * Git push (no force).
-             */
-            PUSH
-        }
+              /**
+               * Git push (no force).
+               */
+              PUSH}
 
-        /**
-         * Features for the maven project type.
-         */
-        public enum Maven implements Feature.Type {
-            /**
-             * mvn compile
-             */
-            COMPILE,
+    /**
+     * Features for the maven project type.
+     */
+    public enum Maven implements Feature.Type{/**
+                                               * mvn compile
+                                               */
+                                              COMPILE,
 
-            /**
-             * mvn clean
-             */
-            CLEAN,
+                                              /**
+                                               * mvn clean
+                                               */
+                                              CLEAN,
 
-            /**
-             * mvn test
-             */
-            TEST,
+                                              /**
+                                               * mvn test
+                                               */
+                                              TEST,
 
-            /**
-             * mvn package
-             */
-            PACKAGE,
+                                              /**
+                                               * mvn package
+                                               */
+                                              PACKAGE,
 
-            /**
-             * mvn install
-             */
-            INSTALL,
+                                              /**
+                                               * mvn install
+                                               */
+                                              INSTALL,
 
-            /**
-             * mvn exec
-             */
-            EXEC,
+                                              /**
+                                               * mvn exec
+                                               */
+                                              EXEC,
 
-            /**
-             * mvn dependency:tree
-             */
-            TREE
-        }
+                                              /**
+                                               * mvn dependency:tree
+                                               */
+                                              TREE}
 
-    }
-
+  }
 }
