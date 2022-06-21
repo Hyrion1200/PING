@@ -6,8 +6,6 @@ import fr.epita.assistants.myide.domain.entity.Feature;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO
-// Classe mere pour les aspect
 public abstract class Aspects implements Aspect {
     private Aspect.Type type;
     protected List<Feature> features;
