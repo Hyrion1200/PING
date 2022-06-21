@@ -7,17 +7,9 @@ import fr.epita.assistants.myide.domain.entity.Project;
 public
 class Add extends Features {
 
-  public Add() {
-    super(FeaturesTypes.Git.ADD);
-  }
+public
+  Add() { super(FeaturesTypes.Git.ADD); }
   @Override public ExecutionReport execute(Project project, Object... params) {
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                   // change
-                                                                   // body
-                                                                   // of
-                                                                   // generated
-                                                                   // methods,
-                                                                   // choose
   }
 }
