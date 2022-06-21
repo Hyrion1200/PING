@@ -1,7 +1,10 @@
 package fr.epita.assistants.myide.domain.service;
 
 import fr.epita.assistants.myide.domain.entity.*;
+import fr.epita.assistants.myide.domain.entity.aspects.Any;
 import fr.epita.assistants.myide.domain.entity.aspects.Aspects;
+import fr.epita.assistants.myide.domain.entity.aspects.Git;
+import fr.epita.assistants.myide.domain.entity.aspects.Maven;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -41,14 +44,18 @@ public class ProjectServ implements ProjectService{
 
     private Set<Aspect> get_aspect(File root){
         Set<Aspect> aspects = new HashSet<>();
+        aspects.add(new Any());
         if (root.isDirectory()){
             for (File cur : root.listFiles()){
                 if (cur.getName().compareTo(".git") == 0){
-                    aspects.add(new Aspects());
+                    aspects.add(new Git());
+                }
+                if (cur.getName().compareTo("pom.xml") == 0){
+                    aspects.add(new Maven());
                 }
             }
         }
-        return null;
+        return aspects;
     }
     @Override
     public Project load(Path root) {
@@ -57,7 +64,7 @@ public class ProjectServ implements ProjectService{
        }
     @Override
     public Feature.ExecutionReport execute(Project project, Feature.Type featureType, Object... params) {
-        project.getFeature(featureType).get().execute(project,params);
+        return project.getFeature(featureType).get().execute(project,params);
     }
 
     @Override
