@@ -8,7 +8,7 @@ import fr.epita.assistants.myide.domain.entity.Project;
 public abstract class Features implements Feature {
     private Type type;
 
-    Features(Type type) {
+    public Features(Type type) {
         this.type = type;
     }
 
@@ -17,33 +17,6 @@ public abstract class Features implements Feature {
     @Override
     public Feature.Type type() {
         return type;
-    }
-
-    public class ExecutionReport implements Feature.ExecutionReport {
-        // - Execution enum
-        public enum ExecutionStatus {
-            SUCCESS,
-            ERROR
-        }
-
-        // - Private attributes
-        private ExecutionStatus status;
-        private String message;
-
-        // - Constructor
-        public ExecutionReport(ExecutionStatus status, String message) {
-            this.status = status;
-            this.message = message;
-        }
-
-        // - Getters
-        public ExecutionStatus getStatus() { return status; }
-        public String getMessage() { return message; }
-
-        // - Method
-        public boolean isSuccess() {
-            return getStatus() == ExecutionStatus.SUCCESS;
-        }
     }
 
     public enum FeaturesTypes {
