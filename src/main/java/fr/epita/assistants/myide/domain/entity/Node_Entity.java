@@ -5,8 +5,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-public
-class Node_Entity implements Node {
+public class Node_Entity implements Node {
   // Constructor
 public
   Node_Entity(Path path, Node.Type type, List<@NotNull Node> children) {

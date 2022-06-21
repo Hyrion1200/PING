@@ -5,7 +5,10 @@ import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
 
 public
-class Clean implements Feature {
+class Clean extends Features {
+  public Clean() {
+    super(FeaturesTypes.Git.CLEAN);
+  }
   @Override public ExecutionReport execute(Project project, Object... params) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Not supported yet."); // To
@@ -15,11 +18,5 @@ class Clean implements Feature {
                                                                    // generated
                                                                    // methods,
                                                                    // choose
-  }
-
-  @Override public Type type() {
-    // Are we not supposed to change any @Given file ? If so how do I return a
-    // Type.MAVEN ?
-    return Type.MAVEN;
   }
 }

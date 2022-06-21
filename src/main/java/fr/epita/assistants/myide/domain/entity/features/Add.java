@@ -3,39 +3,44 @@ package fr.epita.assistants.myide.domain.entity.features;
 import fr.epita.assistants.myide.domain.entity.Feature.ExecutionReport;
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
 
 public
-class Add implements Feature {
+class Add extends Git_features {
+
   @Override public ExecutionReport execute(Project project, Object... params) {
-    String args = "";
+    StringBuilder args = new StringBuilder();
     for (Object param : params) {
-      args += param + " ";
+      args.append(param).append(" ");
     }
 
-    ProcessBuilder pb = new ProcessBuilder()
-                        .command("git", "add", args);
-
-
+    Git git = getGit(project);
     try {
-      Process p = pb.start();
-      int exit = p.waitFor();
-
-      if (exit != 0) {
-        throw new Exception(String.format("git add returned %d", exit));
+      for (String arg : args.toString().split(" ")) {
+        git.add().addFilepattern(arg).call();
       }
-      return new ExecutionReporter() {
+
+      return new ExecutionReport() {
         @Override public boolean isSuccess() {
-          return false;
+          return true;
         }
       };
-      // implement ExecutionReport ?
-    }
-    catch (Exception  e) {
+
+    } catch (GitAPIException e) {
       e.printStackTrace();
-      return new ExecutionReport("test", -1);
-      // implement ExecutionReport ?
     }
-    throw new UnsupportedOperationException("Not supported yet."); // To
+    return new ExecutionReport() {
+      @Override public boolean isSuccess() {
+        return false;
+      }
+    };
   }
 
   @Override public Type type() {
@@ -43,10 +48,4 @@ class Add implements Feature {
     // Type.GIT ?
     return Feature.Type.GIT.ADD;
   }
-
-  class ExecutionReporter implements ExecutionReport {
-    public
-      boolean isSuccess() {
-        return false;
-      }
 }

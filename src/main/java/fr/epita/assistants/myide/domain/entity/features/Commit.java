@@ -4,31 +4,39 @@ import fr.epita.assistants.myide.domain.entity.Feature.ExecutionReport;
 
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+
+import java.io.File;
+import java.io.IOException;
 
 public
-class Commit implements Feature {
+class Commit extends Git_features {
   @Override public ExecutionReport execute(Project project, Object... params) {
     // DONE
-    ProcessBuilder pb = new ProcessBuilder()
-                        .command("git", "commit", "-m", "\"" + (String) params[0] + "\"")
-                        .directory(project.getRootNode().getPath().toFile());
-
-    try {
-      Process p = pb.start();
-      int exit = p.waitFor();
-
-      if (exit != 0) {
-        throw new Exception(String.format("git commit returned %d", exit));
-      }
-      return new ExecutionReport("test", exit);
-      // implement ExecutionReport ?
-    } 
-    catch (Exception  e) {
-      e.printStackTrace();
-      return new ExecutionReport("test", -1);
-      // implement ExecutionReport ?
+    StringBuilder args = new StringBuilder();
+    for (Object param : params) {
+      args.append(param).append(" ");
     }
-    throw new UnsupportedOperationException("Not supported yet."); // To
+    Git git = getGit(project);
+    try {
+      git.commit().setMessage(args.toString()).call();
+      return new ExecutionReport() {
+        @Override public boolean isSuccess() {
+          return true;
+        }
+      };
+
+    } catch (GitAPIException e) {
+      e.printStackTrace();
+    }
+    return new ExecutionReport() {
+      @Override public boolean isSuccess() {
+        return false;
+      }
+    };
   }
 
   @Override public Type type() {
