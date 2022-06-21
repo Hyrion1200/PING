@@ -8,8 +8,7 @@ import fr.epita.assistants.myide.domain.entity.Aspect;
 import fr.epita.assistants.myide.domain.entity.Feature;
 
 public
-class Git implements Aspect {
-
+class Git extends Aspects {
   @Override public Type getType() {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Not supported yet."); // To

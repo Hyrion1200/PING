@@ -2,6 +2,7 @@ package fr.epita.assistants.myide.domain.entity.aspects;
 
 import fr.epita.assistants.myide.domain.entity.Aspect;
 import fr.epita.assistants.myide.domain.entity.Feature;
+import fr.epita.assistants.myide.domain.entity.features.Features;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,9 @@ public abstract class Aspects implements Aspect {
     private Type type;
     private List<Feature> features;
 
-    Aspects(Type type) {
+    Aspects(Type type, List<Feature> features) {
         this.type = type;
-        this.features = new ArrayList<Feature>();
+        this.features = features;
     }
 
     public enum Type implements Aspect.Type {
