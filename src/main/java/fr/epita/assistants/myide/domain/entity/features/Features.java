@@ -19,6 +19,33 @@ public abstract class Features implements Feature {
         return type;
     }
 
+    public class ExecutionReport implements Feature.ExecutionReport {
+        // - Execution enum
+        public enum ExecutionStatus {
+            SUCCESS,
+            ERROR
+        }
+
+        // - Private attributes
+        private ExecutionStatus status;
+        private String message;
+
+        // - Constructor
+        public ExecutionReport(ExecutionStatus status, String message) {
+            this.status = status;
+            this.message = message;
+        }
+
+        // - Getters
+        public ExecutionStatus getStatus() { return status; }
+        public String getMessage() { return message; }
+
+        // - Method
+        public boolean isSuccess() {
+            return getStatus() == ExecutionStatus.SUCCESS;
+        }
+    }
+
     public enum FeaturesTypes {
         ;
 
