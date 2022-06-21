@@ -21,7 +21,7 @@ public class Exceptions {
         try {
             return supplier.get();
         } catch (final Exception throwable) {
-            return new Features.ExecutionReport(Feature)
+            return null;
         }
     }
 }
