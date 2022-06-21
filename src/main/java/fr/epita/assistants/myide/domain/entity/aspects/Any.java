@@ -6,21 +6,8 @@ import fr.epita.assistants.myide.domain.entity.Aspect;
 import fr.epita.assistants.myide.domain.entity.Feature;
 
 public
-class Any implements Aspect {
-  @Override public Type getType() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                   // change
-                                                                   // body
-                                                                   // of
-                                                                   // generated
-                                                                   // methods,
-                                                                   // choose
-  }
-
-  @Override public @NotNull List<Feature> getFeatureList() {
-    // TODO Return all feature from the Any aspect
-    // For now return an empty list
-    return Aspect.super.getFeatureList();
+class Any extends Aspects {
+  public Any() {
+    super(Type.ANY);
   }
 }

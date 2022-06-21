@@ -12,7 +12,7 @@ public abstract class Aspects implements Aspect {
     private Type type;
     private List<Feature> features;
 
-    Aspects(Type type) {
+    public Aspects(Type type) {
         this.type = type;
         this.features = new ArrayList<Feature>();
     }
