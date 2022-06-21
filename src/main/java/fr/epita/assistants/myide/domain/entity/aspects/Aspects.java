@@ -9,12 +9,12 @@ import java.util.List;
 // TODO
 // Classe mere pour les aspect
 public abstract class Aspects implements Aspect {
-    private Type type;
-    private List<Feature> features;
+    private Aspect.Type type;
+    protected List<Feature> features;
 
-    public Aspects(Type type) {
+    public Aspects(Aspect.Type type) {
         this.type = type;
-        this.features = new ArrayList<Feature>();
+        this.features = new ArrayList<>();
     }
 
     public enum Type implements Aspect.Type {

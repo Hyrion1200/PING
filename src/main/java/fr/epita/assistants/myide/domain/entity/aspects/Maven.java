@@ -1,15 +1,19 @@
 package fr.epita.assistants.myide.domain.entity.aspects;
 
-import java.util.List;
+import fr.epita.assistants.myide.domain.entity.Mandatory;
+import fr.epita.assistants.myide.domain.entity.features.maven.*;
+import fr.epita.assistants.myide.domain.entity.features.maven.Package;
 
-import javax.validation.constraints.NotNull;
+public class Maven extends Aspects {
+    public Maven() {
+        super(Mandatory.Aspects.MAVEN);
 
-import fr.epita.assistants.myide.domain.entity.Aspect;
-import fr.epita.assistants.myide.domain.entity.Feature;
-import fr.epita.assistants.myide.domain.entity.features.Features.FeaturesTypes;
-
-public
-class Maven extends Aspects {
-public
-  Maven() { super(Type.MAVEN); }
+        this.features.add(new Clean());
+        this.features.add(new Compile());
+        this.features.add(new Exec());
+        this.features.add(new Install());
+        this.features.add(new Package());
+        this.features.add(new Test());
+        this.features.add(new Tree());
+    }
 }
