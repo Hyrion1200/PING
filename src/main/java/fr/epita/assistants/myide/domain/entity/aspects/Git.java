@@ -1,28 +1,21 @@
 package fr.epita.assistants.myide.domain.entity.aspects;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import javax.validation.constraints.NotNull;
-
-import fr.epita.assistants.myide.domain.entity.Aspect;
+import edu.emory.mathcs.backport.java.util.Arrays;
 import fr.epita.assistants.myide.domain.entity.Feature;
+import fr.epita.assistants.myide.domain.entity.Mandatory;
+import fr.epita.assistants.myide.domain.entity.features.git.*;
 
 public
-class Git implements Aspect {
+class Git extends Aspects {
+    public Git() {
+        super(Mandatory.Aspects.GIT);
 
-  @Override public Type getType() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                   // change
-                                                                   // body
-                                                                   // of
-                                                                   // generated
-                                                                   // methods,
-                                                                   // choose
-  }
-  @Override public @NotNull List<Feature> getFeatureList() {
-    // TODO Return all feature from the Git aspect
-    // For now return an empty list
-    return Aspect.super.getFeatureList();
-  }
+        // TODO create the GIT object once here and provide it to the features
+        this.features.add(new Add());
+        this.features.add(new Commit());
+        this.features.add(new Pull());
+        this.features.add(new Push());
+    }
 }

@@ -1,28 +1,19 @@
 package fr.epita.assistants.myide.domain.entity.aspects;
 
-import java.util.List;
+import fr.epita.assistants.myide.domain.entity.Mandatory;
+import fr.epita.assistants.myide.domain.entity.features.maven.*;
+import fr.epita.assistants.myide.domain.entity.features.maven.Package;
 
-import javax.validation.constraints.NotNull;
+public class Maven extends Aspects {
+    public Maven() {
+        super(Mandatory.Aspects.MAVEN);
 
-import fr.epita.assistants.myide.domain.entity.Aspect;
-import fr.epita.assistants.myide.domain.entity.Feature;
-
-public
-class Maven implements Aspect {
-
-  @Override public Type getType() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                   // change
-                                                                   // body
-                                                                   // of
-                                                                   // generated
-                                                                   // methods,
-                                                                   // choose
-  }
-  @Override public @NotNull List<Feature> getFeatureList() {
-    // TODO Return all feature from the Maven aspect
-    // For now return an empty list
-    return Aspect.super.getFeatureList();
-  }
+        this.features.add(new Clean());
+        this.features.add(new Compile());
+        this.features.add(new Exec());
+        this.features.add(new Install());
+        this.features.add(new Package());
+        this.features.add(new Test());
+        this.features.add(new Tree());
+    }
 }

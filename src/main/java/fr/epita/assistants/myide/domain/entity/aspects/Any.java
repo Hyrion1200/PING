@@ -1,26 +1,17 @@
 package fr.epita.assistants.myide.domain.entity.aspects;
 
-import java.util.List;
-import javax.validation.constraints.NotNull;
-import fr.epita.assistants.myide.domain.entity.Aspect;
-import fr.epita.assistants.myide.domain.entity.Feature;
+import fr.epita.assistants.myide.domain.entity.Mandatory;
+import fr.epita.assistants.myide.domain.entity.Mandatory.Features.Any.*;
+import fr.epita.assistants.myide.domain.entity.features.any.Cleanup;
+import fr.epita.assistants.myide.domain.entity.features.any.Dist;
+import fr.epita.assistants.myide.domain.entity.features.any.Search;
 
-public
-class Any implements Aspect {
-  @Override public Type getType() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                   // change
-                                                                   // body
-                                                                   // of
-                                                                   // generated
-                                                                   // methods,
-                                                                   // choose
-  }
+public class Any extends Aspects {
+    public Any() {
+        super(Mandatory.Aspects.ANY);
 
-  @Override public @NotNull List<Feature> getFeatureList() {
-    // TODO Return all feature from the Any aspect
-    // For now return an empty list
-    return Aspect.super.getFeatureList();
-  }
+        this.features.add(new Cleanup());
+        this.features.add(new Dist());
+        this.features.add(new Search());
+    }
 }
