@@ -3,16 +3,18 @@ package fr.epita.assistants.myide.domain.entity.aspects;
 import fr.epita.assistants.myide.domain.entity.Aspect;
 import fr.epita.assistants.myide.domain.entity.Feature;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // TODO
 // Classe mere pour les aspect
-public class Aspects implements Aspect {
+public abstract class Aspects implements Aspect {
     private Type type;
     private List<Feature> features;
 
     Aspects(Type type) {
         this.type = type;
+        this.features = new ArrayList<Feature>();
     }
 
     public enum Type implements Aspect.Type {
