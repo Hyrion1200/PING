@@ -1,6 +1,6 @@
-package fr.epita.assistants.myide.domain.entity.features;
+package fr.epita.assistants.myide.domain.entity.features.git;
 
-import fr.epita.assistants.myide.domain.entity.Feature;
+import fr.epita.assistants.myide.domain.entity.features.Features;
 import fr.epita.assistants.myide.domain.entity.Project;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
@@ -15,7 +15,7 @@ class Git_features extends Features {
         super(type);
     }
 
-    @Override public Feature.ExecutionReport execute(Project project, Object... params) {
+    @Override public ExecutionReport execute(Project project, Object... params) {
         return null;
     }
 

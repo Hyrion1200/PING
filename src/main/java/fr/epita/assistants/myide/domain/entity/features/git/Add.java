@@ -1,16 +1,9 @@
-package fr.epita.assistants.myide.domain.entity.features;
+package fr.epita.assistants.myide.domain.entity.features.git;
 
-import fr.epita.assistants.myide.domain.entity.Feature.ExecutionReport;
-import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
+import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
 
 public
 class Add extends Git_features {
@@ -31,19 +24,10 @@ class Add extends Git_features {
         git.add().addFilepattern(arg).call();
       }
 
-      return new ExecutionReport() {
-        @Override public boolean isSuccess() {
-          return true;
-        }
-      };
-
+      return new ExecReport(ExecReport.Status.SUCCESS, "git add successful");
     } catch (GitAPIException e) {
       e.printStackTrace();
     }
-    return new ExecutionReport() {
-      @Override public boolean isSuccess() {
-        return false;
-      }
-    };
+    return new ExecReport(ExecReport.Status.ERROR, "failed to git add files: " + args);
   }
 }
