@@ -18,7 +18,7 @@ import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FOLDER;
 
 public class ProjectServ implements ProjectService{
-    ProjectServ(){
+    public ProjectServ(){
         nodeservice = new NodeServ();
     }
 
@@ -60,7 +60,7 @@ public class ProjectServ implements ProjectService{
     @Override
     public Project load(Path root) {
         File rootDir = new File(root.toString());
-        return new Project_Entity(root.toString(),get_nodes(new File(root.toString())),get_aspect(rootDir));
+        return new Project_Entity(get_nodes(new File(root.toString())),get_aspect(rootDir));
        }
     @Override
     public Feature.ExecutionReport execute(Project project, Feature.Type featureType, Object... params) {
