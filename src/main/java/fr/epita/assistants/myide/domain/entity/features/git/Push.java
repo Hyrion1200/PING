@@ -20,7 +20,8 @@ class Push extends Git_features {
         Git git = getGit(project);
         try {
             PushCommand pushCommand = git.push();
-            pushCommand.add("main");
+            // Check later if required or not
+            // pushCommand.add("main");
             pushCommand.setRemote("origin");
             // if credential:
             // pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider("username", "password"));
