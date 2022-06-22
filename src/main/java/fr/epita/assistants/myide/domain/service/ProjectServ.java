@@ -32,7 +32,7 @@ public class ProjectServ implements ProjectService{
                     node.addChildren(get_nodes(cur));
                 }
                 else {
-                    node.addChildren(new Node_Entity(Paths.get(dir.getPath()), FILE, null));
+                    node.addChildren(new Node_Entity(Paths.get(cur.getPath()), FILE, null));
                 }
             }
         }
