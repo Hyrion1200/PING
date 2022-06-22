@@ -30,6 +30,9 @@ public class Dist extends Features {
 
     // - Private methods
     private Path getEntryPath(String rootName, File file) {
+        if (rootName.equals(".") || rootName.equals("./"))
+            return Paths.get(rootName);
+
         List<String> filePathSplitted = Arrays.stream(file.getPath().split(rootName)).toList();
         return Paths.get(rootName + "/" + filePathSplitted.get(filePathSplitted.size() - 1));
     }

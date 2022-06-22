@@ -1,15 +1,14 @@
-package fr.epita.assistants.unit_tests.features.maven;
-
-import org.junit.Test;
+package features.maven;
 
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.service.ProjectServ;
-
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestMaven {
     private ProjectServ projectServ = new ProjectServ();
