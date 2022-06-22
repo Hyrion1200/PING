@@ -22,16 +22,10 @@ class Git_features extends Features {
     public Git getGit(Project project) {
         Repository repo = null;
         try {
-            repo = new FileRepositoryBuilder()
-                    .setGitDir(new File(project.getRootNode() + "/.git"))
-                    .readEnvironment()
-                    .findGitDir()
-                    .setMustExist(true)
-                    .build();
+            return Git.open(project.getRootNode().getPath().toFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return new Git(repo);
     }
 }
 

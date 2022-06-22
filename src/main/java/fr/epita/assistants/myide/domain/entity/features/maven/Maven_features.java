@@ -26,7 +26,8 @@ public abstract class Maven_features extends Features {
         try {
             final int exitCode =
                     Runtime.getRuntime().exec(command.toString()).waitFor();
-            return new ExecReport(ExecReport.Status.SUCCESS);
+            if (exitCode == 0)
+                return new ExecReport(ExecReport.Status.SUCCESS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (java.io.IOException e) {

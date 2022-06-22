@@ -4,6 +4,8 @@ import fr.epita.assistants.myide.domain.entity.Mandatory;
 import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.MergeCommand;
+import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 public
@@ -17,6 +19,8 @@ class Pull extends Git_features {
 
         Git git = getGit(project);
         try {
+            PullCommand pullCommand = git.pull();
+            pullCommand.setFastForward(MergeCommand.FastForwardMode.FF);
             git.pull().call();
             return new ExecReport(ExecReport.Status.SUCCESS, "Git pull successful");
 

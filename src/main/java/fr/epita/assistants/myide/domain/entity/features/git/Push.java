@@ -4,7 +4,9 @@ import fr.epita.assistants.myide.domain.entity.Mandatory;
 import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 public
 class Push extends Git_features {
@@ -17,7 +19,13 @@ class Push extends Git_features {
 
         Git git = getGit(project);
         try {
-            git.push().call();
+            PushCommand pushCommand = git.push();
+            // Check later if required or not
+            // pushCommand.add("main");
+            pushCommand.setRemote("origin");
+            // if credential:
+            // pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider("username", "password"));
+            pushCommand.call();
             return new ExecReport(ExecReport.Status.SUCCESS, "Git push successful");
 
         } catch (GitAPIException e) {
