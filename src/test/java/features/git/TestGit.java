@@ -3,9 +3,8 @@ package features.git;
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import fr.epita.assistants.myide.domain.entity.Project;
-import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import fr.epita.assistants.myide.domain.service.ProjectServ;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
 
