@@ -1,53 +1,91 @@
 package features.any;
 
+import features.TestUtils;
+import fr.epita.assistants.myide.domain.entity.Feature;
+import fr.epita.assistants.myide.domain.entity.Mandatory;
+import fr.epita.assistants.myide.domain.entity.Project;
+import fr.epita.assistants.myide.domain.entity.features.maven.Test;
+import fr.epita.assistants.myide.domain.service.ProjectServ;
+import org.apache.commons.compress.utils.FileNameUtils;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static org.junit.Assert.assertTrue;
+
 public class AnyTestClass {
-    public String path;
-
-    AnyTestClass(String path) {
+    private String path;
+    private ProjectServ projServ;
+    public AnyTestClass(String path, ProjectServ projServ) {
         this.path = path;
-    }
-    public void createFile(String content) throws IOException {
-        File file = new File(Paths.get(path).toString());
-
-        file.createNewFile();
-
-        FileWriter fileWriter = new FileWriter(path);
-        fileWriter.write(content);
-        fileWriter.close();
+        this.projServ = projServ;
     }
 
-    public void createDirectory(String path) throws IOException {
-        if (!fileExists(path))
-            Files.createDirectory(Paths.get(path));
+    private void before() throws IOException {
+        TestUtils.createFile(path + "/" + "salut", "");
+        TestUtils.createFile(path + "/" + "bonjour", "");
+        TestUtils.createFile(path + "/" + "a.txt", "");
+
+        TestUtils.createDirectory(path + "/" + "directory");
+        TestUtils.createDirectory(path + "/" + "directory/other");
+
+        TestUtils.createFile(path + "/" + "directory/salut", "");
+        TestUtils.createFile(path + "/" + "directory/other/bonjour", "");
     }
 
-    public boolean deleteFile(String path) {
-        File file = new File(path);
-        return file.delete();
+    public boolean test(Mandatory.Features.Any feat, boolean ignore) throws IOException{
+        Project project = this.projServ.load(Paths.get(path));
+
+        this.before();
+
+        try {
+            if (ignore)
+                TestUtils.createFile(path + "/" + ".myideignore", "salut\nbonjour\na.txt");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        Feature.ExecutionReport report = project.getFeature(feat)
+                .get().execute(project);
+
+        if (report.isSuccess())
+        {
+            if (feat == Mandatory.Features.Any.DIST)
+            {
+                String zipName = FileNameUtils.getBaseName(path) + ".zip";
+                assertTrue(TestUtils.fileExists(zipName));
+                TestUtils.deleteFile(zipName);
+            }
+            assertTrue(TestUtils.fileNotExists(path + "/" + "salut"));
+            assertTrue(TestUtils.fileNotExists(path + "/" + "bonjour"));
+            assertTrue(TestUtils.fileNotExists(path + "/" + "a.txt"));
+            assertTrue(TestUtils.fileNotExists(path + "/" + "directory/salut"));
+            assertTrue(TestUtils.fileNotExists(path + "/" + "directory/other/bonjour"));
+        }
+
+        assertTrue((!ignore || TestUtils.fileExists(path + "/" + ".myideignore")));
+        assertTrue(TestUtils.fileExists(path + "/" + "directory"));
+        assertTrue(TestUtils.fileExists(path + "/" + "directory/other"));
+
+        this.after();
+
+        return report.isSuccess();
     }
 
-    public boolean fileExists(String path) {
-        return Files.exists(Paths.get(path));
-    }
-
-    public boolean fileNotExists(String path) {
-        return Files.notExists(Paths.get(path));
-    }
-    public void before() {
-        createFile(path + "/" + "salut", "");
-        createFile(path + "/" + "bonjour", "");
-        createFile(path + "/" + "a.txt", "");
-
-        createDirectory(path + "/" + "directory");
-        createDirectory(path + "/" + "directory/other");
-
-        createFile(path + "/" + "directory/salut", "");
-        createFile(path + "/" + "directory/other/bonjour", "");
+    private void after() throws IOException {
+        TestUtils.deleteFile(path + "/" + "salut");
+        TestUtils.deleteFile(path + "/" + "bonjour");
+        TestUtils.deleteFile(path + "/" + "a.txt");
+        TestUtils.deleteFile(path + "/" + "directory/salut");
+        TestUtils.deleteFile(path + "/" + "directory/other/bonjour");
+        TestUtils.deleteFile(path + "/" + "directory/other");
+        TestUtils.deleteFile(path + "/" + "directory");
+        TestUtils.deleteFile(FileNameUtils.getBaseName(path) + ".zip");
+        TestUtils.deleteFile(path + "/" + ".myideignore");
     }
 }
