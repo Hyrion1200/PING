@@ -1,10 +1,10 @@
-package fr.epita.assistants.unit_tests.features.git;
+package features.maven;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestGit {
+public class TestMaven {
     @Test
     public void testExample() {
         assertEquals(1, 1);
