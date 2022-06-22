@@ -10,6 +10,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
@@ -26,10 +27,13 @@ public class NodeServ implements NodeService{
             throw new IllegalArgumentException("Node is of type folder, file expected");
         }
         try {
+            String content = Files.readString(node.getPath());
             FileWriter fw = new FileWriter(node.getPath().toString());
-            String content = new String(Files.readAllBytes(node.getPath()));
-            String new_content = content.substring(0,from - 1) + insertedContent + content.substring(to);
+            String insert = new String(insertedContent);
+            String new_content = content.substring(0,from) + insert + content.substring(to);
             fw.write(new_content);
+            fw.flush();
+            fw.close();
         }
         catch (IOException e){
             e.printStackTrace();
@@ -70,32 +74,38 @@ public class NodeServ implements NodeService{
             e.printStackTrace();
             throw new IllegalArgumentException("IO Error");
         }
-        Node NewNode = new Node_Entity( paths,type,null);
+        Node NewNode = new Node_Entity( paths,type,new ArrayList<Node>());
+        folder.getChildren().add(NewNode);
         return NewNode;
     }
 
     @Override
     public Node move(Node nodeToMove, Node destinationFolder) {
+
         if (destinationFolder.getType() != FOLDER)
             throw new IllegalArgumentException("Destination is not a folder");
-        try{
-            if (nodeToMove.getType() != FILE){
+        try {
+            String oldpath = nodeToMove.getPath().toString();
+            String newpath = destinationFolder.getPath().toString() + "/" + nodeToMove.getPath().getFileName().toString();
+            Node_Entity nde = (Node_Entity) nodeToMove;
+            nde.setPath(Paths.get(newpath));
+            if (nodeToMove.getType() != FILE) {
                 List<Node> children = nodeToMove.getChildren();
-                for (Node child : children){
-                    this.move(child,nodeToMove);
+                Files.createDirectories(nodeToMove.getPath());
+                for (Node child : children) {
+                    this.move(child, nodeToMove);
                 }
-            }
-            else {
-                Files.move(nodeToMove.getPath(), destinationFolder.getPath(), REPLACE_EXISTING);
+                FileUtils.deleteDirectory(new File(oldpath));
+            } else {
+                File file = new File(oldpath);
+                file.renameTo(new File(nde.getPath().toString()));
             }
         }
-        catch (IOException e) {
+        catch (IOException e){
             e.printStackTrace();
-            throw new IllegalArgumentException("IO error when moving a file");
+            throw new IllegalArgumentException("failed to create or delete directory while moving");
         }
-        String newpath = destinationFolder.getPath().toString() + nodeToMove.getPath().getFileName().toString();
-        Node_Entity nde = (Node_Entity) nodeToMove;
-        nde.setPath(Paths.get(newpath));
-        return nde;
+
+        return nodeToMove;
     }
 }
