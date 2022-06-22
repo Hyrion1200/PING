@@ -23,7 +23,6 @@ public class Add extends Git_features {
             for (String arg : args.toString().split(" ")) {
                 git.add().addFilepattern(arg).call();
             }
-
             return new ExecReport(ExecReport.Status.SUCCESS, "git add successful");
         } catch (GitAPIException e) {
             e.printStackTrace();
