@@ -18,6 +18,8 @@ class Commit extends Git_features {
         for (Object param : params) {
             args.append(param).append(" ");
         }
+        if (args.toString().equals(""))
+            return new ExecReport(ExecReport.Status.ERROR, "Aborting commit due to empty commit message");
         Git git = getGit(project);
         try {
             git.commit().setMessage(args.toString()).call();

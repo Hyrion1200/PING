@@ -1,31 +1,71 @@
-package fr.epita.assistants.unit_tests.features.any;
+package features.any;
 
-import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Mandatory;
-import fr.epita.assistants.myide.domain.entity.Project;
-import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import fr.epita.assistants.myide.domain.service.ProjectServ;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.junit.Assert.assertTrue;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestAny {
     private ProjectServ projectServ = new ProjectServ();
 
-    public boolean testDist(String path) {
-        Project project = projectServ.load(Paths.get(path));
-        Feature.ExecutionReport report = project.getFeature(Mandatory.Features.Any.DIST).get().execute(project);
-        return report.isSuccess();
-    }
     @Test
-    public void testDistExistingIgnore() {
-        assertTrue(testDist("/home/mthdqe/Epita/PING"));
+    @Order(1)
+    public void testCleanupRelativeNonExistingIgnore() throws IOException {
+        AnyTestClass testLauncher = new AnyTestClass(".", projectServ);
+        assertTrue(!testLauncher.test(Mandatory.Features.Any.CLEANUP, false));
     }
 
     @Test
-    public void testDistNonExistingIgnore() {
-        assertTrue(!testDist("/home/mthdqe/Epita"));
+    @Order(2)
+    public void testCleanupRelativeExistingIgnore() throws IOException {
+        AnyTestClass testLauncher = new AnyTestClass(".", projectServ);
+        assertTrue(testLauncher.test( Mandatory.Features.Any.CLEANUP, true));
+    }
+
+    @Test
+    @Order(3)
+    public void testCleanupExistingIgnore() throws IOException {
+        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
+        assertTrue(testLauncher.test( Mandatory.Features.Any.CLEANUP, true));
+    }
+
+    @Test
+    @Order(4)
+    public void testCleanupNonExistingIgnore() throws IOException {
+        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
+        assertTrue(!testLauncher.test( Mandatory.Features.Any.CLEANUP, false));
+    }
+
+    @Test
+    @Order(5)
+    public void testDistExistingIgnore() throws IOException {
+        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
+        assertTrue(testLauncher.test( Mandatory.Features.Any.DIST, true));
+    }
+
+    @Test
+    @Order(6)
+    public void testDistNonExistingIgnore() throws IOException {
+        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
+        assertTrue(!testLauncher.test( Mandatory.Features.Any.DIST, false));
+    }
+
+    @Test
+    @Order(7)
+    public void testDistRelativePathNonExistingIgnore() throws IOException {
+        AnyTestClass testLauncher = new AnyTestClass(".", projectServ);
+        assertTrue(!testLauncher.test( Mandatory.Features.Any.DIST, false));
+    }
+
+    @Test
+    @Order(8)
+    public void testDistRelativePathExistingIgnore() throws IOException {
+        AnyTestClass testLauncher = new AnyTestClass(".", projectServ);
+        assertTrue(testLauncher.test( Mandatory.Features.Any.DIST, true));
     }
 }
