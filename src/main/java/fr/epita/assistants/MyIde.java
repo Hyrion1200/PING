@@ -1,9 +1,11 @@
 package fr.epita.assistants;
 
+import fr.epita.assistants.myide.domain.service.ProjectServ;
 import fr.epita.assistants.myide.domain.service.ProjectService;
 import fr.epita.assistants.utils.Given;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Starter class, we will use this class and the init method to get a
@@ -18,8 +20,7 @@ public class MyIde {
      * @return An implementation of {@link ProjectService}.
      */
     public static ProjectService init(final Configuration configuration) {
-        // TODO
-        throw new UnsupportedOperationException("FIXME");
+        return new ProjectServ();
     }
 
     /**
@@ -28,7 +29,6 @@ public class MyIde {
      */
     public record Configuration(Path indexFile,
                                 Path tempFolder) {
-        // TODO
     }
 
 }
