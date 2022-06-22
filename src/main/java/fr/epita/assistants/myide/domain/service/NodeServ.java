@@ -27,10 +27,13 @@ public class NodeServ implements NodeService{
             throw new IllegalArgumentException("Node is of type folder, file expected");
         }
         try {
+            String content = Files.readString(node.getPath());
             FileWriter fw = new FileWriter(node.getPath().toString());
-            String content = new String(Files.readAllBytes(node.getPath()));
-            String new_content = content.substring(0,from - 1) + insertedContent + content.substring(to);
+            String insert = new String(insertedContent);
+            String new_content = content.substring(0,from) + insert + content.substring(to);
             fw.write(new_content);
+            fw.flush();
+            fw.close();
         }
         catch (IOException e){
             e.printStackTrace();
