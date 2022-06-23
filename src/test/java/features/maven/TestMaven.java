@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestMaven {
@@ -21,7 +22,11 @@ public class TestMaven {
 
     @Test
     public void test_tree() {
-        assertTrue(test_maven_feature(".", Mandatory.Features.Maven.TREE));
+        assertTrue(test_maven_feature("./", Mandatory.Features.Maven.TREE));
+    }
+    @Test
+    public void test_tree_malformed() {
+        assertFalse(test_maven_feature(".", Mandatory.Features.Maven.TREE, " -- h"));
     }
 
     @Test
