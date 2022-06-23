@@ -21,6 +21,17 @@ import java.util.Set;
 
 public class TestProjectService {
     @Test
+    public void TestLoadHeavy(){
+        Project proj = ps.load(Paths.get("."));
+        for (Aspect as : proj.getAspects()){
+            System.out.println(as.getClass());
+        }
+        System.out.println(proj.getRootNode().getPath());
+        for (Node child : proj.getRootNode().getChildren()){
+            System.out.println(child.getPath());
+        }
+    }
+    @Test
     public void TestLoad(){
         try {
             Files.createDirectories(Paths.get("./Test"));
