@@ -4,6 +4,6 @@ import fr.epita.assistants.myide.domain.entity.Mandatory;
 
 public class Clean extends Maven_features {
     public Clean() {
-        super(Mandatory.Features.Maven.CLEAN, "mvn clean");
+        super(Mandatory.Features.Maven.CLEAN, "clean");
     }
 }
