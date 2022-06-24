@@ -95,7 +95,7 @@ public class AnyTestClass {
         TestUtils.deleteFile(path + "/" + "ignored/cdq");
         TestUtils.deleteFile(path + "/" + "ignored");
         TestUtils.deleteFile(path + "/" + "directory");
-        // TestUtils.deleteFile("../" + FileNameUtils.getBaseName(path) + ".zip");
+        TestUtils.deleteFile("../" + FileNameUtils.getBaseName(path) + ".zip");
         TestUtils.deleteFile(path + "/" + ".myideignore");
     }
 }
