@@ -78,7 +78,7 @@ public class TestGit {
 
     @Test
     // Basic commit where every arg is build onto a single string
-    public void testGitCommitMany() { assertTrue(testGitCommit("/home/nicolas/s6/test_ping/", "commit of ", "salut2", "salut3", "salut4"));}
+    public void testGitCommitMany() { assertTrue(testGitCommit("/home/nicolas/s6/test_ping/", "commit, salut2, salut3, salut4"));}
 
     @Test
     // basic push should work if valid credentials are given
