@@ -39,7 +39,7 @@ public class Dist extends Features {
 
     private void zipFolder(Node rootNode) throws IOException {
         String rootName = rootNode.getPath().getFileName().toString();
-        String zipName = FileNameUtils.getBaseName(rootNode.getPath().toString()) + ".zip";
+        String zipName = "../" + FileNameUtils.getBaseName(rootNode.getPath().toString()) + ".zip";
         ZipArchiveOutputStream archive = new ZipArchiveOutputStream(new FileOutputStream(zipName));
 
         File direcotryToArchive = new File(rootNode.getPath().toString());

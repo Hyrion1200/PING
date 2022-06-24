@@ -28,6 +28,11 @@ public class Cleanup extends Features {
 
     private boolean deletePath(Path path) {
         File file = new File(path.toString());
+        if (file.isDirectory()) {
+            for (File subFile : file.listFiles()) {
+                deletePath(Paths.get(subFile.getPath()));
+            }
+        }
 
         return file.delete();
     }
@@ -54,7 +59,7 @@ public class Cleanup extends Features {
 
         // - Check if the paths are in the ignoredFiles and delete them if needed
         for (Path path : paths) {
-            if (ignoredFiles.contains(path.getFileName().toString())) {
+            if (ignoredFiles.contains(path.getFileName().toString()) && Files.exists(path)) {
                 if (!deletePath(path))
                     return new ExecReport(ExecReport.Status.ERROR, "Couldn't delete trash file: " + path.toString());
             }

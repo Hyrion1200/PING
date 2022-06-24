@@ -31,6 +31,11 @@ public class AnyTestClass {
 
         TestUtils.createDirectory(path + "/" + "directory");
         TestUtils.createDirectory(path + "/" + "directory/other");
+        TestUtils.createDirectory(path + "/" + "ignored");
+
+        TestUtils.createFile(path + "/" + "ignored/salut", "");
+        TestUtils.createFile(path + "/" + "ignored/alo", "");
+        TestUtils.createFile(path + "/" + "ignored/cdq", "");
 
         TestUtils.createFile(path + "/" + "directory/salut", "");
         TestUtils.createFile(path + "/" + "directory/other/bonjour", "");
@@ -43,7 +48,7 @@ public class AnyTestClass {
 
         try {
             if (ignore)
-                TestUtils.createFile(path + "/" + ".myideignore", "salut\nbonjour\na.txt");
+                TestUtils.createFile(path + "/" + ".myideignore", "salut\nbonjour\na.txt\nignored");
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -57,15 +62,15 @@ public class AnyTestClass {
         {
             if (feat == Mandatory.Features.Any.DIST)
             {
-                String zipName = FileNameUtils.getBaseName(path) + ".zip";
+                String zipName = "../" + FileNameUtils.getBaseName(path) + ".zip";
                 assertTrue(TestUtils.fileExists(zipName));
-                TestUtils.deleteFile(zipName);
             }
             assertTrue(TestUtils.fileNotExists(path + "/" + "salut"));
             assertTrue(TestUtils.fileNotExists(path + "/" + "bonjour"));
             assertTrue(TestUtils.fileNotExists(path + "/" + "a.txt"));
             assertTrue(TestUtils.fileNotExists(path + "/" + "directory/salut"));
             assertTrue(TestUtils.fileNotExists(path + "/" + "directory/other/bonjour"));
+            assertTrue(TestUtils.fileNotExists(path + "/" + "ignored"));
         }
 
         assertTrue((!ignore || TestUtils.fileExists(path + "/" + ".myideignore")));
@@ -85,7 +90,12 @@ public class AnyTestClass {
         TestUtils.deleteFile(path + "/" + "directory/other/bonjour");
         TestUtils.deleteFile(path + "/" + "directory/other");
         TestUtils.deleteFile(path + "/" + "directory");
-        TestUtils.deleteFile(FileNameUtils.getBaseName(path) + ".zip");
+        TestUtils.deleteFile(path + "/" + "ignored/salut");
+        TestUtils.deleteFile(path + "/" + "ignored/alo");
+        TestUtils.deleteFile(path + "/" + "ignored/cdq");
+        TestUtils.deleteFile(path + "/" + "ignored");
+        TestUtils.deleteFile(path + "/" + "directory");
+        // TestUtils.deleteFile("../" + FileNameUtils.getBaseName(path) + ".zip");
         TestUtils.deleteFile(path + "/" + ".myideignore");
     }
 }
