@@ -28,6 +28,22 @@ public class Dist extends Features {
         super(Mandatory.Features.Any.DIST);
     }
 
+    private Path treatPath(Path path) {
+        String baseName = FileNameUtils.getBaseName(path.toString());
+
+        if (baseName.equals(".") || baseName.equals("./"))
+        {
+            Path treatedPath = Paths.get("");
+
+            if (path.isAbsolute())
+                treatedPath = treatedPath.toAbsolutePath();
+
+            return treatedPath;
+        }
+
+        return path;
+    }
+
     // - Private methods
     private Path getEntryPath(String rootName, File file) {
         if (rootName.equals(".") || rootName.equals("./"))
@@ -38,11 +54,12 @@ public class Dist extends Features {
     }
 
     private void zipFolder(Node rootNode) throws IOException {
-        String rootName = rootNode.getPath().getFileName().toString();
-        String zipName = FileNameUtils.getBaseName(rootNode.getPath().toString()) + ".zip";
+        Path root = treatPath(rootNode.getPath());
+        String rootName = root.getFileName().toString();
+        String zipName = "../" + FileNameUtils.getBaseName(root.toString()) + ".zip";
         ZipArchiveOutputStream archive = new ZipArchiveOutputStream(new FileOutputStream(zipName));
 
-        File direcotryToArchive = new File(rootNode.getPath().toString());
+        File direcotryToArchive = new File(root.toString());
 
         for (Path path : Files.walk(direcotryToArchive.toPath()).toList()) {
             File file = path.toFile();

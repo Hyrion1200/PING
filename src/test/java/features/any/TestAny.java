@@ -30,28 +30,28 @@ public class TestAny {
     @Test
     @Order(3)
     public void testCleanupExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
+        AnyTestClass testLauncher = new AnyTestClass(Path.of("").toAbsolutePath().toString(), projectServ);
         assertTrue(testLauncher.test( Mandatory.Features.Any.CLEANUP, true));
     }
 
     @Test
     @Order(4)
     public void testCleanupNonExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
+        AnyTestClass testLauncher = new AnyTestClass(Path.of("").toAbsolutePath().toString(), projectServ);
         assertTrue(!testLauncher.test( Mandatory.Features.Any.CLEANUP, false));
     }
 
     @Test
     @Order(5)
     public void testDistExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
+        AnyTestClass testLauncher = new AnyTestClass(Path.of("").toAbsolutePath().toString(), projectServ);
         assertTrue(testLauncher.test( Mandatory.Features.Any.DIST, true));
     }
 
     @Test
     @Order(6)
     public void testDistNonExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
+        AnyTestClass testLauncher = new AnyTestClass(Path.of("").toAbsolutePath().toString(), projectServ);
         assertTrue(!testLauncher.test( Mandatory.Features.Any.DIST, false));
     }
 
