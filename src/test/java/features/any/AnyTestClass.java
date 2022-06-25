@@ -80,7 +80,6 @@ public class AnyTestClass {
             }
 
             for (String file : filesToCreate) {
-                System.out.println(file);
                 if (containsFile(file, filesToIgnore)) {
                     assertTrue(TestUtils.fileNotExists(path + "/" + file));
                 }
