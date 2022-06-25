@@ -62,7 +62,9 @@ public class AnyTestClass {
         {
             if (feat == Mandatory.Features.Any.DIST)
             {
-                String zipName = "../" + FileNameUtils.getBaseName(path) + ".zip";
+                //String zipName = "../" + FileNameUtils.getBaseName(path) + ".zip";
+                String zipName = Paths.get(path).toAbsolutePath().getParent().toAbsolutePath().toString() + "/" + FileNameUtils.getBaseName(path) + ".zip";
+
                 assertTrue(TestUtils.fileExists(zipName));
             }
             assertTrue(TestUtils.fileNotExists(path + "/" + "salut"));
