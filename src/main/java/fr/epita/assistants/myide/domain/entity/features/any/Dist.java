@@ -53,8 +53,8 @@ public class Dist extends Features {
     }
 
     private void zipFolder(Node rootNode) throws IOException {
-        Path root = rootNode.getPath();
-        //Path root = treatPath(rootNode.getPath());
+        Path root = rootNode.getPath().toRealPath();
+        // Path root = treatPath(rootNode.getPath());
         String rootName = root.getFileName().toString();
         //String zipName = "../" + FileNameUtils.getBaseName(root.toString()) + ".zip";
         String zipName = root.toAbsolutePath().getParent().toAbsolutePath().toString() + "/" + FileNameUtils.getBaseName(root.toString()) + ".zip";
