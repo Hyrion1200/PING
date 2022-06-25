@@ -25,12 +25,15 @@ public class AnyTestClass {
     private List<String> filesToCreate;
     private List<String> filesToIgnore;
 
-    public AnyTestClass(String path, ProjectServ projServ, List<String> dirsToCreate, List<String> filesToCreate, List<String> filesToIgnore) {
+    private String zipPath;
+
+    public AnyTestClass(String path, ProjectServ projServ, List<String> dirsToCreate, List<String> filesToCreate, List<String> filesToIgnore, String zipPath) {
         this.path = path;
         this.projServ = projServ;
         this.dirsToCreate = dirsToCreate;
         this.filesToCreate = filesToCreate;
         this.filesToIgnore = filesToIgnore;
+        this.zipPath = zipPath;
     }
 
     private boolean containsFile(String fileStrPath, List<String> ignored) {
@@ -73,7 +76,7 @@ public class AnyTestClass {
             if (feat == Mandatory.Features.Any.DIST)
             {
                 String zipName = Paths.get(path).toAbsolutePath().getParent().toAbsolutePath().toString() + "/" + FileNameUtils.getBaseName(path) + ".zip";
-                assertTrue(TestUtils.fileExists(zipName));
+                assertTrue(TestUtils.fileExists(zipPath));
             }
 
             for (String file : filesToCreate) {

@@ -66,7 +66,7 @@ public class Dist extends Features {
             File file = path.toFile();
 
             // FIXME: This is a hack to avoid to archive the zip file. But it avoids all zip files.
-            if (!file.isDirectory()  && !FileNameUtils.getExtension(file.getName()).equals("zip")) {
+            if (!file.isDirectory()) {
                 Path entry_path = getEntryPath(rootName, file);
 
                 ZipArchiveEntry entry = new ZipArchiveEntry(file, entry_path.toString());

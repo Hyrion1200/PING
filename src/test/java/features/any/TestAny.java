@@ -19,7 +19,7 @@ public class TestAny {
         String[] dirToCreate = {"ignored", "directory", "ignored/dir"};
         String[] fileToCreate = {"salut", "a.txt", "c", "ignored/a", "ignored/dir/b", "directory/a.txt", "directory/salut", "directory/b"};
         String[] toIgnore = {"salut", "a.txt", "ignored"};
-        AnyTestClass testLauncher = new AnyTestClass(".", projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore));
+        AnyTestClass testLauncher = new AnyTestClass(".", projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore), "../PING.zip");
         assertTrue(testLauncher.test(Mandatory.Features.Any.CLEANUP));
     }
 
@@ -28,7 +28,7 @@ public class TestAny {
         String[] dirToCreate = {"ignored", "directory", "ignored/dir"};
         String[] fileToCreate = {"salut", "a.txt", "c", "ignored/a", "ignored/dir/b", "directory/a.txt", "directory/salut", "directory/b"};
         String[] toIgnore = {"salut", "a.txt", "ignored"};
-        AnyTestClass testLauncher = new AnyTestClass(Paths.get(".").toAbsolutePath().toString(), projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore));
+        AnyTestClass testLauncher = new AnyTestClass(Paths.get(".").toAbsolutePath().toString(), projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore), "../PING.zip");
         assertTrue(testLauncher.test(Mandatory.Features.Any.CLEANUP));
     }
 
@@ -37,7 +37,7 @@ public class TestAny {
         String[] dirToCreate = {"ignored", "directory", "ignored/dir"};
         String[] fileToCreate = {"salut", "a.txt", "c", "ignored/a", "ignored/dir/b", "directory/a.txt", "directory/salut", "directory/b"};
         String[] toIgnore = {"salut", "a.txt", "ignored"};
-        AnyTestClass testLauncher = new AnyTestClass(".", projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore));
+        AnyTestClass testLauncher = new AnyTestClass(".", projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore), "../PING.zip");
         assertTrue(testLauncher.test(Mandatory.Features.Any.DIST));
     }
 
@@ -46,7 +46,7 @@ public class TestAny {
         String[] dirToCreate = {"ignored", "directory", "ignored/dir"};
         String[] fileToCreate = {"salut", "a.txt", "c", "ignored/a", "ignored/dir/b", "directory/a.txt", "directory/salut", "directory/b"};
         String[] toIgnore = {"salut", "a.txt", "ignored"};
-        AnyTestClass testLauncher = new AnyTestClass(Paths.get(".").toAbsolutePath().toString(), projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore));
+        AnyTestClass testLauncher = new AnyTestClass(Paths.get(".").toAbsolutePath().toString(), projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore), "../PING.zip");
         assertTrue(testLauncher.test(Mandatory.Features.Any.DIST));
     }
 }
