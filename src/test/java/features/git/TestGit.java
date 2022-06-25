@@ -95,6 +95,10 @@ public class TestGit {
     public void testGitAddNotExist() { assertFalse(testGitAdd("/home/nicolas/s6/test_ping/", "does_not_exists"));}
 
     @Test
-    // Empty commit message, should not succeed
-    public void testGitCommitNull() { assertFalse(testGitCommit("/home/nicolas/s6/test_ping/"));}
+    // No commit message, should succeed
+    public void testGitCommitNull() { assertTrue(testGitCommit("/home/nicolas/s6/test_ping/"));}
+
+    @Test
+    // Empty commit message, should succeed
+    public void testGitCommitEmpty() { assertTrue(testGitCommit("/home/nicolas/s6/test_ping/"));}
 }
