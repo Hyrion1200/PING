@@ -53,8 +53,8 @@ public class Dist extends Features {
     }
 
     private void zipFolder(Node rootNode) throws IOException {
-        Path root = rootNode.getPath();
-        //Path root = treatPath(rootNode.getPath());
+        Path root = rootNode.getPath().toRealPath();
+        // Path root = treatPath(rootNode.getPath());
         String rootName = root.getFileName().toString();
         //String zipName = "../" + FileNameUtils.getBaseName(root.toString()) + ".zip";
         String zipName = root.toAbsolutePath().getParent().toAbsolutePath().toString() + "/" + FileNameUtils.getBaseName(root.toString()) + ".zip";
@@ -66,7 +66,7 @@ public class Dist extends Features {
             File file = path.toFile();
 
             // FIXME: This is a hack to avoid to archive the zip file. But it avoids all zip files.
-            if (!file.isDirectory()  && !FileNameUtils.getExtension(file.getName()).equals("zip")) {
+            if (!file.isDirectory()) {
                 Path entry_path = getEntryPath(rootName, file);
 
                 ZipArchiveEntry entry = new ZipArchiveEntry(file, entry_path.toString());
