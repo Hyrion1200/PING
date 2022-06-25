@@ -13,47 +13,57 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
 public class AnyTestClass {
     private String path;
     private ProjectServ projServ;
-    public AnyTestClass(String path, ProjectServ projServ) {
+    private List<String> dirsToCreate;
+    private List<String> filesToCreate;
+    private List<String> filesToIgnore;
+
+    public AnyTestClass(String path, ProjectServ projServ, List<String> dirsToCreate, List<String> filesToCreate, List<String> filesToIgnore) {
         this.path = path;
         this.projServ = projServ;
+        this.dirsToCreate = dirsToCreate;
+        this.filesToCreate = filesToCreate;
+        this.filesToIgnore = filesToIgnore;
+    }
+
+    private boolean containsFile(String fileStrPath, List<String> ignored) {
+        File file = new File(fileStrPath);
+
+        while (file != null) {
+            if (ignored.contains(file.getName()))
+                return true;
+            file = file.getParentFile();
+        }
+
+        return false;
     }
 
     private void before() throws IOException {
-        TestUtils.createFile(path + "/" + "salut", "");
-        TestUtils.createFile(path + "/" + "bonjour", "");
-        TestUtils.createFile(path + "/" + "a.txt", "");
+        for (String dirToCreate : dirsToCreate)
+            TestUtils.createDirectory(dirToCreate);
 
-        TestUtils.createDirectory(path + "/" + "directory");
-        TestUtils.createDirectory(path + "/" + "directory/other");
-        TestUtils.createDirectory(path + "/" + "ignored");
+        for (String fileToCreate : filesToCreate)
+            TestUtils.createFile(path + "/" + fileToCreate, "");
 
-        TestUtils.createFile(path + "/" + "ignored/salut", "");
-        TestUtils.createFile(path + "/" + "ignored/alo", "");
-        TestUtils.createFile(path + "/" + "ignored/cdq", "");
+        String ignoreContent = "";
 
-        TestUtils.createFile(path + "/" + "directory/salut", "");
-        TestUtils.createFile(path + "/" + "directory/other/bonjour", "");
+        for (String fileToIgnore : filesToIgnore)
+            ignoreContent = ignoreContent.concat(fileToIgnore + "\n");
+
+        TestUtils.createFile(path + "/.myideignore", ignoreContent);
     }
 
-    public boolean test(Mandatory.Features.Any feat, boolean ignore) throws IOException{
+    public boolean test(Mandatory.Features.Any feat) throws IOException{
         Project project = this.projServ.load(Paths.get(path));
 
         this.before();
-
-        try {
-            if (ignore)
-                TestUtils.createFile(path + "/" + ".myideignore", "salut\nbonjour\na.txt\nignored");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
 
         Feature.ExecutionReport report = project.getFeature(feat)
                 .get().execute(project);
@@ -62,22 +72,21 @@ public class AnyTestClass {
         {
             if (feat == Mandatory.Features.Any.DIST)
             {
-                //String zipName = "../" + FileNameUtils.getBaseName(path) + ".zip";
                 String zipName = Paths.get(path).toAbsolutePath().getParent().toAbsolutePath().toString() + "/" + FileNameUtils.getBaseName(path) + ".zip";
-
                 assertTrue(TestUtils.fileExists(zipName));
             }
-            assertTrue(TestUtils.fileNotExists(path + "/" + "salut"));
-            assertTrue(TestUtils.fileNotExists(path + "/" + "bonjour"));
-            assertTrue(TestUtils.fileNotExists(path + "/" + "a.txt"));
-            assertTrue(TestUtils.fileNotExists(path + "/" + "directory/salut"));
-            assertTrue(TestUtils.fileNotExists(path + "/" + "directory/other/bonjour"));
-            assertTrue(TestUtils.fileNotExists(path + "/" + "ignored"));
-        }
 
-        assertTrue((!ignore || TestUtils.fileExists(path + "/" + ".myideignore")));
-        assertTrue(TestUtils.fileExists(path + "/" + "directory"));
-        assertTrue(TestUtils.fileExists(path + "/" + "directory/other"));
+            for (String file : filesToCreate) {
+                System.out.println(file);
+                if (containsFile(file, filesToIgnore)) {
+                    assertTrue(TestUtils.fileNotExists(path + "/" + file));
+                }
+
+                else {
+                    assertTrue(TestUtils.fileExists(path + "/" + file));
+                }
+            }
+        }
 
         this.after();
 
@@ -85,19 +94,14 @@ public class AnyTestClass {
     }
 
     private void after() throws IOException {
-        TestUtils.deleteFile(path + "/" + "salut");
-        TestUtils.deleteFile(path + "/" + "bonjour");
-        TestUtils.deleteFile(path + "/" + "a.txt");
-        TestUtils.deleteFile(path + "/" + "directory/salut");
-        TestUtils.deleteFile(path + "/" + "directory/other/bonjour");
-        TestUtils.deleteFile(path + "/" + "directory/other");
-        TestUtils.deleteFile(path + "/" + "directory");
-        TestUtils.deleteFile(path + "/" + "ignored/salut");
-        TestUtils.deleteFile(path + "/" + "ignored/alo");
-        TestUtils.deleteFile(path + "/" + "ignored/cdq");
-        TestUtils.deleteFile(path + "/" + "ignored");
-        TestUtils.deleteFile(path + "/" + "directory");
+        for (String file : filesToCreate)
+            TestUtils.deleteFile(path + "/" + file);
+
+        for (String dir : dirsToCreate)
+            TestUtils.deleteFile(path + "/" + dir);
+
+        TestUtils.deleteFile(path + "/.myideignore");
+
         TestUtils.deleteFile("../" + FileNameUtils.getBaseName(path) + ".zip");
-        TestUtils.deleteFile(path + "/" + ".myideignore");
     }
 }
