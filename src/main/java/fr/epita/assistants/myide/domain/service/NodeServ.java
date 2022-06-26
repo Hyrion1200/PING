@@ -19,6 +19,16 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class NodeServ implements NodeService{
 
+    private int id;
+    public NodeServ(int id)
+    {
+        this.id = id;
+    }
+
+    public int getId()
+    {
+        return this.id;
+    }
 
     @Override
     public Node update(Node node, int from, int to, byte[] insertedContent) {

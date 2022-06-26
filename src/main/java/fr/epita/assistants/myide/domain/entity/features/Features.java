@@ -17,6 +17,11 @@ public abstract class Features implements Feature {
         return type;
     }
 
+    public Type getType()
+    {
+        return this.type;
+    }
+
     public enum FeaturesTypes {
         ;
 

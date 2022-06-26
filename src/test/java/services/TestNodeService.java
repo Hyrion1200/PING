@@ -1,4 +1,4 @@
-package fr.epita.assistants.unit_tests.services;
+package services;
 
 import fr.epita.assistants.myide.domain.entity.Node;
 import fr.epita.assistants.myide.domain.entity.Node_Entity;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 
 public class TestNodeService {
-    NodeService ns = new NodeServ();
+    NodeService ns = new NodeServ(1);
 
     @Test
     public void TestMove(){
