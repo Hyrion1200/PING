@@ -3,6 +3,7 @@ package fr.epita.assistants.myide.domain.service;
 import java.nio.file.Paths;
 import java.util.List;
 
+import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,10 +67,17 @@ public class ProjetServiceController {
 
     // ide/files/getSyntaxHighlighting
 
-    // ide/files/execJs
-    
-    // ide/files/execPy
+    // ide/files/exec
 
+    @GetMapping("/ide/files/exec")
+    public String exec(@RequestParam(value="path", defaultValue = "./temp") String path){
+        System.out.println("here");
+        Project_Entity project = projectServ.getProject();
+        ExecReport report = (ExecReport) projectServ.execute(project, Mandatory.Features.Any.EXEC,path);
+        if (report.isSuccess())
+            return project.ExecResult;
+        return report.getMessage();
+    }
     // ide/git/add
 
     // ide/git/commit

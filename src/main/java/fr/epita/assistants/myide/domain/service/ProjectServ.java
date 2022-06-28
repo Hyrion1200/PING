@@ -1,9 +1,17 @@
 package fr.epita.assistants.myide.domain.service;
 
+
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FOLDER;
+import fr.epita.assistants.myide.domain.entity.*;
+import fr.epita.assistants.myide.domain.entity.aspects.Any;
+import fr.epita.assistants.myide.domain.entity.aspects.Aspects;
+import fr.epita.assistants.myide.domain.entity.aspects.Git;
+import fr.epita.assistants.myide.domain.entity.aspects.Maven;
+import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -66,13 +74,15 @@ public class ProjectServ implements ProjectService{
     }
     @Override
     public Project load(Path root) {
-        System.out.println(root.toString());
+        System.out.println(root.toAbsolutePath());
         File rootDir = new File(root.toString());
         return new Project_Entity(get_nodes(new File(root.toString())),get_aspect(rootDir));
        }
     @Override
     public Feature.ExecutionReport execute(Project project, Feature.Type featureType, Object... params) {
-        return project.getFeature(featureType).get().execute(project,params);
+        if (project.getFeature(featureType).isPresent())
+            return project.getFeature(featureType).get().execute(project,params);
+        return new ExecReport(ExecReport.Status.ERROR, "Not implemented yet");
     }
 
     @Override
