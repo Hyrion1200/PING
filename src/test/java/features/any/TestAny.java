@@ -2,6 +2,7 @@ package features.any;
 
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import fr.epita.assistants.myide.domain.service.ProjectServ;
+
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;

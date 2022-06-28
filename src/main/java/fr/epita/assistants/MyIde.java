@@ -1,11 +1,11 @@
 package fr.epita.assistants;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import edu.emory.mathcs.backport.java.util.concurrent.atomic.AtomicLong;
-import fr.epita.assistants.myide.domain.service.ProjectServ;
 import fr.epita.assistants.myide.domain.service.ProjectService;
 import fr.epita.assistants.utils.Given;
 
@@ -25,10 +25,9 @@ public class MyIde {
 
     public static void main(String[] args) {
 		SpringApplication.run(MyIde.class, args);
-        projectServ = new ProjectServ();
     }
 
-    public static ProjectServ projectServ;
+    public static HashMap<String, String> filesContent = new HashMap<String, String>();
 
     /**
      * Record to specify where the configuration of your IDE

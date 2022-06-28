@@ -44,7 +44,12 @@ public abstract class Features implements Feature {
             /**
              * Fulltext search over project files.
              */
-            SEARCH
+            SEARCH,
+
+            /**
+             * Open a file and return its content
+             */
+            OPEN,
         }
 
         /**

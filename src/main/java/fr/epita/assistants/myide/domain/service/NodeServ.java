@@ -1,11 +1,10 @@
 package fr.epita.assistants.myide.domain.service;
 
-import ch.qos.logback.core.util.FileUtil;
 import fr.epita.assistants.myide.domain.entity.Node;
 import fr.epita.assistants.myide.domain.entity.Node_Entity;
 import org.apache.commons.io.FileUtils;
+import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,15 +14,19 @@ import java.util.List;
 
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FOLDER;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+@Service
 public class NodeServ implements NodeService{
 
     private int id;
+
     public NodeServ(int id)
     {
         this.id = id;
     }
+
+    public NodeServ()
+    {}
 
     public int getId()
     {

@@ -11,6 +11,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import fr.epita.assistants.myide.domain.entity.Aspect;
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Node;
@@ -20,6 +23,7 @@ import fr.epita.assistants.myide.domain.entity.Project_Entity;
 import fr.epita.assistants.myide.domain.entity.aspects.Any;
 import fr.epita.assistants.myide.domain.entity.aspects.Git;
 import fr.epita.assistants.myide.domain.entity.aspects.Maven;
+@Service
 public class ProjectServ implements ProjectService{
     public ProjectServ(){
         nodeservice = new NodeServ(1);
@@ -76,5 +80,16 @@ public class ProjectServ implements ProjectService{
         return nodeservice;
     }
 
+    public void setProject(Project_Entity project)
+    {
+        this.project = project;
+    }
+
+    public Project_Entity getProject()
+    {
+        return this.project;
+    }
+
     private NodeService nodeservice;
+    private Project_Entity project;
 }

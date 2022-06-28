@@ -43,7 +43,8 @@ public enum Mandatory {
             /**
              * Fulltext search over project files.
              */
-            SEARCH
+            SEARCH,
+            OPEN
         }
 
         /**

@@ -4,6 +4,7 @@ import fr.epita.assistants.utils.Given;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -11,6 +12,8 @@ import java.util.Set;
 
 @Given()
 public interface Project {
+
+    public HashMap<String, String> filesContents = new HashMap<String, String>();
 
     /**
      * @return The root node of the project.
