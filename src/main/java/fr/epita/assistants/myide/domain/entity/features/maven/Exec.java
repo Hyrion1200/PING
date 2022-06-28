@@ -4,6 +4,6 @@ import fr.epita.assistants.myide.domain.entity.Mandatory;
 
 public class Exec extends Maven_features {
     public Exec() {
-        super(Mandatory.Features.Maven.EXEC, "mvn exec:");
+        super(Mandatory.Features.Maven.EXEC, "exec");
     }
 }

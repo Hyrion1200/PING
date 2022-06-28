@@ -5,7 +5,8 @@ import fr.epita.assistants.myide.domain.service.ProjectServ;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -14,58 +15,38 @@ public class TestAny {
     private ProjectServ projectServ = new ProjectServ();
 
     @Test
-    @Order(1)
-    public void testCleanupRelativeNonExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(".", projectServ);
-        assertTrue(!testLauncher.test(Mandatory.Features.Any.CLEANUP, false));
+    public void testCleanupRelative() throws IOException {
+        String[] dirToCreate = {"ignored", "directory", "ignored/dir"};
+        String[] fileToCreate = {"salut", "a.txt", "c", "ignored/a", "ignored/dir/b", "directory/a.txt", "directory/salut", "directory/b"};
+        String[] toIgnore = {"salut", "a.txt", "ignored"};
+        AnyTestClass testLauncher = new AnyTestClass(".", projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore), "../PING.zip");
+        assertTrue(testLauncher.test(Mandatory.Features.Any.CLEANUP));
     }
 
     @Test
-    @Order(2)
-    public void testCleanupRelativeExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(".", projectServ);
-        assertTrue(testLauncher.test( Mandatory.Features.Any.CLEANUP, true));
+    public void testCleanupAbsoulte() throws IOException {
+        String[] dirToCreate = {"ignored", "directory", "ignored/dir"};
+        String[] fileToCreate = {"salut", "a.txt", "c", "ignored/a", "ignored/dir/b", "directory/a.txt", "directory/salut", "directory/b"};
+        String[] toIgnore = {"salut", "a.txt", "ignored"};
+        AnyTestClass testLauncher = new AnyTestClass(Paths.get(".").toAbsolutePath().toString(), projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore), "../PING.zip");
+        assertTrue(testLauncher.test(Mandatory.Features.Any.CLEANUP));
     }
 
     @Test
-    @Order(3)
-    public void testCleanupExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
-        assertTrue(testLauncher.test( Mandatory.Features.Any.CLEANUP, true));
+    public void testDistRelative() throws IOException {
+        String[] dirToCreate = {"ignored", "directory", "ignored/dir"};
+        String[] fileToCreate = {"salut", "a.txt", "c", "ignored/a", "ignored/dir/b", "directory/a.txt", "directory/salut", "directory/b"};
+        String[] toIgnore = {"salut", "a.txt", "ignored"};
+        AnyTestClass testLauncher = new AnyTestClass(".", projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore), "../PING.zip");
+        assertTrue(testLauncher.test(Mandatory.Features.Any.DIST));
     }
 
     @Test
-    @Order(4)
-    public void testCleanupNonExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
-        assertTrue(!testLauncher.test( Mandatory.Features.Any.CLEANUP, false));
-    }
-
-    @Test
-    @Order(5)
-    public void testDistExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
-        assertTrue(testLauncher.test( Mandatory.Features.Any.DIST, true));
-    }
-
-    @Test
-    @Order(6)
-    public void testDistNonExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(Path.of(".").toAbsolutePath().toString(), projectServ);
-        assertTrue(!testLauncher.test( Mandatory.Features.Any.DIST, false));
-    }
-
-    @Test
-    @Order(7)
-    public void testDistRelativePathNonExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(".", projectServ);
-        assertTrue(!testLauncher.test( Mandatory.Features.Any.DIST, false));
-    }
-
-    @Test
-    @Order(8)
-    public void testDistRelativePathExistingIgnore() throws IOException {
-        AnyTestClass testLauncher = new AnyTestClass(".", projectServ);
-        assertTrue(testLauncher.test( Mandatory.Features.Any.DIST, true));
+    public void testDistAbsolute() throws IOException {
+        String[] dirToCreate = {"ignored", "directory", "ignored/dir"};
+        String[] fileToCreate = {"salut", "a.txt", "c", "ignored/a", "ignored/dir/b", "directory/a.txt", "directory/salut", "directory/b"};
+        String[] toIgnore = {"salut", "a.txt", "ignored"};
+        AnyTestClass testLauncher = new AnyTestClass(Paths.get(".").toAbsolutePath().toString(), projectServ, List.of(dirToCreate), List.of(fileToCreate), List.of(toIgnore), "../PING.zip");
+        assertTrue(testLauncher.test(Mandatory.Features.Any.DIST));
     }
 }
