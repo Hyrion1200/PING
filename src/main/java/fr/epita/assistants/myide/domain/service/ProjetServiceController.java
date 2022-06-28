@@ -5,9 +5,7 @@ import java.util.List;
 
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
@@ -88,6 +86,17 @@ public class ProjetServiceController {
 
     // ide/spotify
 
-    // ide/settings
+    @PostMapping("ide/settings")
+    public ExecReport UpdateSettings(@RequestBody Settings settings){
+        if (settings == null){
+            return new ExecReport(Status.ERROR, "Error when parsing JSON");
+        }
+        try {
+            projectServ.getProject().setSettings(settings);
+        } catch (Exception e){
+            return new ExecReport(Status.ERROR, "Couldn't write to settings file");
+        }
+        return new ExecReport(Status.SUCCESS);
+    }
 
 }
