@@ -1,11 +1,7 @@
 package fr.epita.assistants.myide.domain.service;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.entity.Project_Entity;
-import fr.epita.assistants.myide.domain.entity.features.Features;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport.Status;
 
@@ -61,6 +56,7 @@ public class ProjetServiceController {
         Project project = projectServ.getProject();
         String params = path;
         // TODO
+        return new ExecReport(Status.ERROR, "Error"); 
 
     }
 
