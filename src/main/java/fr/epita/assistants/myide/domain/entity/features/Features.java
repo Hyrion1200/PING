@@ -17,6 +17,11 @@ public abstract class Features implements Feature {
         return type;
     }
 
+    public Type getType()
+    {
+        return this.type;
+    }
+
     public enum FeaturesTypes {
         ;
 
@@ -39,7 +44,12 @@ public abstract class Features implements Feature {
             /**
              * Fulltext search over project files.
              */
-            SEARCH
+            SEARCH,
+
+            /**
+             * Open a file and return its content
+             */
+            OPEN,
         }
 
         /**

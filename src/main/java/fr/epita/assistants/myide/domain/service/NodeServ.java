@@ -1,11 +1,10 @@
 package fr.epita.assistants.myide.domain.service;
 
-import ch.qos.logback.core.util.FileUtil;
 import fr.epita.assistants.myide.domain.entity.Node;
 import fr.epita.assistants.myide.domain.entity.Node_Entity;
 import org.apache.commons.io.FileUtils;
+import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,23 +14,35 @@ import java.util.List;
 
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FOLDER;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+@Service
 public class NodeServ implements NodeService{
 
+    private int id;
+
+    public NodeServ(int id)
+    {
+        this.id = id;
+    }
+
+    public NodeServ()
+    {}
+
+    public int getId()
+    {
+        return this.id;
+    }
 
     @Override
-    public Node update(Node node, int from, int to, byte[] insertedContent) {
+    public Node update(Node node, byte[] insertedContent) {
         if (node.getType() == FOLDER)
         {
             throw new IllegalArgumentException("Node is of type folder, file expected");
         }
         try {
-            String content = Files.readString(node.getPath());
             FileWriter fw = new FileWriter(node.getPath().toString());
-            String insert = new String(insertedContent);
-            String new_content = content.substring(0,from) + insert + content.substring(to);
-            fw.write(new_content);
+            String content = new String(insertedContent);
+            fw.write(content);
             fw.flush();
             fw.close();
         }

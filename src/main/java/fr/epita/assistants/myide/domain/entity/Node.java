@@ -3,10 +3,14 @@ package fr.epita.assistants.myide.domain.entity;
 import fr.epita.assistants.utils.Given;
 
 import javax.validation.constraints.NotNull;
+
+import org.springframework.stereotype.Service;
+
 import java.nio.file.Path;
 import java.util.List;
 
 @Given()
+@Service
 public interface Node {
 
     /**

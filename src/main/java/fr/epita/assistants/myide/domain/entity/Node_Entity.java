@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 public class Node_Entity implements Node {
   // Constructor
 public
@@ -35,10 +39,13 @@ public
     children.add(child);
   }
   // Fields
-private
-  Path path;
-private
-  Node.Type type;
-private
-  List<@NotNull Node> children;
+
+@Autowired
+private Path path;
+
+@Autowired
+private Node.Type type;
+
+@Autowired
+private List<@NotNull Node> children;
 }

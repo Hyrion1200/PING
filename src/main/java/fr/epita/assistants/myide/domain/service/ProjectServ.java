@@ -1,5 +1,8 @@
 package fr.epita.assistants.myide.domain.service;
 
+
+import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
+import static fr.epita.assistants.myide.domain.entity.Node.Types.FOLDER;
 import fr.epita.assistants.myide.domain.entity.*;
 import fr.epita.assistants.myide.domain.entity.aspects.Any;
 import fr.epita.assistants.myide.domain.entity.aspects.Aspects;
@@ -8,6 +11,7 @@ import fr.epita.assistants.myide.domain.entity.aspects.Maven;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -15,12 +19,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
-import static fr.epita.assistants.myide.domain.entity.Node.Types.FOLDER;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import fr.epita.assistants.myide.domain.entity.Aspect;
+import fr.epita.assistants.myide.domain.entity.Feature;
+import fr.epita.assistants.myide.domain.entity.Node;
+import fr.epita.assistants.myide.domain.entity.Node_Entity;
+import fr.epita.assistants.myide.domain.entity.Project;
+import fr.epita.assistants.myide.domain.entity.Project_Entity;
+import fr.epita.assistants.myide.domain.entity.aspects.Any;
+import fr.epita.assistants.myide.domain.entity.aspects.Git;
+import fr.epita.assistants.myide.domain.entity.aspects.Maven;
+@Service
 public class ProjectServ implements ProjectService{
     public ProjectServ(){
-        nodeservice = new NodeServ();
+        nodeservice = new NodeServ(1);
     }
 
     private Node get_nodes(File dir){
@@ -60,6 +74,7 @@ public class ProjectServ implements ProjectService{
     }
     @Override
     public Project load(Path root) {
+        System.out.println(root.toAbsolutePath());
         File rootDir = new File(root.toString());
         return new Project_Entity(get_nodes(new File(root.toString())),get_aspect(rootDir));
        }
@@ -75,5 +90,16 @@ public class ProjectServ implements ProjectService{
         return nodeservice;
     }
 
+    public void setProject(Project_Entity project)
+    {
+        this.project = project;
+    }
+
+    public Project_Entity getProject()
+    {
+        return this.project;
+    }
+
     private NodeService nodeservice;
+    private Project_Entity project;
 }
