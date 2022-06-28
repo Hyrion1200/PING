@@ -17,8 +17,6 @@ public interface NodeService {
      * @throws Exception upon update failure.
      */
     Node update(final Node node,
-                final int from,
-                final int to,
                 final byte[] insertedContent);
 
     /**

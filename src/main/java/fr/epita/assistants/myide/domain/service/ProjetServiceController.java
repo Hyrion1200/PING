@@ -17,6 +17,7 @@ import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.entity.Project_Entity;
 import fr.epita.assistants.myide.domain.entity.features.Features;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
+import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport.Status;
 
 @RestController
 public class ProjetServiceController {
@@ -37,7 +38,7 @@ public class ProjetServiceController {
     }
 
     @GetMapping("/ide/files/open")
-    public String open(@RequestParam(value="path", defaultValue = "./temp") String path)
+    public ExecReport open(@RequestParam(value="path", defaultValue = "./tmp") String path)
     {
         Project project = projectServ.getProject();
         String params = path;
@@ -48,14 +49,19 @@ public class ProjetServiceController {
             if (feature.type().toString() == "OPEN")
             {
                 ExecReport report = (ExecReport) feature.execute(project, params);
-                if (report.isSuccess())
-                {
-                    return Project.filesContents.get(params);
-                }
-                return report.getMessage();
+                return report;
             }
         }
-        return "error";
+        return new ExecReport(Status.ERROR, "Error");
+    }
+
+    @GetMapping("ide/files/save")
+    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path)
+    {
+        Project project = projectServ.getProject();
+        String params = path;
+        // TODO
+
     }
 
     //TODO
