@@ -15,10 +15,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
@@ -123,6 +120,42 @@ public class ProjectServ implements ProjectService{
     public Project_Entity getProject()
     {
         return this.project;
+    }
+
+    public Node getNode(Path path){
+        Node node = project.getRootNode();
+
+        boolean found = false;
+        Iterator<Path> elms = path.iterator();
+        Iterator<Path> rootPath = node.getPath().iterator();
+        while(elms.hasNext() && rootPath.hasNext()){
+            if (!elms.next().equals(rootPath.next()))
+                return null;
+        }
+
+        if (!elms.hasNext())
+            return node;
+
+        while(elms.hasNext()){
+            Path cur = elms.next();
+            for (Node child : node.getChildren()){
+                if (child.getPath().getFileName().equals(cur)){
+                    if (elms.hasNext()){
+                        found = true;
+                        node = child;
+                        break;
+                    }
+                    else {
+                        return child;
+                    }
+                }
+            }
+            if (!found)
+                return null;
+            found = false;
+        }
+
+        return null;
     }
 
     private NodeService nodeservice;

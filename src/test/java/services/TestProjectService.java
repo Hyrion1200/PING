@@ -1,9 +1,6 @@
 package services;
 
-import fr.epita.assistants.myide.domain.entity.Aspect;
-import fr.epita.assistants.myide.domain.entity.Node;
-import fr.epita.assistants.myide.domain.entity.Node_Entity;
-import fr.epita.assistants.myide.domain.entity.Project;
+import fr.epita.assistants.myide.domain.entity.*;
 import fr.epita.assistants.myide.domain.entity.aspects.Any;
 import fr.epita.assistants.myide.domain.entity.aspects.Aspects;
 import fr.epita.assistants.myide.domain.entity.aspects.Git;
@@ -16,8 +13,10 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Set;
 
 public class TestProjectService {
@@ -103,6 +102,16 @@ public class TestProjectService {
             throw new RuntimeException("Failed to finalize test");
         }
     }
+    @Test
+    public void TestGetNode(){
+        ProjectServ projectServ = new ProjectServ();
+
+        Project_Entity project = (Project_Entity) projectServ.load(Paths.get("/home/hugo/test"));
+        projectServ.setProject(project);
+        Node node = projectServ.getNode(Paths.get("/home/hugo/test/test.py"));
+        System.out.println(node.getPath());
+    }
+
     @Test
     public void TestAspect(){
         testMaven();
