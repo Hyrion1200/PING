@@ -1,12 +1,9 @@
 package fr.epita.assistants.myide.domain.service;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
+import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.entity.Project_Entity;
-import fr.epita.assistants.myide.domain.entity.features.Features;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 
 @RestController
@@ -64,10 +60,17 @@ public class ProjetServiceController {
 
     // ide/files/getSyntaxHighlighting
 
-    // ide/files/execJs
-    
-    // ide/files/execPy
+    // ide/files/exec
 
+    @GetMapping("/ide/files/exec")
+    public String exec(@RequestParam(value="path", defaultValue = "./temp") String path){
+        System.out.println("here");
+        Project_Entity project = projectServ.getProject();
+        ExecReport report = (ExecReport) projectServ.execute(project, Mandatory.Features.Any.EXEC,path);
+        if (report.isSuccess())
+            return project.ExecResult;
+        return report.getMessage();
+    }
     // ide/git/add
 
     // ide/git/commit

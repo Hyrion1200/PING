@@ -4,6 +4,7 @@ import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FOLDER;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class ProjectServ implements ProjectService{
     }
     @Override
     public Project load(Path root) {
-        System.out.println(root.toString());
+        System.out.println(root.toAbsolutePath());
         File rootDir = new File(root.toString());
         return new Project_Entity(get_nodes(new File(root.toString())),get_aspect(rootDir));
        }
