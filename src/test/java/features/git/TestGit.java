@@ -79,7 +79,7 @@ public class TestGit {
 
     @Test
     // Basic commit where every arg is build onto a single string
-    public void testGitCommitMany() { assertTrue(testGitCommit("/home/nicolas/s6/test_ping/", "commit of ", "salut2", "salut3", "salut4"));}
+    public void testGitCommitMany() { assertTrue(testGitCommit("/home/nicolas/s6/test_ping/", "commit, salut2, salut3, salut4"));}
 
     @Test
     // basic push should work if valid credentials are given
@@ -96,6 +96,10 @@ public class TestGit {
     public void testGitAddNotExist() { assertFalse(testGitAdd("/home/nicolas/s6/test_ping/", "does_not_exists"));}
 
     @Test
-    // Empty commit message, should not succeed
-    public void testGitCommitNull() { assertFalse(testGitCommit("/home/nicolas/s6/test_ping/"));}
+    // No commit message, should succeed
+    public void testGitCommitNull() { assertTrue(testGitCommit("/home/nicolas/s6/test_ping/"));}
+
+    @Test
+    // Empty commit message, should succeed
+    public void testGitCommitEmpty() { assertTrue(testGitCommit("/home/nicolas/s6/test_ping/"));}
 }
