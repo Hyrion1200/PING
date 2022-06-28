@@ -21,8 +21,11 @@ class Pull extends Git_features {
         try {
             PullCommand pullCommand = git.pull();
             pullCommand.setFastForward(MergeCommand.FastForwardMode.FF);
-            git.pull().call();
-            return new ExecReport(ExecReport.Status.SUCCESS, "Git pull successful");
+            var pull = pullCommand.call();
+            if (!pull.isSuccessful())
+                return new ExecReport(ExecReport.Status.ERROR, String.format("Cannot pull from git '%s'", git.getRepository().toString()));
+            String res = pull.getMergeResult().getMergeStatus().toString();
+            return new ExecReport(ExecReport.Status.SUCCESS, res, "Git pull successful");
 
         } catch (GitAPIException e) {
             e.printStackTrace();

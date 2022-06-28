@@ -20,13 +20,13 @@ class Push extends Git_features {
         Git git = getGit(project);
         try {
             PushCommand pushCommand = git.push();
-            // Check later if required or not
-            // pushCommand.add("main");
             pushCommand.setRemote("origin");
             // if credential:
             // pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider("username", "password"));
             pushCommand.call();
-            return new ExecReport(ExecReport.Status.SUCCESS, "Git push successful");
+            String res = "";
+            res += pushCommand.getRemote();
+            return new ExecReport(ExecReport.Status.SUCCESS, String.format("Pushed to %s.", res), "Git push successful");
 
         } catch (GitAPIException e) {
             e.printStackTrace();
