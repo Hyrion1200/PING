@@ -3,23 +3,20 @@ package fr.epita.assistants.myide.domain.service;
 
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FILE;
 import static fr.epita.assistants.myide.domain.entity.Node.Types.FOLDER;
-import fr.epita.assistants.myide.domain.entity.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import fr.epita.assistants.myide.domain.entity.aspects.Any;
-import fr.epita.assistants.myide.domain.entity.aspects.Aspects;
 import fr.epita.assistants.myide.domain.entity.aspects.Git;
 import fr.epita.assistants.myide.domain.entity.aspects.Maven;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.epita.assistants.myide.domain.entity.Aspect;
@@ -28,9 +25,6 @@ import fr.epita.assistants.myide.domain.entity.Node;
 import fr.epita.assistants.myide.domain.entity.Node_Entity;
 import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.entity.Project_Entity;
-import fr.epita.assistants.myide.domain.entity.aspects.Any;
-import fr.epita.assistants.myide.domain.entity.aspects.Git;
-import fr.epita.assistants.myide.domain.entity.aspects.Maven;
 @Service
 public class ProjectServ implements ProjectService{
     public ProjectServ(){
@@ -74,9 +68,37 @@ public class ProjectServ implements ProjectService{
     }
     @Override
     public Project load(Path root) {
-        System.out.println(root.toAbsolutePath());
         File rootDir = new File(root.toString());
-        return new Project_Entity(get_nodes(new File(root.toString())),get_aspect(rootDir));
+        Node rootNode = get_nodes(new File(root.toString()));
+        Settings settings = null;
+        for (Node node : rootNode.getChildren()){
+            if (node.getPath().getFileName().toString().equals(".pingsettings")){
+                try {
+                    ObjectMapper mapper = new ObjectMapper();
+                    settings = mapper.readValue(node.getPath().toFile(), Settings.class);
+                    System.out.println(settings);
+                } catch (Exception e){
+                    e.printStackTrace();
+                    settings = null;
+                }
+            }
+        }
+        if (settings == null){
+            settings = new Settings();
+            settings.Theme = "DARK";
+            settings.Langue = "FR";
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            try {
+                FileWriter fw = new FileWriter(root + "/.pingsettings");
+                String json = ow.writeValueAsString(settings);
+                fw.write(json);
+                fw.close();
+            } catch (Exception e){
+                e.printStackTrace();
+                settings = null;
+            }
+        }
+        return new Project_Entity(rootNode,get_aspect(rootDir),settings);
        }
     @Override
     public Feature.ExecutionReport execute(Project project, Feature.Type featureType, Object... params) {
@@ -98,6 +120,42 @@ public class ProjectServ implements ProjectService{
     public Project_Entity getProject()
     {
         return this.project;
+    }
+
+    public Node getNode(Path path){
+        Node node = project.getRootNode();
+
+        boolean found = false;
+        Iterator<Path> elms = path.iterator();
+        Iterator<Path> rootPath = node.getPath().iterator();
+        while(elms.hasNext() && rootPath.hasNext()){
+            if (!elms.next().equals(rootPath.next()))
+                return null;
+        }
+
+        if (!elms.hasNext())
+            return node;
+
+        while(elms.hasNext()){
+            Path cur = elms.next();
+            for (Node child : node.getChildren()){
+                if (child.getPath().getFileName().equals(cur)){
+                    if (elms.hasNext()){
+                        found = true;
+                        node = child;
+                        break;
+                    }
+                    else {
+                        return child;
+                    }
+                }
+            }
+            if (!found)
+                return null;
+            found = false;
+        }
+
+        return null;
     }
 
     private NodeService nodeservice;
