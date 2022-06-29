@@ -61,6 +61,34 @@ public class ProjetServiceController {
 
     }
 
+    @GetMapping("/ide/git/add")
+    public ExecReport add(@RequestParam(value="path", defaultValue = "./temp") String path)
+    {
+        Project_Entity project = projectServ.getProject();
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.ADD, path);
+    }
+
+    @GetMapping("/ide/git/commit")
+    public ExecReport commit(@RequestParam(value="message", defaultValue = "") String message)
+    {
+        Project_Entity project = projectServ.getProject();
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.COMMIT, message);
+    }
+
+    @GetMapping("/ide/git/pull")
+    public ExecReport pull()
+    {
+        Project_Entity project = projectServ.getProject();
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL);
+    }
+
+    @GetMapping("/ide/git/push")
+    public ExecReport push()
+    {
+        Project_Entity project = projectServ.getProject();
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PUSH);
+    }
+
     //TODO
 
     // ide/files/save

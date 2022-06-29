@@ -6,6 +6,12 @@ import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.PersonIdent;
+
+import java.sql.DatabaseMetaData;
+import java.sql.Time;
+import java.util.Date;
+import java.util.TimeZone;
 
 public
 class Commit extends Git_features {
@@ -23,8 +29,15 @@ class Commit extends Git_features {
         try {
             CommitCommand commitCommand = git.commit();
             commitCommand.setMessage(message);
-            commitCommand.call();
-            return new ExecReport(ExecReport.Status.SUCCESS, "Git commit successful");
+            var commit = commitCommand.call();
+
+            PersonIdent commiterIdent = commit.getCommitterIdent();
+            var msg = commit.getFullMessage();
+            var nb = commit.getId().getName();
+            String res = "[commit " + nb + "] - " + msg + "\n";
+            res += commiterIdent.getName() + " " + commiterIdent.getEmailAddress() + " " + commiterIdent.getWhen();
+
+            return new ExecReport(ExecReport.Status.SUCCESS, res, "Git commit successful");
 
         } catch (GitAPIException e) {
             e.printStackTrace();

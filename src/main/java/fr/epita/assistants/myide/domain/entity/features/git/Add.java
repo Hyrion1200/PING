@@ -25,10 +25,12 @@ public class Add extends Git_features {
 
         Git git = getGit(project);
         try {
+            StringBuilder res = new StringBuilder("File added:\n");
             for (String arg : args.toString().split(" ")) {
                 git.add().addFilepattern(arg).call();
+                res.append(arg).append("\n");
             }
-            return new ExecReport(ExecReport.Status.SUCCESS, "git add successful");
+            return new ExecReport(ExecReport.Status.SUCCESS, res.toString(), "git add successful");
         } catch (GitAPIException e) {
             e.printStackTrace();
         }
