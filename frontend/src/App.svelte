@@ -4,7 +4,6 @@
 	import Path from "./components/Path.svelte";
 	import Spotify from "./components/Spotify.svelte";
 	import Tree from "./components/Tree.svelte";
-	import Git from "./components/Git.svelte";
 </script>
 
 <main>
@@ -14,7 +13,6 @@
 		<Header />
 		<Path />
 		<Editor />
-		<Git />
 	</div>
 
 	<Spotify />

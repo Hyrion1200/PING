@@ -78,6 +78,7 @@ public class ProjetServiceController {
     @GetMapping("/ide/git/pull")
     public ExecReport pull()
     {
+        System.out.println("pull");
         Project_Entity project = projectServ.getProject();
         return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL);
     }

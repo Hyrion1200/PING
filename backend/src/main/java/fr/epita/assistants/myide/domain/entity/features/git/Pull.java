@@ -16,6 +16,7 @@ class Pull extends Git_features {
 
     @Override public ExecutionReport execute(Project project, Object... params) {
         // DONE
+        System.out.println("Pull");
 
         Git git = getGit(project);
         try {
