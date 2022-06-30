@@ -21,15 +21,16 @@ public class Open extends Features {
     @Override
     public ExecutionReport execute(Project project, Object... params) {
         String path = params[0].toString();
+        String content = "";
         try {
             System.out.println(path);
             Path file = Paths.get(path);
-            String content = Files.readString(file);
+            content = Files.readString(file);
             Project.filesContents.put(path, content);
         } catch (IOException e) {
             return new ExecReport(ExecReport.Status.ERROR, "Error reading the file " + path);
         }
-        return new ExecReport(ExecReport.Status.SUCCESS);
+        return new ExecReport(ExecReport.Status.SUCCESS, content, "Success opening file");
     }
     
 }
