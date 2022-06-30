@@ -26,6 +26,7 @@ public class ProjetServiceController {
     @GetMapping("/ide/load")
     public Project load(@RequestParam(value="path", defaultValue = ".") String path)
     {
+        System.out.println("Load");
         Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
         projectServ.setProject(project);
         return projectServ.getProject();
@@ -69,6 +70,7 @@ public class ProjetServiceController {
     @GetMapping("/ide/git/commit")
     public ExecReport commit(@RequestParam(value="message", defaultValue = "") String message)
     {
+        System.out.println("commit: " + message);
         Project_Entity project = projectServ.getProject();
         return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.COMMIT, message);
     }
