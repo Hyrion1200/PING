@@ -1,14 +1,29 @@
 <script>
+    import Modal from './Modal.svelte';
+
+    let isOpenModal = false;
+    let text = "default";
+
     async function handlePull() {
         let url = "http://localhost:8080/ide/git/pull";
-        const resp = await fetch(url, { mode: 'no-cors'})
-        console.log(resp);
+        const resp = await fetch(url).then(function(response){ return response.json();}).then(
+        function(data)
+        {
+            if (data.status === 'ERROR')
+            {
+                console.log("Error")
+                isOpenModal = true;
+                text = data.message;
+            }
+            document.getElementById("editor").textContent = data.content;
+        });
     }
 </script>
 
 <button id="pull" on:click={handlePull}>
     Git pull 
 </button>
+<Modal isOpenModal={isOpenModal} text={text} />
 
 <style>
     button {

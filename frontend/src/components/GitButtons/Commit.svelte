@@ -1,7 +1,12 @@
 <script>
+    import Modal from './Modal.svelte';
+
+    let isOpenModal = false;
+    let text = "default";
     var commitOpen = false;
 
     function handleCommit() {
+        isOpenModal = false;
         if (commitOpen) {
             return;
         }
@@ -23,11 +28,20 @@
                 var msg = commitInput.value;
                 commitInput.parentElement.removeChild(commitInput);
                 abortCommit.parentElement.removeChild(abortCommit);
-                console.log(msg);
 
                 let url = "http://localhost:8080/ide/git/commit?message=" + msg;
-                const resp = await fetch(url,{ mode: 'no-cors'});
-                console.log(resp);
+
+                const resp = await fetch(url).then(function(response){ return response.json();}).then(
+                function(data)
+                {
+                    if (data.status === 'ERROR')
+                    {
+                        console.log("Error")
+                        isOpenModal = true;
+                        text = data.message;
+                    }
+                    document.getElementById("editor").textContent = data.content;
+                });
                 commitOpen = false;
             }
         });
@@ -62,6 +76,8 @@
 <button id="commit" on:click={handleCommit}>
     Git commit 
 </button>
+
+<Modal isOpenModal={isOpenModal} text={text} />
 
 <style>
     button {
