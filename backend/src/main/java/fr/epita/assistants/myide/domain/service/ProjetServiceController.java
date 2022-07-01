@@ -98,13 +98,11 @@ public class ProjetServiceController {
     // ide/spotify
 
     @GetMapping("/ide/files/exec")
-    public String exec(@RequestParam(value="path", defaultValue = "./temp") String path){
+    public ExecReport exec(@RequestParam(value="path", defaultValue = "./temp") String path){
         System.out.println("here");
         Project_Entity project = projectServ.getProject();
         ExecReport report = (ExecReport) projectServ.execute(project, Mandatory.Features.Any.EXEC,path);
-        if (report.isSuccess())
-            return project.ExecResult;
-        return report.getMessage();
+        return report;
     }
 
     @PostMapping("ide/settings")

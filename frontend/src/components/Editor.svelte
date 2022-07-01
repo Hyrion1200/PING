@@ -1,5 +1,6 @@
 <script>
-    import { afterUpdate } from "svelte";
+    // @ts-ignore
+import { afterUpdate } from "svelte";
 
     let editorContent = "";
     let lines = "";
@@ -40,7 +41,7 @@
 <style>
     div {
         display: flex;
-        height: 100%;
+        height: 70%;
     }
 
     textarea {

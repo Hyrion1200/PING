@@ -61,8 +61,6 @@ public class Exec extends Features {
         } catch (IOException e){
             return new ExecReport(ExecReport.Status.ERROR, "error when building process");
         }
-        Project_Entity proj = (Project_Entity) project;
-        proj.ExecResult = result;
-        return new ExecReport(ExecReport.Status.SUCCESS, "success");
+        return new ExecReport(ExecReport.Status.SUCCESS, result ,"success");
     }
 }
