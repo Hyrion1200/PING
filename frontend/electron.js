@@ -8,7 +8,7 @@ function createWindow () {
     webPreferences: { }
   })
 
-  win.loadFile('index.html')
+  win.loadFile('dist/index.html')
 }
 
 app.whenReady().then(() => {
