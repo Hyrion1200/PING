@@ -7,6 +7,7 @@
         { name: "main.c", on: true },
         { name: "main.h", on: false },
     ];
+
 </script>
 
 <div>

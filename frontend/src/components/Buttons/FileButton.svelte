@@ -1,10 +1,21 @@
 <script>
     import Open from "../FilesButtons/Open.svelte";
+    async function run(){
+    //get the current file path
+    var path = "/home/hugo/test/test.py";
+
+    var Content_header = "Executed file at " + path + ":<br/>";
+
+    var output_console = document.getElementById("Output");
+    fetch("http://localhost:8080/ide/files/exec?path=" + path)
+    .then(response => response.json())
+    .then(data => output_console.innerHTML = Content_header + data.content)
+    }
 </script>
 <div id="files">
     <Open />
     <button>Close</button>
-    <button id="run"> Run </button>
+    <button id="run" on:click={run}> Run </button>
 </div>
 
 <style>
@@ -23,6 +34,9 @@
 
     #run {
         background-color: #0cc182;
+    }
+
+    #run:hover {
         color: #424949;
     }
 
