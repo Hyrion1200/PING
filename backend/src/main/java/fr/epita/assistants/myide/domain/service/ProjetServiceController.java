@@ -6,6 +6,7 @@ import java.util.List;
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
@@ -14,6 +15,7 @@ import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport.Status;
 
 @RestController
+@CrossOrigin
 public class ProjetServiceController {
     @Autowired
     private ProjectServ projectServ;
@@ -44,6 +46,7 @@ public class ProjetServiceController {
             if (feature.type().toString() == "OPEN")
             {
                 ExecReport report = (ExecReport) feature.execute(project, params);
+                System.out.println(report.getContent());
                 return report;
             }
         }

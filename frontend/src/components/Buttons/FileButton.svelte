@@ -1,5 +1,8 @@
+<script>
+    import Open from "../FilesButtons/Open.svelte";
+</script>
 <div id="files">
-    <button>Open</button>
+    <Open />
     <button>Close</button>
     <button id="run"> Run </button>
 </div>
