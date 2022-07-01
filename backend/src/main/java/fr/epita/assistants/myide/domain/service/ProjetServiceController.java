@@ -6,6 +6,7 @@ import java.util.List;
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import fr.epita.assistants.myide.domain.entity.Feature;
 import fr.epita.assistants.myide.domain.entity.Project;
@@ -14,6 +15,7 @@ import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport.Status;
 
 @RestController
+@CrossOrigin
 public class ProjetServiceController {
     @Autowired
     private ProjectServ projectServ;
@@ -26,6 +28,7 @@ public class ProjetServiceController {
     @GetMapping("/ide/load")
     public Project load(@RequestParam(value="path", defaultValue = ".") String path)
     {
+        System.out.println("Load");
         Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
         projectServ.setProject(project);
         return projectServ.getProject();
@@ -43,6 +46,7 @@ public class ProjetServiceController {
             if (feature.type().toString() == "OPEN")
             {
                 ExecReport report = (ExecReport) feature.execute(project, params);
+                System.out.println(report.getContent());
                 return report;
             }
         }
@@ -69,6 +73,7 @@ public class ProjetServiceController {
     @GetMapping("/ide/git/commit")
     public ExecReport commit(@RequestParam(value="message", defaultValue = "") String message)
     {
+        System.out.println("commit: " + message);
         Project_Entity project = projectServ.getProject();
         return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.COMMIT, message);
     }
@@ -76,6 +81,7 @@ public class ProjetServiceController {
     @GetMapping("/ide/git/pull")
     public ExecReport pull()
     {
+        System.out.println("pull");
         Project_Entity project = projectServ.getProject();
         return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL);
     }
