@@ -93,13 +93,9 @@ public class ProjetServiceController {
         return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PUSH);
     }
 
-    //TODO
-
-    // ide/files/save
-
+    // TODO
     // ide/files/getSyntaxHighlighting
-
-    // ide/files/exec
+    // ide/spotify
 
     @GetMapping("/ide/files/exec")
     public String exec(@RequestParam(value="path", defaultValue = "./temp") String path){
@@ -110,15 +106,6 @@ public class ProjetServiceController {
             return project.ExecResult;
         return report.getMessage();
     }
-    // ide/git/add
-
-    // ide/git/commit
-
-    // ide/git/pull
-
-    // ide/git/push
-
-    // ide/spotify
 
     @PostMapping("ide/settings")
     public ExecReport UpdateSettings(@RequestBody Settings settings){
