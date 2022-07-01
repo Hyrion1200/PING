@@ -28,12 +28,16 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+        "packagerConfig": {
+            "executableName": "frontend"
+        },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
+          "platforms": [ "linux" ],
           "config": {
-            "name": "frontend"
+            "authors": "The Holidays tream",
+            "exe": "frontend"
           }
         },
         {
