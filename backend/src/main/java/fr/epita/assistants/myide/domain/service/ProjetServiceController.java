@@ -97,7 +97,6 @@ public class ProjetServiceController {
     // ide/files/getSyntaxHighlighting
     // ide/spotify
 
-    @CrossOrigin
     @GetMapping("/ide/files/exec")
     public String exec(@RequestParam(value="path", defaultValue = "./temp") String path){
         System.out.println("here");
