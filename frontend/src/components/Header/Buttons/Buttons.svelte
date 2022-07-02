@@ -1,18 +1,39 @@
 <script>
     import Git from "./Git/Git.svelte";
+    import Files from "./Files/Files.svelte";
 
     let git = false;
+    let files = false;
+    let maven = false;
+
+    function displayGit() {
+        git = !git;
+        files = false;
+        maven = false;
+    }
+
+    function displayFiles() {
+        files = !files;
+        git = false;
+        maven = false;
+    }
+
+    function displayMaven() {
+        maven = !maven;
+        files = false;
+        git = false;
+    }
 </script>
 
 <div id="main">
-    <button>
+    <button on:click={displayFiles}>
         <img src="../../../../images/directory.png" alt="directory" />
     </button>
-    <button><img src="../../../../images/maven.png" alt="maven" /></button>
-    <button
-        on:mousemove={() => {
-            git = true;
-        }}><img src="../../../../images/git.png" alt="git" /></button
+    <button on:click={displayMaven}
+        ><img src="../../../../images/maven.png" alt="maven" /></button
+    >
+    <button on:click={displayGit}
+        ><img src="../../../../images/git.png" alt="git" /></button
     >
     <button id="run">
         <img src="../../../../images/triangle.png" alt="triangle" />
@@ -21,6 +42,10 @@
 
 {#if git}
     <Git />
+{/if}
+
+{#if files}
+    <Files />
 {/if}
 
 <style>

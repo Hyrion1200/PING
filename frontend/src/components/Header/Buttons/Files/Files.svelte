@@ -1,15 +1,9 @@
 <script>
-    import Add from "./Add.svelte";
-    import Commit from "./Commit.svelte";
-    import Pull from "./Pull.svelte";
-    import Push from "./Pull.svelte";
+    import Open from "./Open.svelte";
 </script>
 
-<div id="git">
-    <Add />
-    <Commit />
-    <Pull />
-    <Push />
+<div>
+    <Open />
 </div>
 
 <style>
