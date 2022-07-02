@@ -1,19 +1,20 @@
 <script>
-    import Editor from "../Editor.svelte";
     async function handleOpen() {
         var path = "README.md";
         let url = "http://localhost:8080/ide/files/open?path=" + path;
-        console.log(url)
-        const resp = await fetch(url).then(function(response){ return response.json();}).then(
-            function(data)
-            {
-                console.log(data.content)
+        console.log(url);
+        const resp = await fetch(url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data.content);
                 document.getElementById("editor").textContent = data.content;
             });
     }
 </script>
 
-<button id="open" on:click={handleOpen} >Open</button>
+<button id="open" on:click={handleOpen}>Open</button>
 
 <style>
     button {
