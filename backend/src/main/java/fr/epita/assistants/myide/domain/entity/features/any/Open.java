@@ -26,11 +26,11 @@ public class Open extends Features {
             System.out.println(path);
             Path file = Paths.get(path);
             content = Files.readString(file);
-            Project.filesContents.put(path, content);
+            System.out.println(content);
         } catch (IOException e) {
             return new ExecReport(ExecReport.Status.ERROR, "Error reading the file " + path);
         }
-        return new ExecReport(ExecReport.Status.SUCCESS, content, "Success opening file");
+        return new ExecReport(ExecReport.Status.SUCCESS, content, "Success reading file: " + path);
     }
     
 }
