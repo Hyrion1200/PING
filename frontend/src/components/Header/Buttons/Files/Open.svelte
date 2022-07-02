@@ -21,10 +21,8 @@
         cursor: pointer;
         border: none;
         background-color: #2d2d2d;
-        border-radius: 2px;
         color: white;
         padding: 10px;
-        border-bottom: 1px solid #2d2d2d;
     }
 
     button:hover {

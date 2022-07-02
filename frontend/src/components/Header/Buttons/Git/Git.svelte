@@ -1,6 +1,7 @@
 <script>
     import Add from "./Add.svelte";
     import Commit from "./Commit.svelte";
+    import Modal from "./Modal.svelte";
     import Pull from "./Pull.svelte";
     import Push from "./Pull.svelte";
 </script>
@@ -18,7 +19,7 @@
         flex-direction: column;
         position: absolute;
         right: 14.3%;
-        top: 49px;
+        top: 48.5px;
         width: 180px;
         margin: 0;
         padding: 0;
