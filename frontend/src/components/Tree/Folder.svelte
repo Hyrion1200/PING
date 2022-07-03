@@ -10,6 +10,7 @@
     }
 </script>
 
+<!-- TODO crop text depending on size -->
 <span class:expanded on:click={toggle}>{name}</span>
 
 {#if expanded}
