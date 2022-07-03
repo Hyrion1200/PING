@@ -1,9 +1,11 @@
 <script>
     import Open from "./Open.svelte";
+    import Save from "./Save.svelte"
 </script>
 
 <div>
     <Open />
+    <Save />
 </div>
 
 <style>

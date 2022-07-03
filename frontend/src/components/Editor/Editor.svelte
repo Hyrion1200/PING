@@ -10,6 +10,7 @@
 
     $: {
         lines = "";
+        content;
         for (let i = 1; i < content.split("\n").length + 1; i++)
             lines += i + "\n";
     }
@@ -19,6 +20,7 @@
     });
 
     function handleTab(event) {
+        editorContent.update(value => value = event.currentTarget.value);
         if (event.key !== "Tab") return;
 
         event.preventDefault();
