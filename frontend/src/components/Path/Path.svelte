@@ -2,6 +2,7 @@
 
 <style>
     p {
+        height: 20px;
         font-size: 12px;
         padding: 4px;
         margin: 0;

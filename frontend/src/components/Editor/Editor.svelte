@@ -1,8 +1,7 @@
 <script>
     // @ts-ignore
-import { afterUpdate } from "svelte";
-
-    let editorContent = "";
+    import { editorStore, editorAdd } from "./EditorStore";
+    import { afterUpdate } from "svelte";
     let lines = "";
 
     let numberArea;
@@ -10,7 +9,7 @@ import { afterUpdate } from "svelte";
 
     $: {
         lines = "";
-        for (let i = 1; i < editorContent.split("\n").length + 1; i++)
+        for (let i = 1; i < $editorStore.split("\n").length + 1; i++)
             lines += i + "\n";
     }
 
@@ -23,7 +22,7 @@ import { afterUpdate } from "svelte";
 
         event.preventDefault();
 
-        editorContent += "    ";
+        editorAdd("    ");
     }
 </script>
 
@@ -32,7 +31,7 @@ import { afterUpdate } from "svelte";
     <textarea
         id="editor"
         bind:this={editorArea}
-        bind:value={editorContent}
+        bind:value={$editorStore}
         on:keydown={handleTab}
         spellcheck="false"
     />
