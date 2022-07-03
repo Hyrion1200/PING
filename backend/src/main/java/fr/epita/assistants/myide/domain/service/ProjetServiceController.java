@@ -26,12 +26,12 @@ public class ProjetServiceController {
     }
 
     @GetMapping("/ide/load")
-    public Project load(@RequestParam(value="path", defaultValue = ".") String path)
+    public ExecReport load(@RequestParam(value="path", defaultValue = ".") String path)
     {
         System.out.println("Load");
         Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
         projectServ.setProject(project);
-        return projectServ.getProject();
+        return new ExecReport(Status.SUCCESS, projectServ.getProject());
     }
 
     @GetMapping("/ide/files/open")
@@ -116,6 +116,19 @@ public class ProjetServiceController {
             return new ExecReport(Status.ERROR, "Couldn't write to settings file");
         }
         return new ExecReport(Status.SUCCESS);
+    }
+
+    public ExecReport getSettings(){
+        return new ExecReport(Status.SUCCESS, projectServ.getProject().getSettings());
+    }
+
+    @GetMapping("ide/setting")
+    public ExecReport getSetting(@RequestParam(value="name", defaultValue = "") String name){
+        Object setting = projectServ.getProject().getSettings().getSetting(name);
+        if (setting == null){
+            return new ExecReport(Status.ERROR, "Setting not found");
+        }
+        return new ExecReport(Status.SUCCESS, setting);
     }
 
 }
