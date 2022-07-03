@@ -3,16 +3,23 @@
     import Folder from "./Folder.svelte";
 
     function parseNodes(root) {
-        // TODO crop names on relative path
         let name = root.path;
+        if (name.endsWith("/")) {
+            console.log(name);
+            name = name.substring(0, name.length - 1);
+            console.log(name);
+        }
+        name = name.split("/").pop();
+
         let children = undefined;
         if (root.type === "FOLDER") {
             children = root.children.map((child) => {
                 return parseNodes(child);
             });
+            return { name, children };
         }
 
-        return { name, children };
+        return { name };
     }
 
     $: root =
@@ -30,6 +37,7 @@
         }
     }
 
+    // FIXME REMOVE ME
     try {
         load();
     } catch (e) {
@@ -45,7 +53,7 @@
         </div>
     {:else}
         <!-- TODO enable showing or not showing hidden files.-->
-        <Folder name="Home" children={root.children} expanded={true} />
+        <Folder name={root.name} children={root.children} expanded={true} />
     {/if}
 </div>
 
