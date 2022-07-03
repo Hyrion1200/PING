@@ -9,6 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "electron-forge start",
+    "electron": "npm run build && electron .",
     "package": "electron-forge package",
     "make": "npm run build && electron-forge make"
   },
@@ -24,17 +25,17 @@
     "vite": "^2.9.9"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "get-port": "^6.1.2"
   },
   "config": {
     "forge": {
-        "packagerConfig": {
-            "executableName": "frontend"
-        },
+      "packagerConfig": {
+        "executableName": "frontend"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
-          "platforms": [ "linux" ],
           "config": {
             "authors": "The Holidays tream",
             "exe": "frontend"
