@@ -1,7 +1,8 @@
 <script>
     import { afterUpdate } from "svelte";
-
-    let editorContent = "";
+    import { editorContent } from "./EditorStores.js"
+    let content = ""
+    editorContent.subscribe(value => { content = value });
     let lines = "";
 
     let numberArea;
@@ -9,7 +10,7 @@
 
     $: {
         lines = "";
-        for (let i = 1; i < editorContent.split("\n").length + 1; i++)
+        for (let i = 1; i < content.split("\n").length + 1; i++)
             lines += i + "\n";
     }
 
@@ -22,8 +23,9 @@
 
         event.preventDefault();
 
-        editorContent += "    ";
+        content += "    ";
     }
+
 </script>
 
 <div>
@@ -31,7 +33,7 @@
     <textarea
         id="editor"
         bind:this={editorArea}
-        bind:value={editorContent}
+        bind:value={content}
         on:keydown={handleTab}
         spellcheck="false"
     />
