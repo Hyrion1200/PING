@@ -15,4 +15,13 @@ public class Settings {
                 "Language: %s," +
                 "KeyBindings: %s}",Theme, Langue, KeyBindings);
     }
+
+    public Object getSetting(String key) {
+        // TODO we can improve this by iterating to be case insensitive
+        try {
+            return this.getClass().getField(key).get(this);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            return null;
+        }
+    }
 }
