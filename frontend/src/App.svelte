@@ -4,6 +4,9 @@
 	import Path from "./components/Path/Path.svelte";
 	import Spotify from "./components/Spotify/Spotify.svelte";
 	import Tree from "./components/Tree/Tree.svelte";
+	import Output from "./components/Console/Output.svelte";
+	import Terminal from "./components/Console/Terminal.svelte";
+	import ConsoleHeader from "./components/Console/ConsoleHeader.svelte";
 </script>
 
 <main>
@@ -13,9 +16,15 @@
 		<Header />
 		<Path />
 		<Editor />
+		<ConsoleHeader/>
+		<div id="bottom">		
+			<Terminal/>
+			<Output/>
+		</div>
 	</div>
-
+	
 	<Spotify />
+
 </main>
 
 <style>
@@ -31,4 +40,9 @@
 		height: 100%;
 		width: 100%;
 	}
+	#bottom {
+		height:20%;
+		width: 100%;
+	}
+
 </style>

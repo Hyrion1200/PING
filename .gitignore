@@ -32,6 +32,7 @@ Main.java
 
 # Tests
 .myideignore
+.pingsettings
 
 # Compilation
 target
