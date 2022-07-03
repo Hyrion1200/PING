@@ -3,7 +3,7 @@
 
     export let expanded = false;
     export let name;
-    export let files;
+    export let children;
 
     function toggle() {
         expanded = !expanded;
@@ -15,9 +15,9 @@
 
 {#if expanded}
     <ul>
-        {#each files as file}
+        {#each children as file}
             <li>
-                {#if file.files}
+                {#if file.children}
                     <svelte:self {...file} />
                 {:else}
                     <File {...file} />
@@ -30,6 +30,7 @@
 <!-- TODO background image use variables -->
 <style>
     span {
+        color: rgb(198, 196, 196);
         padding: 0 0 0 1.5em;
         background: url(/src/assets/themes/default/icons/folder.svg) 0 0.1em
             no-repeat;

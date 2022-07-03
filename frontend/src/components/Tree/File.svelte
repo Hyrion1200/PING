@@ -1,7 +1,7 @@
 <script>
     export let name;
     // TODO - use store for settings as the theme
-    export let theme = "default";
+    let theme = "default";
     $: type = name.slice(name.lastIndexOf(".") + 1);
 </script>
 
@@ -12,6 +12,7 @@
 
 <style>
     span {
+        color: rgb(198, 196, 196);
         padding: 0 0 0 1.5em;
         background: 0 0.1em no-repeat;
         background-size: 1em 1em;
