@@ -4,6 +4,10 @@ const { spawn } = require('node:child_process');
 const path = require('path');
 
 const backend_version = '1.0.0';
+if (process.env.NODE_ENV !== 'production') {
+  process.resourcesPath = path.join(__dirname, '/resources');
+  console.log('Resources path: ' + process.resourcesPath);
+}
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -25,7 +29,7 @@ async function spawnBackend() {
   const getPort = (await import('get-port'));
   const port = await getPort.default();
 
-  const backend = spawn('java', ['-jar', `ping_backend-${backend_version}.jar`, `--server.port=${port}`]);
+  const backend = spawn('java', ['-jar', `${process.resourcesPath}/ping_backend-${backend_version}.jar`, `--server.port=${port}`]);
   backend.on('error', (err) => {
     console.error('Make sure to have java 17+ installed.');
     console.error('Failed to start backend: ' + err);

@@ -31,7 +31,10 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "executableName": "frontend"
+        "executableName": "frontend",
+        "extraResources": [
+          "./resources/ping_backend-1.0.0.jar"
+        ]
       },
       "makers": [
         {
