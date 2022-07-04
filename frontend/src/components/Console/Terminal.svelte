@@ -10,10 +10,10 @@
 
 <style>
     div {
-        display:flex;
+        display: flex;
         position: absolute;
         height: 20%;
-        width: 100%;
+        width: 71.4%;
     }
     p {
         width: 100%;
@@ -25,6 +25,4 @@
         color: white;
         outline: none;
     }
-
-
 </style>

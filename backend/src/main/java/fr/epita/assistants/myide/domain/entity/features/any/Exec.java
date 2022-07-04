@@ -38,7 +38,7 @@ public class Exec extends Features {
         String result = null;
         try {
             if (Pattern.matches(".*.py", path.getFileName().toString())) {
-                ProcessBuilder processBuilder = new ProcessBuilder("python", path.toString());
+                ProcessBuilder processBuilder = new ProcessBuilder("python3", path.toString());
                 processBuilder.redirectErrorStream(true);
                 Process process = processBuilder.start();
                BufferedReader reader =

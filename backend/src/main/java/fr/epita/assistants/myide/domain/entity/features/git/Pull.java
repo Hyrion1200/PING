@@ -7,6 +7,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 public
 class Pull extends Git_features {
@@ -17,11 +18,14 @@ class Pull extends Git_features {
     @Override public ExecutionReport execute(Project project, Object... params) {
         // DONE
         System.out.println("Pull");
+        String user = (String) params[0];
+        String password = (String) params[1];
 
         Git git = getGit(project);
         try {
             PullCommand pullCommand = git.pull();
             pullCommand.setFastForward(MergeCommand.FastForwardMode.FF);
+            pullCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(user, password));
             var pull = pullCommand.call();
             if (!pull.isSuccessful())
                 return new ExecReport(ExecReport.Status.ERROR, String.format("Cannot pull from git '%s'", git.getRepository().toString()));

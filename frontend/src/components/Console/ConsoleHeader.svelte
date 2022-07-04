@@ -1,14 +1,13 @@
 <script>
-import Terminal from "./Terminal.svelte";
+    import {output_content} from "./OutputStore";
 
 
-    let output_content = "Execution output...";
     let Prompt = "/home/hugo ~ Prompt";
 
     function Show_Output(){
         var output = document.getElementById("Output")
         var Terminal = document.getElementById("Terminal");
-        output.innerHTML = output_content;
+        output_content.set("Execution output...");
         output.hidden = false;
         Terminal.hidden = true;
     }

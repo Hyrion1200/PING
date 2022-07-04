@@ -1,19 +1,28 @@
 <script>
-    let output_content = "Execution output...";
+    import {output_content} from "./OutputStore";
+
+
+    let content = "Execution output...";
+
+    output_content.subscribe(value => 
+    {
+        content = value;
+    })
+
 </script>
 
 <div>
     <p id="Output">
-        {output_content}
+        {content}
     </p>
 </div>
 
 <style>
     div {
-        display:flex;
+        display: flex;
         position: absolute;
         height: 20%;
-        width: 100%;
+        width: 71.4%;
     }
     p {
         width: 100%;
@@ -25,6 +34,4 @@
         color: white;
         outline: none;
     }
-
-
 </style>

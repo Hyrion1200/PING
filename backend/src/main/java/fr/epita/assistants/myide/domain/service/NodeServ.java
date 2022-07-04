@@ -34,15 +34,15 @@ public class NodeServ implements NodeService{
     }
 
     @Override
-    public Node update(Node node, byte[] insertedContent) {
+    public Node update(Node node, String insertedContent) {
         if (node.getType() == FOLDER)
         {
             throw new IllegalArgumentException("Node is of type folder, file expected");
         }
         try {
+            System.out.println("inserted content : " + insertedContent);
             FileWriter fw = new FileWriter(node.getPath().toString());
-            String content = new String(insertedContent);
-            fw.write(content);
+            fw.write(insertedContent);
             fw.flush();
             fw.close();
         }

@@ -1,7 +1,9 @@
 package fr.epita.assistants.myide.domain.service;
 
+import java.io.Console;
 import java.nio.file.Paths;
 import java.util.List;
+import java.io.File;
 
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.entity.Project_Entity;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport.Status;
+import fr.epita.assistants.myide.domain.entity.Node;
 
 @RestController
 @CrossOrigin
@@ -26,17 +29,18 @@ public class ProjetServiceController {
     }
 
     @GetMapping("/ide/load")
-    public Project load(@RequestParam(value="path", defaultValue = ".") String path)
+    public ExecReport load(@RequestParam(value="path", defaultValue = ".") String path)
     {
         System.out.println("Load");
         Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
         projectServ.setProject(project);
-        return projectServ.getProject();
+        return new ExecReport(Status.SUCCESS, projectServ.getProject());
     }
 
     @GetMapping("/ide/files/open")
     public ExecReport open(@RequestParam(value="path", defaultValue = "./tmp") String path)
     {
+        System.out.println(path);
         Project project = projectServ.getProject();
         String params = path;
         List<Feature> features = project.getFeatures();
@@ -46,20 +50,26 @@ public class ProjetServiceController {
             if (feature.type().toString() == "OPEN")
             {
                 ExecReport report = (ExecReport) feature.execute(project, params);
-                System.out.println(report.getContent());
                 return report;
             }
         }
         return new ExecReport(Status.ERROR, "Error");
     }
 
-    @GetMapping("ide/files/save")
-    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path)
+    @PostMapping("ide/files/save")
+    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path, @RequestBody String content)
     {
         Project project = projectServ.getProject();
         String params = path;
         // TODO
-        return new ExecReport(Status.ERROR, "Error"); 
+
+        Node node = projectServ.get_nodes(new File(path));
+        try {
+            projectServ.getNodeService().update(node, content);
+        } catch (Exception e){
+            return new ExecReport(Status.ERROR, "Couldn't save file");
+        }
+        return new ExecReport(Status.SUCCESS, content, "Success saving file"); 
 
     }
 
@@ -79,18 +89,17 @@ public class ProjetServiceController {
     }
 
     @GetMapping("/ide/git/pull")
-    public ExecReport pull()
+    public ExecReport pull(@RequestParam(value="user", defaultValue="") String user, @RequestParam(value="password", defaultValue="") String password)
     {
-        System.out.println("pull");
         Project_Entity project = projectServ.getProject();
-        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL);
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL, user, password);
     }
 
     @GetMapping("/ide/git/push")
-    public ExecReport push()
+    public ExecReport push(@RequestParam(value="user", defaultValue="") String user, @RequestParam(value="password", defaultValue="") String password)
     {
         Project_Entity project = projectServ.getProject();
-        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PUSH);
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PUSH, user, password);
     }
 
     // TODO
@@ -99,7 +108,8 @@ public class ProjetServiceController {
 
     @GetMapping("/ide/files/exec")
     public ExecReport exec(@RequestParam(value="path", defaultValue = "./temp") String path){
-        System.out.println("here");
+        System.out.println(path);
+        System.out.println(Paths.get(path).toAbsolutePath());
         Project_Entity project = projectServ.getProject();
         ExecReport report = (ExecReport) projectServ.execute(project, Mandatory.Features.Any.EXEC,path);
         return report;
@@ -116,6 +126,19 @@ public class ProjetServiceController {
             return new ExecReport(Status.ERROR, "Couldn't write to settings file");
         }
         return new ExecReport(Status.SUCCESS);
+    }
+
+    public ExecReport getSettings(){
+        return new ExecReport(Status.SUCCESS, projectServ.getProject().getSettings());
+    }
+
+    @GetMapping("ide/setting")
+    public ExecReport getSetting(@RequestParam(value="name", defaultValue = "") String name){
+        Object setting = projectServ.getProject().getSettings().getSetting(name);
+        if (setting == null){
+            return new ExecReport(Status.ERROR, "Setting not found");
+        }
+        return new ExecReport(Status.SUCCESS, setting);
     }
 
 }

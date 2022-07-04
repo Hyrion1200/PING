@@ -6,7 +6,7 @@
     }
 </script>
 
-<div id="error" style="--display: {isOpenModal ? 'block' : 'none' };">
+<div id="error" style="--display: {isOpenModal ? 'block' : 'none'};">
     <p>{text}</p>
     <button id="close" on:click={handleClose}>Close</button>
 </div>
@@ -20,21 +20,17 @@
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: gray;
-        border-radius: 2px;
-        color:aliceblue;
+        color: aliceblue;
         border: none;
         filter: drop-shadow(0 0 20px #333);
-        border-bottom: 1px solid #2d2d2d;
     }
 
     button {
         cursor: pointer;
         border: none;
         background-color: #4d4d4d;
-        border-radius: 2px;
         color: white;
         padding: 10px;
-        border-bottom: 1px solid #4d4d4d;
     }
 
     button:hover {

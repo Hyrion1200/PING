@@ -31,22 +31,23 @@ public class ProjectServ implements ProjectService{
         nodeservice = new NodeServ(1);
     }
 
-    private Node get_nodes(File dir){
+    public Node get_nodes(File dir){
         Node_Entity node ;
         List<File> parents = new ArrayList<>();
         if (dir.isDirectory()){
-            node = new Node_Entity(Paths.get(dir.getPath()), FOLDER, new ArrayList<Node>());
+            node = new Node_Entity(Paths.get(dir.getPath()).toAbsolutePath(), FOLDER, new ArrayList<Node>());
             for (File cur : dir.listFiles()){
+                System.out.println(node.getPath());
                 if (cur.isDirectory()){
                     node.addChildren(get_nodes(cur));
                 }
                 else {
-                    node.addChildren(new Node_Entity(Paths.get(cur.getPath()), FILE, new ArrayList<>()));
+                    node.addChildren(new Node_Entity(Paths.get(cur.getPath()).toAbsolutePath(), FILE, new ArrayList<>()));
                 }
             }
         }
         else {
-            node = new Node_Entity(Paths.get(dir.getPath()), FILE, new ArrayList<>());
+            node = new Node_Entity(Paths.get(dir.getPath()).toAbsolutePath(), FILE, new ArrayList<>());
         }
         return node;
     }

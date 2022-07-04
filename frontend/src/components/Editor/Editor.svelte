@@ -1,8 +1,7 @@
 <script>
     // @ts-ignore
-import { afterUpdate } from "svelte";
-
-    let editorContent = "";
+    import { editorStore, editorAdd } from "./EditorStore";
+    import { afterUpdate } from "svelte";
     let lines = "";
 
     let numberArea;
@@ -10,21 +9,23 @@ import { afterUpdate } from "svelte";
 
     $: {
         lines = "";
-        for (let i = 1; i < editorContent.split("\n").length + 1; i++)
+        for (let i = 1; i < $editorStore.split("\n").length + 1; i++)
             lines += i + "\n";
     }
 
-    afterUpdate(() => {
+    function handleScroll() {
         numberArea.scrollTop = editorArea.scrollTop;
-    });
+    }
 
     function handleTab(event) {
+        //editorContent.update(value => value = event.currentTarget.value);
         if (event.key !== "Tab") return;
 
         event.preventDefault();
 
-        editorContent += "    ";
+        editorAdd("    ");
     }
+
 </script>
 
 <div>
@@ -32,8 +33,9 @@ import { afterUpdate } from "svelte";
     <textarea
         id="editor"
         bind:this={editorArea}
-        bind:value={editorContent}
+        bind:value={$editorStore}
         on:keydown={handleTab}
+        on:scroll={handleScroll}
         spellcheck="false"
     />
 </div>
