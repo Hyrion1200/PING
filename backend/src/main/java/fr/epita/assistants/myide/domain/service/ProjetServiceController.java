@@ -2,6 +2,7 @@ package fr.epita.assistants.myide.domain.service;
 
 import java.nio.file.Paths;
 import java.util.List;
+import java.io.File;
 
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import fr.epita.assistants.myide.domain.entity.Project;
 import fr.epita.assistants.myide.domain.entity.Project_Entity;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport;
 import fr.epita.assistants.myide.domain.entity.features.exec_report.ExecReport.Status;
+import fr.epita.assistants.myide.domain.entity.Node;
 
 @RestController
 @CrossOrigin
@@ -53,13 +55,20 @@ public class ProjetServiceController {
         return new ExecReport(Status.ERROR, "Error");
     }
 
-    @GetMapping("ide/files/save")
-    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path)
+    @PostMapping("ide/files/save")
+    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path, @RequestBody String content)
     {
         Project project = projectServ.getProject();
         String params = path;
         // TODO
-        return new ExecReport(Status.ERROR, "Error"); 
+
+        Node node = projectServ.get_nodes(new File(path));
+        try {
+            projectServ.getNodeService().update(node, content);
+        } catch (Exception e){
+            return new ExecReport(Status.ERROR, "Couldn't save file");
+        }
+        return new ExecReport(Status.SUCCESS, content, "Success saving file"); 
 
     }
 

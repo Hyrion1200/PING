@@ -17,7 +17,7 @@ public interface NodeService {
      * @throws Exception upon update failure.
      */
     Node update(final Node node,
-                final byte[] insertedContent);
+                final String insertedContent);
 
     /**
      * Delete the node given as parameter.
