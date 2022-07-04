@@ -1,6 +1,7 @@
 package fr.epita.assistants.myide.domain.service;
 
 import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
 import java.io.File;
 
@@ -31,9 +32,19 @@ public class ProjetServiceController {
     public ExecReport load(@RequestParam(value="path", defaultValue = ".") String path)
     {
         System.out.println("Load");
-        Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
-        projectServ.setProject(project);
-        return new ExecReport(Status.SUCCESS, projectServ.getProject());
+        try {
+            Path p = Paths.get(path);
+            Project_Entity project = (Project_Entity) projectServ.load(p);
+            if (project != null)
+            {
+                projectServ.setProject(project);
+                return new ExecReport(Status.SUCCESS, projectServ.getProject());
+            }
+        } catch (Exception e) {
+            return new ExecReport(Status.ERROR, "Cannot open project");
+        }
+        
+        return new ExecReport(Status.ERROR, "Cannot open project");
     }
 
     @GetMapping("/ide/files/open")

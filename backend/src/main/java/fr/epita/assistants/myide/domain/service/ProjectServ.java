@@ -78,8 +78,7 @@ public class ProjectServ implements ProjectService{
                     settings = mapper.readValue(node.getPath().toFile(), Settings.class);
                     System.out.println(settings);
                 } catch (Exception e){
-                    e.printStackTrace();
-                    settings = null;
+                    return null;
                 }
             }
         }

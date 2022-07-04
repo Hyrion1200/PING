@@ -24,7 +24,9 @@ public class Open extends Features {
         String content = "";
         try {
             System.out.println(path);
-            Path file = Paths.get(path);
+            System.out.println(Paths.get(path));
+            Path file = Path.of(project.getRootNode().getPath() + "/" + path);
+            System.out.println(file);
             content = Files.readString(file);
             System.out.println(content);
         } catch (IOException e) {

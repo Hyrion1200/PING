@@ -17,9 +17,11 @@
             {
                 if (data.status == "SUCCESS")
                 {
+                    console.log(data.content)
                     project.set(data.content)
                 }
-                console.log(data.content)
+                else
+                    project.set(undefined)
             });
     }
 </script>
