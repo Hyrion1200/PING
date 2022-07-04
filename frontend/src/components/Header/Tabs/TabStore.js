@@ -59,10 +59,10 @@ function saveTabContent() {
 
 export function addTab(tab) {
     tabStore.update(tabs => {
-        if (tabs.find(elt => tabEqual(elt, tab)) === undefined) {
+        if (tabs.find(elt => tabEqual(elt, tab)) === undefined)
             tabs.push(tab);
-            switchTab(tab);
-        }
+
+        switchTab(tab);
 
         return tabs;
     })
