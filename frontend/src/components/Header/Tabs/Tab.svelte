@@ -1,6 +1,6 @@
 <script>
     import { editorStore } from "../../Editor/EditorStore.js";
-    import { removeTab, setTabOn } from "./TabStore";
+    import { removeTab, saveTabContent, setTabOn } from "./TabStore";
     export let tabConfig;
     let li;
 
@@ -19,6 +19,7 @@
     }
 
     function tabClick(event) {
+        saveTabContent($editorStore);
         editorStore.set(tabConfig.content);
         setTabOn(tabConfig);
     }

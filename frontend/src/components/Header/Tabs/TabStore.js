@@ -1,9 +1,14 @@
 import { writable } from "svelte/store";
+import { editorStore } from "../../Editor/EditorStore.js";
 
 export const tabStore = writable([]);
 
 function tabEqual(a, b) {
     return a.path === b.path;
+}
+
+function tabOn(tab) {
+    return tab.on;
 }
 
 export function addTab(tab) {
@@ -28,5 +33,13 @@ export function setTabOn(tab) {
                 t.on = true;
             return t;
         });
+    })
+}
+
+export function saveTabContent(editorContent) {
+    tabStore.update(tabs => {
+        let index = tabs.findIndex(t => tabOn(t));
+        tabs[index].content = editorContent;
+        return tabs;
     })
 }
