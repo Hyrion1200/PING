@@ -13,9 +13,9 @@
             lines += i + "\n";
     }
 
-    afterUpdate(() => {
+    function handleScroll() {
         numberArea.scrollTop = editorArea.scrollTop;
-    });
+    }
 
     function handleTab(event) {
         if (event.key !== "Tab") return;
@@ -33,6 +33,7 @@
         bind:this={editorArea}
         bind:value={$editorStore}
         on:keydown={handleTab}
+        on:scroll={handleScroll}
         spellcheck="false"
     />
 </div>
