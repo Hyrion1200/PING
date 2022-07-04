@@ -2,13 +2,14 @@
     import { addTab, TabConfig } from "/src/components/Header/Tabs/TabStore.js";
     export let name;
     export let path;
+    export let relativePath;
     // TODO - use store for settings as the theme
     let theme = "default";
     $: type = name.slice(name.lastIndexOf(".") + 1);
 
     async function getContent() {
         const response = await fetch(
-            "http://localhost:8080/ide/files/open?path=" + name
+            "http://localhost:8080/ide/files/open?path=" + relativePath
         );
         const report = await response.json();
 

@@ -3,24 +3,26 @@
     import Folder from "./Folder.svelte";
     import { get_root_for_style } from "svelte/internal";
 
-    function parseNodes(root) {
+    function parseNodes(root, i=0) {
         let name = root.path;
         if (name.endsWith("/")) {
             console.log(name);
             name = name.substring(0, name.length - 1);
             console.log(name);
         }
-        name = name.split("/").pop();
+        const nameSplitted = name.split("/");
+        name = nameSplitted[nameSplitted.length - 1];
+        let relativePath = nameSplitted.slice(nameSplitted.length - i - 1).join('/');
 
         let children = undefined;
         if (root.type === "FOLDER") {
             children = root.children.map((child) => {
-                return parseNodes(child);
+                return parseNodes(child, i + 1);
             });
             return { name, children };
         }
 
-        return { name, path: root.path };
+        return { name, path: root.path, relativePath};
     }
 
     $: root =
