@@ -18,11 +18,12 @@ class Push extends Git_features {
         // DONE
 
         Git git = getGit(project);
+        String user = (String) params[0];
+        String password = (String) params[1];
         try {
             PushCommand pushCommand = git.push();
             pushCommand.setRemote("origin");
-            // if credential:
-            // pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider("username", "password"));
+            pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(user, password));
             pushCommand.call();
             String res = "";
             res += pushCommand.getRemote();

@@ -1,8 +1,7 @@
 <script>
+    // @ts-ignore
+    import { editorStore, editorAdd } from "./EditorStore";
     import { afterUpdate } from "svelte";
-    import { editorContent } from "./EditorStores.js"
-    let content = ""
-    editorContent.subscribe(value => { content = value });
     let lines = "";
 
     let numberArea;
@@ -10,8 +9,7 @@
 
     $: {
         lines = "";
-        content;
-        for (let i = 1; i < content.split("\n").length + 1; i++)
+        for (let i = 1; i < $editorStore.split("\n").length + 1; i++)
             lines += i + "\n";
     }
 
@@ -20,12 +18,12 @@
     });
 
     function handleTab(event) {
-        editorContent.update(value => value = event.currentTarget.value);
+        //editorContent.update(value => value = event.currentTarget.value);
         if (event.key !== "Tab") return;
 
         event.preventDefault();
 
-        content += "    ";
+        editorAdd("    ");
     }
 
 </script>
@@ -35,7 +33,7 @@
     <textarea
         id="editor"
         bind:this={editorArea}
-        bind:value={content}
+        bind:value={$editorStore}
         on:keydown={handleTab}
         spellcheck="false"
     />
@@ -44,7 +42,7 @@
 <style>
     div {
         display: flex;
-        height: 100%;
+        height: 70%;
     }
 
     textarea {

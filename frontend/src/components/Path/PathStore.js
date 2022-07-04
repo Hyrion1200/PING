@@ -1,3 +1,3 @@
 import { writable } from "svelte/store";
 
-export const editorContent = writable("")
+export let pathStore = writable("");

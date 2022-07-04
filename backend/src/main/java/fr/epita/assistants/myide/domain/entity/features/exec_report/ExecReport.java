@@ -12,14 +12,20 @@ public class ExecReport implements Feature.ExecutionReport {
 	// - Private attributes
 	private Status status;
 	private String message;
-	private String content;
+	private Object content;
 
 	// - Constructor
-	public ExecReport(Status status, String content, String message)
+	public ExecReport(Status status, Object content, String message)
 	{
 		this.status = status;
 		this.content = content;
 		this.message = message;
+	}
+
+	public ExecReport(Status status, Object content)
+	{
+		this.status = status;
+		this.content = content;
 	}
 
 	public ExecReport(Status status, String message) {
@@ -39,7 +45,7 @@ public class ExecReport implements Feature.ExecutionReport {
 	// - Getters
 	public Status getStatus() { return status; }
 	public String getMessage() { return message; }
-	public String getContent() { return content;}
+	public Object getContent() { return content;}
 
 	// - Method
 	public boolean isSuccess() {

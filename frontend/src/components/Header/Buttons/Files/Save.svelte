@@ -1,15 +1,15 @@
 <script>
-    import { editorContent } from "../../../Editor/EditorStores";
+    import { editorStore } from "../../../Editor/EditorStore";
     let path;
 
     async function handleSave() {
         //let url = window.BASE_URL + "/ide/files/open?path=" + path;
         let url = "http://localhost:8080/ide/files/save?path=" + path;
         console.log(url)
-        console.log($editorContent)
+        console.log($editorStore)
         const resp = await fetch(url, {
             method: 'POST',
-            body: $editorContent
+            body: $editorStore
         }).then(function(response){ return response.json();}).then(
             function(data)
             {

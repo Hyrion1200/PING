@@ -28,12 +28,12 @@ public class ProjetServiceController {
     }
 
     @GetMapping("/ide/load")
-    public Project load(@RequestParam(value="path", defaultValue = ".") String path)
+    public ExecReport load(@RequestParam(value="path", defaultValue = ".") String path)
     {
         System.out.println("Load");
         Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
         projectServ.setProject(project);
-        return projectServ.getProject();
+        return new ExecReport(Status.SUCCESS, projectServ.getProject());
     }
 
     @GetMapping("/ide/files/open")
@@ -88,18 +88,17 @@ public class ProjetServiceController {
     }
 
     @GetMapping("/ide/git/pull")
-    public ExecReport pull()
+    public ExecReport pull(@RequestParam(value="user", defaultValue="") String user, @RequestParam(value="password", defaultValue="") String password)
     {
-        System.out.println("pull");
         Project_Entity project = projectServ.getProject();
-        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL);
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL, user, password);
     }
 
     @GetMapping("/ide/git/push")
-    public ExecReport push()
+    public ExecReport push(@RequestParam(value="user", defaultValue="") String user, @RequestParam(value="password", defaultValue="") String password)
     {
         Project_Entity project = projectServ.getProject();
-        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PUSH);
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PUSH, user, password);
     }
 
     // TODO
@@ -107,13 +106,11 @@ public class ProjetServiceController {
     // ide/spotify
 
     @GetMapping("/ide/files/exec")
-    public String exec(@RequestParam(value="path", defaultValue = "./temp") String path){
+    public ExecReport exec(@RequestParam(value="path", defaultValue = "./temp") String path){
         System.out.println("here");
         Project_Entity project = projectServ.getProject();
         ExecReport report = (ExecReport) projectServ.execute(project, Mandatory.Features.Any.EXEC,path);
-        if (report.isSuccess())
-            return project.ExecResult;
-        return report.getMessage();
+        return report;
     }
 
     @PostMapping("ide/settings")
@@ -127,6 +124,19 @@ public class ProjetServiceController {
             return new ExecReport(Status.ERROR, "Couldn't write to settings file");
         }
         return new ExecReport(Status.SUCCESS);
+    }
+
+    public ExecReport getSettings(){
+        return new ExecReport(Status.SUCCESS, projectServ.getProject().getSettings());
+    }
+
+    @GetMapping("ide/setting")
+    public ExecReport getSetting(@RequestParam(value="name", defaultValue = "") String name){
+        Object setting = projectServ.getProject().getSettings().getSetting(name);
+        if (setting == null){
+            return new ExecReport(Status.ERROR, "Setting not found");
+        }
+        return new ExecReport(Status.SUCCESS, setting);
     }
 
 }

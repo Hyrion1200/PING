@@ -1,18 +1,18 @@
 <script>
-    import { editorContent } from "../../../Editor/EditorStores";
+    import { editorStore } from "../../../Editor/EditorStore";
     let path;
 
     async function handleOpen() {
         //let url = window.BASE_URL + "/ide/files/open?path=" + path;
         let url = "http://localhost:8080/ide/files/open?path=" + path;
         console.log(url)
-        console.log(editorContent)
+        console.log(editorStore)
         const resp = await fetch(url).then(function(response){ return response.json();}).then(
             function(data)
             {
                 console.log(data.content)
                 if (data.content != null)
-                    editorContent.update(value => value = data.content);
+                    editorStore.update(value => value = data.content);
             });
     }
 </script>

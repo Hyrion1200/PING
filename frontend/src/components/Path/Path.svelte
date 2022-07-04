@@ -1,7 +1,12 @@
-<p>PING > frontend > src > components > main.c</p>
+<script>
+    import { pathStore } from "./PathStore";
+</script>
+
+<p>{$pathStore}</p>
 
 <style>
     p {
+        height: 20px;
         font-size: 12px;
         padding: 4px;
         margin: 0;
