@@ -4,22 +4,24 @@
 
     async function handleSave() {
         //let url = window.BASE_URL + "/ide/files/open?path=" + path;
-        let url = "http://localhost:8080/ide/files/save?path=" + path;
-        console.log(url)
-        console.log($editorStore)
+        // @ts-ignore
+        let url = `${window.BASE_URL}/ide/files/save?path=${path}`;
+        console.log(url);
+        console.log($editorStore);
         const resp = await fetch(url, {
-            method: 'POST',
-            body: $editorStore
-        }).then(function(response){ return response.json();}).then(
-            function(data)
-            {
-                console.log(data)
+            method: "POST",
+            body: $editorStore,
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
             });
     }
 </script>
 
-
-<input type="text" bind:value={path}>
+<input type="text" bind:value={path} />
 <button id="save" on:click={handleSave}>Save</button>
 
 <style>
@@ -35,4 +37,3 @@
         background-color: #3d3d3d;
     }
 </style>
-

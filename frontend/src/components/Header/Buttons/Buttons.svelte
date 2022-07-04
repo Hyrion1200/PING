@@ -1,14 +1,13 @@
 <script>
     import Git from "./Git/Git.svelte";
     import Files from "./Files/Files.svelte";
-    import {output_content} from "../../Console/OutputStore";
-    import {pathStore} from "../../Path/PathStore";
+    import { output_content } from "../../Console/OutputStore";
+    import { pathStore } from "../../Path/PathStore";
 
     var path = "path";
-    pathStore.subscribe(string => 
-    {
+    pathStore.subscribe((string) => {
         path = string.substring(6);
-    })
+    });
 
     let git = false;
     let files = false;
@@ -32,19 +31,20 @@
         git = false;
     }
 
-    async function run(){
+    async function run() {
         //get the current file path
         var Content_header = "Executed file at " + path.substring(6) + ":\n";
-        fetch("http://localhost:8080/ide/files/exec?path=" + path)
-        .then(response => response.json())
-        .then(data => { 
-            if (data) 
-                output_content.set(Content_header + data.content);
-            else 
-                output_content.set("Couldn't execute file at " + path + "<br/>");
+        // @ts-ignore
+        fetch(`${window.BASE_URL}/ide/files/exec?path=${path}`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data) output_content.set(Content_header + data.content);
+                else
+                    output_content.set(
+                        "Couldn't execute file at " + path + "<br/>"
+                    );
             });
     }
-
 </script>
 
 <div id="main">

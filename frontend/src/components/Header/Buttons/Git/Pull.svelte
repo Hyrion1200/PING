@@ -5,13 +5,14 @@
     let text = "default";
 
     async function handlePull() {
-        let user = window.prompt("Git username: ")
+        let user = window.prompt("Git username: ");
         if (user === null) return;
 
-        let password = window.prompt("Git password: ")
+        let password = window.prompt("Git password: ");
         if (password === null) return;
 
-        let url = "http://localhost:8080/ide/git/pull?user=" + user + "&password=" + password;
+        // @ts-ignore
+        let url = `${window.BASE_URL}/ide/git/pull?user=${user}&password=${password}`;
         const resp = await fetch(url)
             .then(function (response) {
                 return response.json();

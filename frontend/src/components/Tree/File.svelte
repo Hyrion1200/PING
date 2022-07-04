@@ -1,4 +1,5 @@
 <script>
+    // @ts-ignore
     import { addTab, TabConfig } from "/src/components/Header/Tabs/TabStore.js";
     export let name;
     export let path;
@@ -9,7 +10,8 @@
 
     async function getContent() {
         const response = await fetch(
-            "http://localhost:8080/ide/files/open?path=" + relativePath
+            // @ts-ignore
+            `${window.BASE_URL}/ide/files/open?path=${relativePath}`
         );
         const report = await response.json();
 

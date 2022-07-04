@@ -11,7 +11,8 @@
 
         if (msg === null) return;
 
-        let url = "http://localhost:8080/ide/git/commit?message=" + msg;
+        // @ts-ignore
+        let url = `${window.BASE_URL}/ide/git/commit?message=${msg}`;
         const resp = await fetch(url)
             .then(function (response) {
                 return response.json();

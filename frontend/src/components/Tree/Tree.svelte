@@ -1,9 +1,10 @@
 <script>
+    // @ts-ignore
     import { project } from "/src/stores/project.js";
     import Folder from "./Folder.svelte";
     import { get_root_for_style } from "svelte/internal";
 
-    function parseNodes(root, i=0) {
+    function parseNodes(root, i = 0) {
         let name = root.path;
         if (name.endsWith("/")) {
             console.log(name);
@@ -12,7 +13,9 @@
         }
         const nameSplitted = name.split("/");
         name = nameSplitted[nameSplitted.length - 1];
-        let relativePath = nameSplitted.slice(nameSplitted.length - i - 1).join('/');
+        let relativePath = nameSplitted
+            .slice(nameSplitted.length - i - 1)
+            .join("/");
 
         let children = undefined;
         if (root.type === "FOLDER") {
@@ -22,7 +25,7 @@
             return { name, children };
         }
 
-        return { name, path: root.path, relativePath};
+        return { name, path: root.path, relativePath };
     }
 
     $: root =
@@ -33,7 +36,8 @@
     async function load() {
         if (root === undefined) {
             let loadedProject = await fetch(
-                "http://localhost:8080/ide/load?path=."
+                // @ts-ignore
+                `${window.BASE_URL}/ide/load?path=.`
             );
             let jsonObj = await loadedProject.json();
             project.set(jsonObj.content);
