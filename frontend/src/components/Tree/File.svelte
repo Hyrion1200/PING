@@ -8,7 +8,7 @@
 
     async function getContent() {
         const response = await fetch(
-            window.BASE_URL + "/ide/files/open?path=" + path
+            "http://localhost:8080/ide/files/open?path=" + name
         );
         const report = await response.json();
 

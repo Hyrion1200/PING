@@ -2,7 +2,7 @@
     import Tab from "./Tab.svelte";
     import { TabConfig, tabStore, addTab } from "./TabStore.js";
 
-    addTab(new TabConfig("main.py", "src/main.py", "Salut Baptiste", true));
+    addTab(new TabConfig("main.py", "src/main.py", "Salut Baptiste"));
     addTab(new TabConfig("utils.py", "src/utils.py", "Salut Nico"));
     addTab(new TabConfig("func.py", "src/func.py", "Salut Nathan"));
 </script>

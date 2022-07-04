@@ -1,7 +1,7 @@
 <script>
     import { editorStore } from "../../Editor/EditorStore.js";
     import { pathStore } from "../../Path/PathStore.js";
-    import { removeTab, saveTabContent, setTabOn } from "./TabStore";
+    import { removeTab, switchTab } from "./TabStore";
     export let tabConfig;
     let li;
 
@@ -21,9 +21,7 @@
     }
 
     function tabClick(event) {
-        saveTabContent($editorStore);
-        editorStore.set(tabConfig.content);
-        setTabOn(tabConfig);
+        switchTab(tabConfig);
     }
 
     function closeClick(event) {
@@ -33,6 +31,7 @@
 
     $: {
         if (li) {
+            console.log(tabConfig);
             if (tabConfig.on) {
                 li.style.borderColor = "white";
             } else {

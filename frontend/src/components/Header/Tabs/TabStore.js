@@ -6,12 +6,17 @@ import { writable } from "svelte/store";
 export const tabStore = writable([]);
 
 export class TabConfig {
-    constructor(name, path, content, on = false) {
+    constructor(name, path, content) {
         this.name = name;
         this.path = path;
         this.content = content;
-        this.on = on;
+        this.on = false;
     }
+}
+
+function resetTabs() {
+    editorStore.set("");
+    pathStore.set("");
 }
 
 function tabEqual(a, b) {
@@ -22,10 +27,43 @@ function tabOn(tab) {
     return tab.on;
 }
 
+function setTabOn(tab) {
+    tabStore.update(tabs => {
+        return tabs.map(t => {
+            t.on = false;
+
+            if (tabEqual(t, tab))
+                t.on = true;
+
+            return t;
+        })
+    })
+}
+
+function saveTabContent() {
+    let content;
+
+    let unsubscribe = editorStore.subscribe(val => content = val);
+
+    tabStore.update(tabs => {
+        let index = tabs.findIndex(t => tabOn(t));
+
+        if (index !== -1)
+            tabs[index].content = content;
+
+        return tabs;
+    })
+
+    unsubscribe();
+}
+
 export function addTab(tab) {
     tabStore.update(tabs => {
-        if (tabs.find(elt => tabEqual(elt, tab)) === undefined)
+        if (tabs.find(elt => tabEqual(elt, tab)) === undefined) {
             tabs.push(tab);
+            switchTab(tab);
+        }
+
         return tabs;
     })
 }
@@ -33,8 +71,6 @@ export function addTab(tab) {
 export function removeTab(tab) {
     tabStore.update(tabs => {
         if (tab.on) {
-            tab.on = false;
-
             let tabIndex = tabs.findIndex(elt => tabEqual(elt, tab));
             let newTabIndex = tabIndex + 1;
 
@@ -42,35 +78,22 @@ export function removeTab(tab) {
                 newTabIndex = tabIndex - 1;
 
             if (newTabIndex === -1)
-                editorStore.set("");
-            else {
-                tabs[newTabIndex].on = true;
-                editorStore.set(tabs[newTabIndex].content);
-                pathStore.set(tabs[newTabIndex].path);
-            }
+                resetTabs();
+            else
+                switchTab(tabs[newTabIndex]);
         }
 
         return tabs.filter(elt => !tabEqual(elt, tab));
     })
 }
 
-export function setTabOn(tab) {
-    tabStore.update(tabs => {
-        return tabs.map(t => {
-            t.on = false;
-            if (tabEqual(t, tab)) {
-                t.on = true;
-                pathStore.set(t.path);
-            }
-            return t;
-        });
-    })
-}
+export function switchTab(tab) {
+    saveTabContent();
 
-export function saveTabContent(editorContent) {
     tabStore.update(tabs => {
-        let index = tabs.findIndex(t => tabOn(t));
-        tabs[index].content = editorContent;
+        setTabOn(tab);
+        editorStore.set(tab.content);
+        pathStore.set(tab.path);
         return tabs;
     })
 }
