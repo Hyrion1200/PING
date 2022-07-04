@@ -16,15 +16,14 @@
 		<Header />
 		<Path />
 		<Editor />
-		<ConsoleHeader/>
-		<div id="bottom">		
-			<Terminal/>
-			<Output/>
+		<ConsoleHeader />
+		<div id="bottom">
+			<Terminal />
+			<Output />
 		</div>
 	</div>
-	
-	<Spotify />
 
+	<Spotify />
 </main>
 
 <style>
@@ -41,8 +40,7 @@
 		width: 100%;
 	}
 	#bottom {
-		height:20%;
+		height: 20%;
 		width: 100%;
 	}
-
 </style>
