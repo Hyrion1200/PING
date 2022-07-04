@@ -1,17 +1,6 @@
 <script>
     import Tab from "./Tab.svelte";
-    import { tabStore, addTab } from "./TabStore.js";
-
-    class TabConfig {
-        constructor(name, path, content, on = false) {
-            this.name = name;
-            this.path = path;
-            this.content = content;
-            this.on = on;
-        }
-    }
-
-    let tabs = [];
+    import { TabConfig, tabStore, addTab } from "./TabStore.js";
 
     addTab(new TabConfig("main.py", "src/main.py", "Salut Baptiste", true));
     addTab(new TabConfig("utils.py", "src/utils.py", "Salut Nico"));
