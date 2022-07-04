@@ -6,7 +6,7 @@ const path = require('path');
 const backend_version = '1.0.0';
 if (process.env.NODE_ENV !== 'production') {
   process.resourcesPath = path.join(__dirname, '/resources');
-  console.log('Resources path: ' + process.resourcesPath);
+  console.debug('Resources path: ' + process.resourcesPath);
 }
 
 function createWindow() {
@@ -65,7 +65,10 @@ async function spawnBackend() {
 }
 
 app.whenReady().then(async () => {
-  await spawnBackend();
+  if (process.env.DEBUG === undefined)
+    await spawnBackend();
+  else
+    process.env.BASE_URL = 'http://localhost:8080';
 
   createWindow()
 
