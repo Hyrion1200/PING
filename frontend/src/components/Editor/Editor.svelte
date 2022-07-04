@@ -18,12 +18,14 @@
     }
 
     function handleTab(event) {
+        //editorContent.update(value => value = event.currentTarget.value);
         if (event.key !== "Tab") return;
 
         event.preventDefault();
 
         editorAdd("    ");
     }
+
 </script>
 
 <div>

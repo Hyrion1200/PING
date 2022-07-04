@@ -31,7 +31,7 @@ public class ProjectServ implements ProjectService{
         nodeservice = new NodeServ(1);
     }
 
-    private Node get_nodes(File dir){
+    public Node get_nodes(File dir){
         Node_Entity node ;
         List<File> parents = new ArrayList<>();
         if (dir.isDirectory()){
