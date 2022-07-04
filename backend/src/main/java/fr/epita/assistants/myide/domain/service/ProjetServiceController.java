@@ -79,18 +79,17 @@ public class ProjetServiceController {
     }
 
     @GetMapping("/ide/git/pull")
-    public ExecReport pull()
+    public ExecReport pull(@RequestParam(value="user", defaultValue="") String user, @RequestParam(value="password", defaultValue="") String password)
     {
-        System.out.println("pull");
         Project_Entity project = projectServ.getProject();
-        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL);
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PULL, user, password);
     }
 
     @GetMapping("/ide/git/push")
-    public ExecReport push()
+    public ExecReport push(@RequestParam(value="user", defaultValue="") String user, @RequestParam(value="password", defaultValue="") String password)
     {
         Project_Entity project = projectServ.getProject();
-        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PUSH);
+        return (ExecReport) projectServ.execute(project, Mandatory.Features.Git.PUSH, user, password);
     }
 
     // TODO

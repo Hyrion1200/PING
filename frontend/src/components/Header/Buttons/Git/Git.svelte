@@ -3,7 +3,7 @@
     import Commit from "./Commit.svelte";
     import Modal from "./Modal.svelte";
     import Pull from "./Pull.svelte";
-    import Push from "./Pull.svelte";
+    import Push from "./Push.svelte";
 </script>
 
 <div id="git">

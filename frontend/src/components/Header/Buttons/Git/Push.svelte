@@ -5,7 +5,13 @@
     let text = "default";
 
     async function handlePush() {
-        let url = "http://localhost:8080/ide/git/push";
+        let user = window.prompt("Git username: ")
+        if (user === null) return;
+
+        let password = window.prompt("Git password: ")
+        if (password === null) return;
+
+        let url = "http://localhost:8080/ide/git/push?user=" + user + "&password=" + password;
         const resp = await fetch(url)
             .then(function (response) {
                 return response.json();
