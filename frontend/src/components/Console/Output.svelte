@@ -1,10 +1,19 @@
 <script>
-    let output_content = "Execution output...";
+    import {output_content} from "./OutputStore";
+
+
+    let content = "Execution output...";
+
+    output_content.subscribe(value => 
+    {
+        content = value;
+    })
+
 </script>
 
 <div>
     <p id="Output">
-        {output_content}
+        {content}
     </p>
 </div>
 
