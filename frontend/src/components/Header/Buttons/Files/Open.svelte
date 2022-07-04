@@ -1,5 +1,7 @@
 <script>
     import { editorStore } from "../../../Editor/EditorStore";
+    import Tab from "../../Tabs/Tab.svelte";
+    import { TabConfig, tabStore, addTab } from "../../Tabs/TabStore.js";
     let path;
 
     async function handleOpen() {
@@ -10,9 +12,12 @@
         const resp = await fetch(url).then(function(response){ return response.json();}).then(
             function(data)
             {
-                console.log(data.content)
-                if (data.content != null)
+                if (data.status == "SUCCESS")
+                {
+                    addTab(new TabConfig(path, path, data.content));
                     editorStore.update(value => value = data.content);
+                }
+                console.log(data.content)
             });
     }
 </script>
