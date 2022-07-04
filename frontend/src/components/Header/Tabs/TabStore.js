@@ -1,5 +1,7 @@
-import { writable } from "svelte/store";
 import { editorStore } from "../../Editor/EditorStore.js";
+import { pathStore } from "../../Path/PathStore.js"
+
+import { writable } from "svelte/store";
 
 export const tabStore = writable([]);
 
@@ -13,7 +15,6 @@ export class TabConfig {
 }
 
 function tabEqual(a, b) {
-    console.log(a.path + " and " + b.path);
     return a.path === b.path;
 }
 
@@ -31,6 +32,24 @@ export function addTab(tab) {
 
 export function removeTab(tab) {
     tabStore.update(tabs => {
+        if (tab.on) {
+            tab.on = false;
+
+            let tabIndex = tabs.findIndex(elt => tabEqual(elt, tab));
+            let newTabIndex = tabIndex + 1;
+
+            if (newTabIndex === tabs.length)
+                newTabIndex = tabIndex - 1;
+
+            if (newTabIndex === -1)
+                editorStore.set("");
+            else {
+                tabs[newTabIndex].on = true;
+                editorStore.set(tabs[newTabIndex].content);
+                pathStore.set(tabs[newTabIndex].path);
+            }
+        }
+
         return tabs.filter(elt => !tabEqual(elt, tab));
     })
 }
@@ -39,8 +58,10 @@ export function setTabOn(tab) {
     tabStore.update(tabs => {
         return tabs.map(t => {
             t.on = false;
-            if (tabEqual(t, tab))
+            if (tabEqual(t, tab)) {
                 t.on = true;
+                pathStore.set(t.path);
+            }
             return t;
         });
     })

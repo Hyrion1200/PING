@@ -1,4 +1,8 @@
-<p>PING > frontend > src > components > main.c</p>
+<script>
+    import { pathStore } from "./PathStore";
+</script>
+
+<p>{$pathStore}</p>
 
 <style>
     p {

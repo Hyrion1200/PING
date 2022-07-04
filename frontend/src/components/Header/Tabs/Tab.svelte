@@ -1,11 +1,13 @@
 <script>
     import { editorStore } from "../../Editor/EditorStore.js";
+    import { pathStore } from "../../Path/PathStore.js";
     import { removeTab, saveTabContent, setTabOn } from "./TabStore";
     export let tabConfig;
     let li;
 
     if (tabConfig.on) {
         editorStore.set(tabConfig.content);
+        pathStore.set(tabConfig.path);
     }
 
     function btnHoverEnter(event) {
@@ -24,6 +26,11 @@
         setTabOn(tabConfig);
     }
 
+    function closeClick(event) {
+        removeTab(tabConfig);
+        event.stopPropagation();
+    }
+
     $: {
         if (li) {
             if (tabConfig.on) {
@@ -39,7 +46,7 @@
     <span>
         {tabConfig.name}
         <button
-            on:click={() => removeTab(tabConfig)}
+            on:click={closeClick}
             on:mouseenter={btnHoverEnter}
             on:mouseleave={btnHoverLeave}
         >
