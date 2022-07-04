@@ -1,5 +1,6 @@
 package fr.epita.assistants.myide.domain.service;
 
+import java.io.Console;
 import java.nio.file.Paths;
 import java.util.List;
 import java.io.File;
@@ -39,6 +40,7 @@ public class ProjetServiceController {
     @GetMapping("/ide/files/open")
     public ExecReport open(@RequestParam(value="path", defaultValue = "./tmp") String path)
     {
+        System.out.println(path);
         Project project = projectServ.getProject();
         String params = path;
         List<Feature> features = project.getFeatures();
@@ -48,7 +50,6 @@ public class ProjetServiceController {
             if (feature.type().toString() == "OPEN")
             {
                 ExecReport report = (ExecReport) feature.execute(project, params);
-                System.out.println(report.getContent());
                 return report;
             }
         }
@@ -107,7 +108,8 @@ public class ProjetServiceController {
 
     @GetMapping("/ide/files/exec")
     public ExecReport exec(@RequestParam(value="path", defaultValue = "./temp") String path){
-        System.out.println("here");
+        System.out.println(path);
+        System.out.println(Paths.get(path).toAbsolutePath());
         Project_Entity project = projectServ.getProject();
         ExecReport report = (ExecReport) projectServ.execute(project, Mandatory.Features.Any.EXEC,path);
         return report;

@@ -1,6 +1,14 @@
 <script>
     import Git from "./Git/Git.svelte";
     import Files from "./Files/Files.svelte";
+    import {output_content} from "../../Console/OutputStore";
+    import {pathStore} from "../../Path/PathStore";
+
+    var path = "path";
+    pathStore.subscribe(string => 
+    {
+        path = string.substring(6);
+    })
 
     let git = false;
     let files = false;
@@ -23,6 +31,20 @@
         files = false;
         git = false;
     }
+
+    async function run(){
+        //get the current file path
+        var Content_header = "Executed file at " + path.substring(6) + ":\n";
+        fetch("http://localhost:8080/ide/files/exec?path=" + path)
+        .then(response => response.json())
+        .then(data => { 
+            if (data) 
+                output_content.set(Content_header + data.content);
+            else 
+                output_content.set("Couldn't execute file at " + path + "<br/>");
+            });
+    }
+
 </script>
 
 <div id="main">
@@ -35,7 +57,7 @@
     <button on:click={displayGit}
         ><img src="../../../../images/git.png" alt="git" /></button
     >
-    <button id="run">
+    <button id="run" on:click={run}>
         <img src="../../../../images/triangle.png" alt="triangle" />
     </button>
 </div>
