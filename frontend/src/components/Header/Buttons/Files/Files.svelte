@@ -1,11 +1,13 @@
 <script>
     import Open from "./Open.svelte";
-    import Save from "./Save.svelte"
+    import Save from "./Save.svelte";
+    import Load from "./Load.svelte";
 </script>
 
 <div>
     <Open />
     <Save />
+    <Load />
 </div>
 
 <style>

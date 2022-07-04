@@ -38,12 +38,12 @@
         }
     }
 
-    // FIXME REMOVE ME
-    try {
-        load();
-    } catch (e) {
-        console.log(e);
-    }
+    // // FIXME REMOVE ME
+    // try {
+    //     load();
+    // } catch (e) {
+    //     console.log(e);
+    // }
 </script>
 
 <div class="container">
