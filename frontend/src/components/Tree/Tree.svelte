@@ -1,6 +1,7 @@
 <script>
     import { project } from "/src/stores/project.js";
     import Folder from "./Folder.svelte";
+    import { get_root_for_style } from "svelte/internal";
 
     function parseNodes(root) {
         let name = root.path;
@@ -19,7 +20,7 @@
             return { name, children };
         }
 
-        return { name };
+        return { name, path: root.path };
     }
 
     $: root =
@@ -45,7 +46,12 @@
     }
 </script>
 
-<div class="tree">
+<div class="container">
+    <div class="project-name">
+        <h2>
+            {#if root === undefined} No project {:else} {root.name} {/if}
+        </h2>
+    </div>
     {#if root === undefined}
         <!-- TODO component to open a project-->
         <div id="no_project">
@@ -53,16 +59,34 @@
         </div>
     {:else}
         <!-- TODO enable showing or not showing hidden files.-->
-        <Folder name={root.name} children={root.children} expanded={true} />
+        <div class="tree">
+            <Folder name={root.name} children={root.children} expanded={true} />
+        </div>
     {/if}
 </div>
 
 <style>
-    .tree {
-        padding-top: 15px;
-        padding-left: 0.7%;
+    .container {
+        background-color: #17212f;
         height: 100%;
         width: 20%;
+        align-content: inherit;
+    }
+
+    .tree {
+        padding-top: 15px;
+        padding-left: 10%;
+        height: 100%;
+        background-color: #17212f;
+    }
+
+    .project-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 0.7%;
+        height: 45px;
+        border-bottom: 1px solid #ffff;
         background-color: #17212f;
     }
 
@@ -80,6 +104,13 @@
         color: rgb(198, 196, 196);
         font-size: 1em;
         font-weight: bold;
+        text-align: center;
+    }
+
+    h2 {
+        color: aliceblue;
+        margin: 0;
+        font-size: 12;
         text-align: center;
     }
 </style>
