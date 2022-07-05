@@ -4,6 +4,7 @@ import java.io.Console;
 import java.nio.file.Paths;
 import java.util.List;
 import java.io.File;
+import java.util.Optional;
 
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,15 +58,20 @@ public class ProjetServiceController {
     }
 
     @PostMapping("ide/files/save")
-    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path, @RequestBody String content)
+    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path, @RequestBody Optional<String> content)
     {
+        String actual_content = "";
+        if (content.isPresent()){
+            actual_content = content.get();
+        }
+        System.out.println("here");
         Project project = projectServ.getProject();
         String params = path;
         // TODO
 
         Node node = projectServ.get_nodes(new File(path));
         try {
-            projectServ.getNodeService().update(node, content);
+            projectServ.getNodeService().update(node, actual_content); 
         } catch (Exception e){
             return new ExecReport(Status.ERROR, "Couldn't save file");
         }
