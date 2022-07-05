@@ -33,16 +33,26 @@
 
     async function run() {
         //get the current file path
+        if (path == "")
+        {
+            output_content.set("No file is currently opened, open a file in the editor to run it.")
+            return;
+        }
         var Content_header = "Executed file at " + path.substring(6) + ":\n";
         // @ts-ignore
         fetch(`${window.BASE_URL}/ide/files/exec?path=${path}`)
             .then((response) => response.json())
             .then((data) => {
-                if (data) output_content.set(Content_header + data.content);
+                if (data.content) 
+                {
+                    output_content.set(Content_header + data.content);
+                }
                 else
+                {
                     output_content.set(
-                        "Couldn't execute file at " + path + "<br/>"
+                        "Couldn't execute file at " + path + `: ${data.message}` 
                     );
+                }
             });
     }
 </script>
