@@ -26,7 +26,9 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "get-port": "^6.1.2"
+    "get-port": "^6.1.2",
+    "xterm": "^4.19.0",
+    "xterm-addon-fit": "^0.5.0"
   },
   "config": {
     "forge": {
