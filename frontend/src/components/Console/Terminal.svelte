@@ -1,5 +1,7 @@
-<script>
+<link rel="stylesheet" href="./node_modules/xterm/css/xterm.css" />
+<script src="./node_modules/xterm/lib/xterm.js">
     import {show_terminal} from "../../stores/OutputStore"
+    import { Terminal } from 'xterm';
 
     let show = false;
     let Prompt = "/home/hugo ~ Prompt";
@@ -7,7 +9,10 @@
     show_terminal.subscribe((value) => {
         show = value;
     })
+
+    //var term = new Terminal();
 </script>
+
 
 {#if show}
     <div>
