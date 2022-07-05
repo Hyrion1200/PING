@@ -1,5 +1,6 @@
 <script>
-    import { addTab, TabConfig } from "../Header/Tabs/TabStore.js";
+    // @ts-ignore
+    import { addTab, TabConfig } from "/src/stores/TabStore.js";
     export let name;
     export let path;
     export let relativePath;

@@ -1,8 +1,10 @@
 <script>
     import Git from "./Git/Git.svelte";
     import Files from "./Files/Files.svelte";
-    import { output_content } from "../../../stores/OutputStore";
-    import { pathStore } from "../../../stores/PathStore";
+    // @ts-ignore
+    import { output_content } from "/src/stores/OutputStore";
+    // @ts-ignore
+    import { pathStore } from "/src/stores/PathStore";
 
     var path = "path";
     pathStore.subscribe((string) => {
@@ -33,9 +35,10 @@
 
     async function run() {
         //get the current file path
-        if (path == "")
-        {
-            output_content.set("No file is currently opened, open a file in the editor to run it.")
+        if (path == "") {
+            output_content.set(
+                "No file is currently opened, open a file in the editor to run it."
+            );
             return;
         }
         var Content_header = "Executed file at " + path.substring(6) + ":\n";
@@ -43,14 +46,11 @@
         fetch(`${window.BASE_URL}/ide/files/exec?path=${path}`)
             .then((response) => response.json())
             .then((data) => {
-                if (data.content) 
-                {
+                if (data.content) {
                     output_content.set(Content_header + data.content);
-                }
-                else
-                {
+                } else {
                     output_content.set(
-                        "Couldn't execute file at " + path + `: ${data.message}` 
+                        "Couldn't execute file at " + path + `: ${data.message}`
                     );
                 }
             });

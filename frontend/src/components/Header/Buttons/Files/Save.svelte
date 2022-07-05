@@ -1,5 +1,6 @@
 <script>
-    import { editorStore } from "../../../Editor/EditorStore";
+    // @ts-ignore
+    import { editorStore } from "/src/stores/EditorStore";
     let path;
 
     async function handleSave() {

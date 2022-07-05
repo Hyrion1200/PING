@@ -1,7 +1,10 @@
 <script>
-    import { editorStore } from "../../Editor/EditorStore.js";
-    import { pathStore } from "../../../stores/PathStore.js";
-    import { removeTab, switchTab } from "./TabStore";
+    // @ts-ignore
+    import { editorStore } from "/src/stores/EditorStore.js";
+    // @ts-ignore
+    import { pathStore } from "/src/stores/PathStore.js";
+    // @ts-ignore
+    import { removeTab, switchTab } from "/src/stores/TabStore";
     export let tabConfig;
     let li;
 

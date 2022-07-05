@@ -1,5 +1,6 @@
 <script>
-    import { output_content } from "../../stores/OutputStore";
+    // @ts-ignore
+    import { output_content } from "/src/stores/OutputStore";
 
     let Prompt = "/home/hugo ~ Prompt";
 

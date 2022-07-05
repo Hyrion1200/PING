@@ -36,3 +36,6 @@ Main.java
 
 # Compilation
 target
+
+# Tests project
+backend/project

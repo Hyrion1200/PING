@@ -1,5 +1,6 @@
 <script>
-    import { pathStore } from "../../stores/PathStore";
+    // @ts-ignore
+    import { pathStore } from "/src/stores/PathStore";
 </script>
 
 <p>{$pathStore}</p>

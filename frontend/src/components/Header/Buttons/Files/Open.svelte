@@ -1,7 +1,8 @@
 <script>
-    import { editorStore } from "../../../Editor/EditorStore";
-    import Tab from "../../Tabs/Tab.svelte";
-    import { TabConfig, tabStore, addTab } from "../../Tabs/TabStore.js";
+    // @ts-ignore
+    import { editorStore } from "/src/stores/EditorStore";
+    // @ts-ignore
+    import { TabConfig, addTab } from "/src/stores/TabStore.js";
     let path;
 
     async function handleOpen() {
