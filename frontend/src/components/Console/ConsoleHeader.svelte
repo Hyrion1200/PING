@@ -1,21 +1,18 @@
 <script>
     import { output_content } from "../../stores/OutputStore";
+    import {show_terminal} from "../../stores/OutputStore"
+    import {show_output} from "../../stores/OutputStore"
 
     let Prompt = "/home/hugo ~ Prompt";
 
     function Show_Output() {
-        var output = document.getElementById("Output");
-        var Terminal = document.getElementById("Terminal");
         output_content.set("Execution output...");
-        output.hidden = false;
-        Terminal.hidden = true;
+        show_output.set(true);
+        show_terminal.set(false);
     }
     function Show_Terminal() {
-        var output = document.getElementById("Output");
-        var Terminal = document.getElementById("Terminal");
-        Terminal.innerHTML = Prompt;
-        Terminal.hidden = false;
-        output.hidden = true;
+        show_output.set(false);
+        show_terminal.set(true);
     }
 </script>
 
