@@ -1,8 +1,8 @@
 <script>
     import Git from "./Git/Git.svelte";
     import Files from "./Files/Files.svelte";
-    import { output_content } from "../../Console/OutputStore";
-    import { pathStore } from "../../Path/PathStore";
+    import { output_content } from "../../../stores/OutputStore";
+    import { pathStore } from "../../../stores/PathStore";
 
     var path = "path";
     pathStore.subscribe((string) => {
@@ -49,16 +49,15 @@
 
 <div id="main">
     <button on:click={displayFiles}>
-        <img src="../../../../images/directory.png" alt="directory" />
+        <img src="images/directory.png" alt="directory" />
     </button>
     <button on:click={displayMaven}
-        ><img src="../../../../images/maven.png" alt="maven" /></button
+        ><img src="images/maven.png" alt="maven" /></button
     >
-    <button on:click={displayGit}
-        ><img src="../../../../images/git.png" alt="git" /></button
+    <button on:click={displayGit}><img src="images/git.png" alt="git" /></button
     >
     <button id="run" on:click={run}>
-        <img src="../../../../images/triangle.png" alt="triangle" />
+        <img src="images/triangle.png" alt="triangle" />
     </button>
 </div>
 

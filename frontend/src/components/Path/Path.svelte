@@ -1,5 +1,5 @@
 <script>
-    import { pathStore } from "./PathStore";
+    import { pathStore } from "../../stores/PathStore";
 </script>
 
 <p>{$pathStore}</p>

@@ -1,7 +1,6 @@
 <script>
     import { editorStore } from "../../../Editor/EditorStore";
-    // @ts-ignore
-    import { project } from "/src/stores/project.js";
+    import { project } from "../../../../stores/project.js";
     import { TabConfig, tabStore, addTab } from "../../Tabs/TabStore.js";
     let path;
 

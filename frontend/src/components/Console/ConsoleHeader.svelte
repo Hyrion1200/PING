@@ -1,34 +1,28 @@
 <script>
-    import {output_content} from "./OutputStore";
-
+    import { output_content } from "../../stores/OutputStore";
 
     let Prompt = "/home/hugo ~ Prompt";
 
-    function Show_Output(){
-        var output = document.getElementById("Output")
+    function Show_Output() {
+        var output = document.getElementById("Output");
         var Terminal = document.getElementById("Terminal");
         output_content.set("Execution output...");
         output.hidden = false;
         Terminal.hidden = true;
     }
-    function Show_Terminal(){
-        var output = document.getElementById("Output")
+    function Show_Terminal() {
+        var output = document.getElementById("Output");
         var Terminal = document.getElementById("Terminal");
         Terminal.innerHTML = Prompt;
         Terminal.hidden = false;
         output.hidden = true;
-        
     }
 </script>
 
 <div>
     <ul>
-        <button on:click={Show_Output}>
-            Output
-        </button>
-        <button on:click={Show_Terminal}>
-            Terminal
-        </button>
+        <button on:click={Show_Output}> Output </button>
+        <button on:click={Show_Terminal}> Terminal </button>
     </ul>
 </div>
 
@@ -54,12 +48,11 @@
         list-style: none;
     }
 
-    button{
+    button {
         margin: 0;
         color: grey;
         display: inline-block;
         padding: 10px;
         border-bottom: 1px solid #2d2d2d;
     }
-
 </style>

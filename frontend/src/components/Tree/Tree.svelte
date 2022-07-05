@@ -2,7 +2,6 @@
     // @ts-ignore
     import { project } from "/src/stores/project.js";
     import Folder from "./Folder.svelte";
-    import { get_root_for_style } from "svelte/internal";
 
     function parseNodes(root, i = 0) {
         let name = root.path;
@@ -72,6 +71,7 @@
 </div>
 
 <style>
+    /* TODO propper gestion of resizing and simply scrolling */
     .container {
         background-color: #17212f;
         height: 100%;
