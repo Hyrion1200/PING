@@ -32,7 +32,7 @@
     span {
         color: rgb(198, 196, 196);
         padding: 0 0 0 1.5em;
-        background: url(/src/assets/themes/default/icons/folder.svg) 0 0.1em
+        background: url(assets/themes/default/icons/folder.svg) 0 0.1em
             no-repeat;
         background-size: 1em 1em;
         font-weight: bold;
@@ -40,7 +40,7 @@
     }
 
     .expanded {
-        background-image: url(/src/assets/themes/default/icons/opened-folder.svg);
+        background-image: url(assets/themes/default/icons/opened-folder.svg);
     }
 
     ul {

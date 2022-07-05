@@ -1,6 +1,6 @@
 <script>
     import { editorStore } from "../../Editor/EditorStore.js";
-    import { pathStore } from "../../Path/PathStore.js";
+    import { pathStore } from "../../../stores/PathStore.js";
     import { removeTab, switchTab } from "./TabStore";
     export let tabConfig;
     let li;
@@ -49,7 +49,7 @@
             on:mouseenter={btnHoverEnter}
             on:mouseleave={btnHoverLeave}
         >
-            <img src="../../../images/cross.png" alt="cross" />
+            <img src="images/cross.png" alt="cross" />
         </button>
     </span>
 </li>

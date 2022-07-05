@@ -9,6 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "electron-forge start",
+    "electron": "npm run build && electron .",
     "package": "electron-forge package",
     "make": "npm run build && electron-forge make"
   },
@@ -24,16 +25,23 @@
     "vite": "^2.9.9"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "get-port": "^6.1.2"
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "executableName": "frontend",
+        "extraResources": [
+          "./resources/ping_backend-1.0.0.jar"
+        ]
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "frontend"
+            "authors": "The Holidays tream",
+            "exe": "frontend"
           }
         },
         {

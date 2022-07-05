@@ -6,24 +6,25 @@
 
     async function handleOpen() {
         //let url = window.BASE_URL + "/ide/files/open?path=" + path;
-        let url = "http://localhost:8080/ide/files/open?path=" + path;
-        console.log(url)
-        console.log(editorStore)
-        const resp = await fetch(url).then(function(response){ return response.json();}).then(
-            function(data)
-            {
-                if (data.status == "SUCCESS")
-                {
+        // @ts-ignore
+        let url = `${window.BASE_URL}/ide/files/open?path=${path}`;
+        console.log(url);
+        console.log(editorStore);
+        const resp = await fetch(url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.status == "SUCCESS") {
                     addTab(new TabConfig(path, path, data.content));
-                    editorStore.update(value => value = data.content);
+                    editorStore.update((value) => (value = data.content));
                 }
-                console.log(data.content)
+                console.log(data.content);
             });
     }
 </script>
 
-
-<input type="text" bind:value={path}>
+<input type="text" bind:value={path} />
 <button id="open" on:click={handleOpen}>Open</button>
 
 <style>

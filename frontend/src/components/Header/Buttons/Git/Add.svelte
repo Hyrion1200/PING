@@ -5,7 +5,8 @@
     let text = "default";
     async function handleAdd() {
         var path = "test";
-        let url = "http://localhost:8080/ide/git/add?path=" + path;
+        // @ts-ignore
+        let url = `${window.BASE_URL}/ide/git/add?path=${path}`;
 
         const resp = await fetch(url)
             .then(function (response) {

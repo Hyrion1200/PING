@@ -1,5 +1,5 @@
 <script>
-    import { addTab, TabConfig } from "/src/components/Header/Tabs/TabStore.js";
+    import { addTab, TabConfig } from "../Header/Tabs/TabStore.js";
     export let name;
     export let path;
     export let relativePath;
@@ -9,7 +9,8 @@
 
     async function getContent() {
         const response = await fetch(
-            "http://localhost:8080/ide/files/open?path=" + relativePath
+            // @ts-ignore
+            `${window.BASE_URL}/ide/files/open?path=${relativePath}`
         );
         const report = await response.json();
 
@@ -20,7 +21,7 @@
         try {
             const report = await getContent();
             if (report.status === "ERROR") throw new Error(report.message);
-            addTab(new TabConfig(name, path, report.content, false));
+            addTab(new TabConfig(name, path, report.content));
         } catch (e) {
             console.error("Failed to load file", e);
         }
@@ -29,7 +30,7 @@
 
 <button
     on:click={clickFile}
-    style="background-image: url(/src/assets/themes/{theme}/icons/{type}.svg), url(/src/assets/themes/{theme}/icons/file.svg)"
+    style="background-image: url(assets/themes/{theme}/icons/{type}.svg), url(assets/themes/{theme}/icons/file.svg)"
     >{name}</button
 >
 

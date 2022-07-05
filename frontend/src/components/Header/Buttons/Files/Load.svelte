@@ -1,29 +1,29 @@
 <script>
     import { editorStore } from "../../../Editor/EditorStore";
-    import { project } from "/src/stores/project.js";
+    import { project } from "../../../../stores/project.js";
     import { TabConfig, tabStore, addTab } from "../../Tabs/TabStore.js";
     let path;
 
     async function handleLoad() {
         path = prompt("Enter a project path: ");
-        if (path === undefined)
-            return;
+        if (path === undefined) return;
         //let url = window.BASE_URL + "/ide/files/open?path=" + path;
-        let url = "http://localhost:8080/ide/load?path=" + path;
-        console.log(url)
-        console.log(editorStore)
-        const resp = await fetch(url).then(function(response){ return response.json();}).then(
-            function(data)
-            {
-                if (data.status == "SUCCESS")
-                {
-                    project.set(data.content)
+        // @ts-ignore
+        let url = `${window.BASE_URL}/ide/load?path=${path}`;
+        console.log(url);
+        console.log(editorStore);
+        const resp = await fetch(url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.status == "SUCCESS") {
+                    project.set(data.content);
                 }
-                console.log(data.content)
+                console.log(data.content);
             });
     }
 </script>
-
 
 <button id="open" on:click={handleLoad}>Load Project</button>
 
@@ -40,4 +40,3 @@
         background-color: #3d3d3d;
     }
 </style>
-

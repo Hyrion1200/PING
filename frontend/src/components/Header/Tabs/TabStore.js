@@ -1,5 +1,5 @@
 import { editorStore } from "../../Editor/EditorStore.js";
-import { pathStore } from "../../Path/PathStore.js"
+import { pathStore } from "../../../stores/PathStore.js"
 
 import { writable } from "svelte/store";
 
