@@ -1,10 +1,11 @@
 <script>
     import Modal from "./Modal.svelte";
+    import { pathStore } from "../../../../stores/PathStore"
 
     let isOpenModal = false;
     let text = "default";
     async function handleAdd() {
-        var path = "test";
+        var path = $pathStore;
         // @ts-ignore
         let url = `${window.BASE_URL}/ide/git/add?path=${path}`;
 
