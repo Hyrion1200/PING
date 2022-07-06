@@ -7,10 +7,12 @@
 	import Output from "./components/Console/Output.svelte";
 	import Terminal from "./components/Console/Terminal.svelte";
 	import ConsoleHeader from "./components/Console/ConsoleHeader.svelte";
+	import Sound from "./components/sound/Sound.svelte";
 </script>
 
 <main>
 	<Tree />
+	<Sound />
 
 	<div>
 		<Header />
