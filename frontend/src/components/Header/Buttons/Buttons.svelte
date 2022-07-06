@@ -73,6 +73,7 @@
     div {
         display: flex;
         flex-wrap: nowrap;
+        width: 135px;
     }
 
     img {

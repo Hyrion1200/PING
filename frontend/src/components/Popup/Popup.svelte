@@ -20,14 +20,14 @@
         cancel = cancelFunc;
     }
 
-    async function okClick() {
-        await ok();
-        show = false;
-    }
-
-    async function cancelClick() {
-        await cancel();
-        show = false;
+    async function onClick(func) {
+        try {
+            await func();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            show = false;
+        }
     }
 </script>
 
@@ -39,8 +39,10 @@
             <input type="text" bind:value={answer} />
 
             <nav>
-                <button id="ok" on:click={okClick}> OK </button>
-                <button id="cancel" on:click={cancelClick}> Cancel </button>
+                <button id="ok" on:click={() => onClick(ok)}> OK </button>
+                <button id="cancel" on:click={() => onClick(cancel)}>
+                    Cancel
+                </button>
             </nav>
         </article>
     </div>
@@ -89,7 +91,8 @@
 
     nav {
         display: flex;
-        width: 50%;
+        justify-content: space-around;
+        width: 100%;
         margin: auto;
         padding: 10px;
         margin-top: 10px;

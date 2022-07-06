@@ -16,7 +16,7 @@
         flex-direction: column;
         position: absolute;
         right: 250px;
-        top: 48.5px;
+        top: 45px;
         width: 135px;
     }
 </style>

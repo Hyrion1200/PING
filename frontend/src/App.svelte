@@ -7,7 +7,7 @@
 	import Console from "./components/Console/Console.svelte";
 </script>
 
-<main style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+<main>
 	<Tree />
 
 	<div id="center">
@@ -30,7 +30,6 @@
 	#center {
 		display: flex;
 		flex-flow: column;
-		width: 100%;
-		height: 100%;
+		width: calc(100% - 500px);
 	}
 </style>
