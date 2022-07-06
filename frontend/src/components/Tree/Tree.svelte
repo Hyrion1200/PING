@@ -74,15 +74,13 @@
     /* TODO propper gestion of resizing and simply scrolling */
     .container {
         background-color: #17212f;
-        height: 100%;
-        width: 20%;
+        min-width: 250px;
         align-content: inherit;
     }
 
     .tree {
         padding-top: 15px;
         padding-left: 10%;
-        height: 100%;
         background-color: #17212f;
     }
 
@@ -101,7 +99,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 80%;
         width: 95%;
         background-color: #17212f;
     }

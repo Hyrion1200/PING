@@ -81,7 +81,7 @@
     li {
         margin: 0;
         color: grey;
-        height: 25px;
+        height: 45px;
         border-bottom: 1px solid #2d2d2d;
         padding: 10px 10px 10px 30px;
     }

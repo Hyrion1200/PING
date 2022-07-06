@@ -8,8 +8,7 @@
         text-align: center;
     }
     div {
-        height: 100%;
-        width: 20%;
+        min-width: 250px;
         background-color: #121212;
     }
 </style>

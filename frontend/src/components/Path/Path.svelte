@@ -7,9 +7,11 @@
 
 <style>
     p {
-        height: 20px;
+        padding-left: 10px;
+        height: 40px;
+        display: flex;
+        align-items: center;
         font-size: 12px;
-        padding: 4px;
         margin: 0;
         background-color: #2d2d2d;
         color: grey;

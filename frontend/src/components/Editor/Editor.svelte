@@ -41,8 +41,8 @@
 
 <style>
     div {
+        height: 100%;
         display: flex;
-        height: 70%;
     }
 
     textarea {
