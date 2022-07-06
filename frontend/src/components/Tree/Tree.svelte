@@ -24,7 +24,7 @@
             return { name, children };
         }
 
-        return { name, path: root.path, relativePath };
+        return { name, path: root.path.slice(7), relativePath };
     }
 
     $: root =
@@ -32,23 +32,6 @@
 
     $: console.log("root", root);
 
-    async function load() {
-        if (root === undefined) {
-            let loadedProject = await fetch(
-                // @ts-ignore
-                `${window.BASE_URL}/ide/load?path=.`
-            );
-            let jsonObj = await loadedProject.json();
-            project.set(jsonObj.content);
-        }
-    }
-
-    // // FIXME REMOVE ME
-    // try {
-    //     load();
-    // } catch (e) {
-    //     console.log(e);
-    // }
 </script>
 
 <div class="container">
