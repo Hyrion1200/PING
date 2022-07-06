@@ -1,12 +1,17 @@
 <script>
+    import { show_terminal } from "../../stores/OutputStore";
+
+    let show = false;
     let Prompt = "/home/hugo ~ Prompt";
 </script>
 
-<div>
-    <p id="Terminal" hidden>
-        {Prompt}
-    </p>
-</div>
+{#if $show_terminal}
+    <div>
+        <p id="Terminal">
+            {Prompt}
+        </p>
+    </div>
+{/if}
 
 <style>
     div {
