@@ -30,7 +30,7 @@
 <!-- TODO background image use variables -->
 <style>
     span {
-        color: rgb(198, 196, 196);
+        color: #ffffe0;
         padding: 0 0 0 1.5em;
         background: url(assets/themes/default/icons/folder.svg) 0 0.1em
             no-repeat;

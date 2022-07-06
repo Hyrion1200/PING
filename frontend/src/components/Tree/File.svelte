@@ -39,7 +39,7 @@
     button {
         all: unset;
         cursor: pointer;
-        color: rgb(198, 196, 196);
+        color: #ffffe0;
         padding: 0 0 0 1.5em;
         background: 0 0.1em no-repeat;
         background-size: contain;

@@ -3,10 +3,14 @@
     import { editorStore } from "/src/stores/EditorStore";
     // @ts-ignore
     import { TabConfig, addTab } from "/src/stores/TabStore.js";
-    let path;
+    // @ts-ignore
+    import Popup from "/src/components/Popup/Popup.svelte";
+
+    let popup;
 
     async function handleOpen() {
         //let url = window.BASE_URL + "/ide/files/open?path=" + path;
+        let path = popup.answer;
         // @ts-ignore
         let url = `${window.BASE_URL}/ide/files/open?path=${path}`;
         console.log(url);
@@ -23,10 +27,15 @@
                 console.log(data.content);
             });
     }
+
+    function askFilePath() {
+        popup.prompt(handleOpen);
+    }
 </script>
 
-<input type="text" bind:value={path} />
-<button id="open" on:click={handleOpen}>Open</button>
+<Popup bind:this={popup} sentence="File path: " />
+
+<button id="open" on:click={askFilePath}>Open</button>
 
 <style>
     button {

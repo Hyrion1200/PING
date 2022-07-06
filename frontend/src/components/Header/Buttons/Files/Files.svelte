@@ -17,6 +17,6 @@
         position: absolute;
         right: 14.3%;
         top: 48.5px;
-        width: 180px;
+        width: 135px;
     }
 </style>

@@ -1,16 +1,14 @@
 <script>
-    import Modal from "./Modal.svelte";
+    // @ts-ignore
+    import Popup from "/src/components/Popup/Popup.svelte";
 
-    let isOpenModal = false;
     let text = "default";
+    let usernamePopup;
+    let passwordPopup;
 
     async function handlePull() {
-        let user = window.prompt("Git username: ");
-        if (user === null) return;
-
-        let password = window.prompt("Git password: ");
-        if (password === null) return;
-
+        let user = usernamePopup.answer;
+        let password = passwordPopup.answer;
         // @ts-ignore
         let url = `${window.BASE_URL}/ide/git/pull?user=${user}&password=${password}`;
         const resp = await fetch(url)
@@ -20,16 +18,24 @@
             .then(function (data) {
                 if (data.status === "ERROR") {
                     console.log("Error");
-                    isOpenModal = true;
                     text = data.message;
                 }
                 document.getElementById("editor").textContent = data.content;
             });
     }
+
+    function askUsername() {
+        usernamePopup.prompt(askPassword);
+    }
+
+    function askPassword() {
+        passwordPopup.prompt(handlePull);
+    }
 </script>
 
-<button id="pull" on:click={handlePull}> Git pull </button>
-<Modal {isOpenModal} {text} />
+<Popup bind:this={usernamePopup} sentence="Git username: " />
+<Popup bind:this={passwordPopup} sentence="Git password: " />
+<button id="pull" on:click={askUsername}> Git pull </button>
 
 <style>
     button {

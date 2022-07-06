@@ -1,6 +1,7 @@
 <script>
     // @ts-ignore
     import { editorStore, editorAdd } from "/src/stores/EditorStore";
+
     let lines = "";
 
     let numberArea;

@@ -1,15 +1,14 @@
 <script>
-    import Modal from "./Modal.svelte";
+    // @ts-ignore
+    import Popup from "/src/components/Popup/Popup.svelte";
 
-    let isOpenModal = false;
     let text = "default";
+    let usernamePopup;
+    let passwordPopup;
 
     async function handlePush() {
-        let user = window.prompt("Git username: ");
-        if (user === null) return;
-
-        let password = window.prompt("Git password: ");
-        if (password === null) return;
+        let user = usernamePopup.answer;
+        let password = passwordPopup.answer;
 
         // @ts-ignore
         let url = `${window.BASE_URL}/ide/git/push?user=${user}&password=${password}`;
@@ -20,16 +19,25 @@
             .then(function (data) {
                 if (data.status === "ERROR") {
                     console.log("Error");
-                    isOpenModal = true;
                     text = data.message;
                 }
                 document.getElementById("editor").textContent = data.content;
             });
     }
+
+    function askUsername() {
+        usernamePopup.prompt(askPassword);
+    }
+
+    function askPassword() {
+        passwordPopup.prompt(handlePush);
+    }
 </script>
 
-<button id="push" on:click={handlePush}> Git push </button>
-<Modal {isOpenModal} {text} />
+<Popup bind:this={usernamePopup} sentence="Git username: " />
+<Popup bind:this={passwordPopup} sentence="Git password: " />
+
+<button id="push" on:click={askUsername}> Git push </button>
 
 <style>
     button {

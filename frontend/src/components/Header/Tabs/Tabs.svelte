@@ -1,7 +1,7 @@
 <script>
     import Tab from "./Tab.svelte";
     // @ts-ignore
-    import { TabConfig, tabStore, addTab } from "/src/stores/TabStore.js";
+    import { tabStore } from "/src/stores/TabStore.js";
 </script>
 
 <ul>

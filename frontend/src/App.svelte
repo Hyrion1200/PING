@@ -9,9 +9,8 @@
 	import ConsoleHeader from "./components/Console/ConsoleHeader.svelte";
 </script>
 
-<main>
+<main style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
 	<Tree />
-
 	<div>
 		<Header />
 		<Path />

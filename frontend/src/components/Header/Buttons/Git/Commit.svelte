@@ -1,13 +1,12 @@
 <script>
-    import Modal from "./Modal.svelte";
+    // @ts-ignore
+    import Popup from "/src/components/Popup/Popup.svelte";
 
-    let isOpenModal = false;
     let text = "default";
+    let popup;
 
     async function handleCommit() {
-        isOpenModal = false;
-
-        let msg = window.prompt("Commit message: ");
+        let msg = popup.answer;
 
         if (msg === null) return;
 
@@ -20,17 +19,20 @@
             .then(function (data) {
                 if (data.status === "ERROR") {
                     console.log("Error");
-                    isOpenModal = true;
                     text = data.message;
                 }
                 document.getElementById("editor").textContent = data.content;
             });
     }
+
+    function askCommitMessage() {
+        popup.prompt(handleCommit);
+    }
 </script>
 
-<button id="commit" on:click={handleCommit}> Git commit </button>
+<Popup bind:this={popup} sentence="Commit message: " />
 
-<Modal {isOpenModal} {text} />
+<button id="commit" on:click={askCommitMessage}> Git commit </button>
 
 <style>
     button {

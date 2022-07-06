@@ -1,14 +1,17 @@
 <script>
+    import { onMount } from "svelte";
+
+    // @ts-ignore
+    import Popup from "/src/components/Popup/Popup.svelte";
     // @ts-ignore
     import { editorStore } from "/src/stores/EditorStore";
     // @ts-ignore
     import { project } from "/src/stores/project.js";
 
-    let path;
+    let popup;
 
     async function handleLoad() {
-        path = prompt("Enter a project path: ");
-        if (path === undefined) return;
+        let path = popup.answer;
         //let url = window.BASE_URL + "/ide/files/open?path=" + path;
         // @ts-ignore
         let url = `${window.BASE_URL}/ide/load?path=${path}`;
@@ -25,9 +28,15 @@
                 console.log(data.content);
             });
     }
+
+    function askProjectPath() {
+        popup.prompt(handleLoad);
+    }
 </script>
 
-<button id="open" on:click={handleLoad}>Load Project</button>
+<Popup bind:this={popup} sentence="Project path: " />
+
+<button id="open" on:click={askProjectPath}>Load Project</button>
 
 <style>
     button {

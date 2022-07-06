@@ -27,12 +27,6 @@
         maven = false;
     }
 
-    function displayMaven() {
-        maven = !maven;
-        files = false;
-        git = false;
-    }
-
     async function run() {
         //get the current file path
         if (path == "") {
@@ -61,9 +55,6 @@
     <button on:click={displayFiles}>
         <img src="images/directory.png" alt="directory" />
     </button>
-    <button on:click={displayMaven}
-        ><img src="images/maven.png" alt="maven" /></button
-    >
     <button on:click={displayGit}><img src="images/git.png" alt="git" /></button
     >
     <button id="run" on:click={run}>

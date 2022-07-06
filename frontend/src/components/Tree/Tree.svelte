@@ -107,14 +107,14 @@
     }
 
     p {
-        color: rgb(198, 196, 196);
+        color: #ffffe0;
         font-size: 1em;
         font-weight: bold;
         text-align: center;
     }
 
     h2 {
-        color: aliceblue;
+        color: #ffffe0;
         margin: 0;
         font-size: 12;
         text-align: center;
