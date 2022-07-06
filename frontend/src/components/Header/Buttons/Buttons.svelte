@@ -6,7 +6,7 @@
 
     var path = "path";
     pathStore.subscribe((string) => {
-        path = string.substring(6);
+        path = string;
     });
 
     let git = false;
@@ -38,7 +38,7 @@
             output_content.set("No file is currently opened, open a file in the editor to run it.")
             return;
         }
-        var Content_header = "Executed file at " + path.substring(6) + ":\n";
+        var Content_header = "Executed file at " + path + ":\n";
         // @ts-ignore
         fetch(`${window.BASE_URL}/ide/files/exec?path=${path}`)
             .then((response) => response.json())

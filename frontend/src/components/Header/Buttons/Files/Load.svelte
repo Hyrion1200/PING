@@ -7,7 +7,6 @@
     async function handleLoad() {
         path = prompt("Enter a project path: ");
         if (path === undefined) return;
-        //let url = window.BASE_URL + "/ide/files/open?path=" + path;
         // @ts-ignore
         let url = `${window.BASE_URL}/ide/load?path=${path}`;
         console.log(url);

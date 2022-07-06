@@ -66,13 +66,11 @@ public class ProjetServiceController {
         if (content.isPresent()){
             actual_content = content.get();
         }
-        System.out.println("here");
-        Project project = projectServ.getProject();
-        String params = path;
-        // TODO
 
-        Node node = projectServ.get_nodes(new File(path));
         try {
+            Project project = projectServ.getProject();
+            String params = path;
+            Node node = projectServ.get_nodes(new File(path));
             projectServ.getNodeService().update(node, actual_content); 
         } catch (Exception e){
             return new ExecReport(Status.ERROR, "Couldn't save file");

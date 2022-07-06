@@ -10,7 +10,7 @@
     async function getContent() {
         const response = await fetch(
             // @ts-ignore
-            `${window.BASE_URL}/ide/files/open?path=${relativePath}`
+            `${window.BASE_URL}/ide/files/open?path=${path}` 
         );
         const report = await response.json();
 
