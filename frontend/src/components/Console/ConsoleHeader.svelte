@@ -1,22 +1,21 @@
 <script>
     // @ts-ignore
     import { output_content } from "/src/stores/OutputStore";
+    // @ts-ignore
+    import { show_terminal } from "/src/stores/OutputStore";
+    // @ts-ignore
+    import { show_output } from "/src/stores/OutputStore";
 
     let Prompt = "/home/hugo ~ Prompt";
 
     function Show_Output() {
-        var output = document.getElementById("Output");
-        var Terminal = document.getElementById("Terminal");
         output_content.set("Execution output...");
-        output.hidden = false;
-        Terminal.hidden = true;
+        show_output.set(true);
+        show_terminal.set(false);
     }
     function Show_Terminal() {
-        var output = document.getElementById("Output");
-        var Terminal = document.getElementById("Terminal");
-        Terminal.innerHTML = Prompt;
-        Terminal.hidden = false;
-        output.hidden = true;
+        show_output.set(false);
+        show_terminal.set(true);
     }
 </script>
 

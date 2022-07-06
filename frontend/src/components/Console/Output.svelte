@@ -1,19 +1,20 @@
 <script>
     // @ts-ignore
     import { output_content } from "/src/stores/OutputStore";
+    // @ts-ignore
+    import { show_output } from "/src/stores/OutputStore";
 
     let content = "Execution output...";
-
-    output_content.subscribe((value) => {
-        content = value;
-    });
+    let show = true;
 </script>
 
-<div>
-    <p id="Output">
-        {content}
-    </p>
-</div>
+{#if $show_output}
+    <div>
+        <p id="Output">
+            {$output_content}
+        </p>
+    </div>
+{/if}
 
 <style>
     div {
