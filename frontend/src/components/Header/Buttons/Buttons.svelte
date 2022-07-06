@@ -8,7 +8,7 @@
 
     var path = "path";
     pathStore.subscribe((string) => {
-        path = string.substring(6);
+        path = string;
     });
 
     let git = false;

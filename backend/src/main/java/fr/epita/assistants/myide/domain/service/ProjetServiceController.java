@@ -34,6 +34,8 @@ public class ProjetServiceController {
     {
         System.out.println("Load");
         Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
+        if (project == null)
+            return new ExecReport(Status.ERROR, "Failed to load project at: " + path);
         projectServ.setProject(project);
         return new ExecReport(Status.SUCCESS, projectServ.getProject());
     }
@@ -64,13 +66,11 @@ public class ProjetServiceController {
         if (content.isPresent()){
             actual_content = content.get();
         }
-        System.out.println("here");
-        Project project = projectServ.getProject();
-        String params = path;
-        // TODO
 
-        Node node = projectServ.get_nodes(new File(path));
         try {
+            Project project = projectServ.getProject();
+            String params = path;
+            Node node = projectServ.get_nodes(new File(path));
             projectServ.getNodeService().update(node, actual_content); 
         } catch (Exception e){
             return new ExecReport(Status.ERROR, "Couldn't save file");
