@@ -1,26 +1,17 @@
 <script>
-import { writable } from "svelte/store";
+    import { writable } from "svelte/store";
 
     import { output_content } from "../../stores/OutputStore";
-    import { show_output } from "../../stores/OutputStore"
+    import { show_output } from "../../stores/OutputStore";
 
     let content = "Execution output...";
     let show = true;
-
-    output_content.subscribe((value) => {
-        content = value;
-    });
-
-    show_output.subscribe((value) => {
-        show = value;
-    })
-
 </script>
 
-{#if show}
-     <div>
+{#if $show_output}
+    <div>
         <p id="Output">
-            {content}
+            {$output_content}
         </p>
     </div>
 {/if}
