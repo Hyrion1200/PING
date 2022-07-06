@@ -34,6 +34,8 @@ public class ProjetServiceController {
     {
         System.out.println("Load");
         Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
+        if (project == null)
+            return new ExecReport(Status.ERROR, "Failed to load project at: " + path);
         projectServ.setProject(project);
         return new ExecReport(Status.SUCCESS, projectServ.getProject());
     }

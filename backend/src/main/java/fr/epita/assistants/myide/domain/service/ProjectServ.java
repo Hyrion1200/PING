@@ -70,6 +70,8 @@ public class ProjectServ implements ProjectService{
     @Override
     public Project load(Path root) {
         File rootDir = new File(root.toString());
+        if (!rootDir.exists())
+            return null;
         Node rootNode = get_nodes(new File(root.toString()));
         Settings settings = null;
         for (Node node : rootNode.getChildren()){
