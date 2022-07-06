@@ -24,7 +24,7 @@
             return { name, children };
         }
 
-        return { name, path: root.path.slice(7), relativePath };
+        return { name, path: root.path.slice(7), relativePath }; // Remove file:// before absolute path   
     }
 
     $: root =
