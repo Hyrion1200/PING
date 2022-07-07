@@ -5,6 +5,7 @@
     import { pathStore } from "/src/stores/PathStore.js";
     // @ts-ignore
     import { removeTab, switchTab } from "/src/stores/TabStore";
+
     export let tabConfig;
     let li;
 
@@ -13,25 +14,26 @@
         pathStore.set(tabConfig.path);
     }
 
-    function tabHoverEnter() {
+    function tabHover() {
         li.style.backgroundColor = "#3d3d3d";
     }
 
-    function tabHoverLeave() {
-        li.style.backgroundColor = "#2d2d2d";
+    function saveHover() {
+        li.style.backgroundColor = "#51AC71";
+        li.style.color = "black";
     }
 
-    function btnHoverEnter(event) {
+    function closeHover() {
         li.style.backgroundColor = "#EB4747";
         li.style.color = "black";
     }
 
-    function btnHoverLeave(event) {
+    function hoverLeave() {
         li.style.backgroundColor = "#2d2d2d";
         li.style.color = "grey";
     }
 
-    function tabClick(event) {
+    function tabClick() {
         switchTab(tabConfig);
     }
 
@@ -54,14 +56,18 @@
 <li
     bind:this={li}
     on:click={tabClick}
-    on:mouseenter={tabHoverEnter}
-    on:mouseleave={tabHoverLeave}
+    on:mouseenter={tabHover}
+    on:mouseleave={hoverLeave}
 >
+    <button id="save" on:mouseenter={saveHover} on:mouseleave={hoverLeave}
+        ><img src="images/save.png" alt="save" /></button
+    >
     {tabConfig.name}
     <button
+        id="close"
         on:click={closeClick}
-        on:mouseenter={btnHoverEnter}
-        on:mouseleave={btnHoverLeave}
+        on:mouseenter={closeHover}
+        on:mouseleave={hoverLeave}
     >
         <img src="images/cross.png" alt="cross" />
     </button>
@@ -77,12 +83,18 @@
     button {
         visibility: hidden;
         position: relative;
-        right: -5px;
-        top: -8px;
         border: none;
         background-color: inherit;
         padding: 0;
         cursor: pointer;
+    }
+
+    #close {
+        right: -5px;
+    }
+
+    #save {
+        left: -5px;
     }
 
     li {
@@ -91,11 +103,14 @@
         color: grey;
         height: 45px;
         border-bottom: 1px solid #2d2d2d;
-        padding: 10px 10px 10px 30px;
+        padding: 10px;
         cursor: pointer;
     }
 
     li:hover button {
         visibility: visible;
+    }
+    li:hover {
+        transition: 0.1s;
     }
 </style>

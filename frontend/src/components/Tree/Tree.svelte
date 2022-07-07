@@ -1,6 +1,6 @@
 <script>
     // @ts-ignore
-    import { project } from "/src/stores/project.js";
+    import { project } from "/src/stores/ProjectStore.js";
     import Folder from "./Folder.svelte";
 
     function parseNodes(root, i = 0) {
@@ -24,14 +24,13 @@
             return { name, children };
         }
 
-        return { name, path: root.path.slice(7), relativePath }; // Remove file:// before absolute path   
+        return { name, path: root.path.slice(7), relativePath }; // Remove file:// before absolute path
     }
 
     $: root =
         $project !== undefined ? parseNodes($project.rootNode) : undefined;
 
     $: console.log("root", root);
-
 </script>
 
 <div class="container">
