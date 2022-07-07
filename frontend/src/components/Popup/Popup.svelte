@@ -1,6 +1,8 @@
 <svelte:options accessors={true} />
 
 <script>
+    import { afterUpdate, onMount } from "svelte";
+
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
     const popUpWidth = 400;
@@ -13,6 +15,18 @@
     let ok = undefined;
     let cancel = undefined;
     let show = false;
+
+    let input;
+
+    function setFocus() {
+        if (input) input.focus();
+    }
+
+    function handleKey(event) {
+        if (event.key === "Enter") {
+            onClick(ok);
+        }
+    }
 
     export function prompt(okFunc, cancelFunc = () => {}) {
         answer = "";
@@ -30,6 +44,8 @@
             show = false;
         }
     }
+
+    afterUpdate(setFocus);
 </script>
 
 {#if show}
@@ -37,7 +53,13 @@
         <article style="top: {popUpPosY}px; left: {popUpPosX}px;">
             <p>{sentence}</p>
 
-            <input type="text" bind:value={answer} />
+            <input
+                id="input"
+                bind:this={input}
+                type="text"
+                on:keypress={handleKey}
+                bind:value={answer}
+            />
 
             <nav>
                 <button id="ok" on:click={() => onClick(ok)}> OK </button>
