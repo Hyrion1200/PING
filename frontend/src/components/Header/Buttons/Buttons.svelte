@@ -5,8 +5,6 @@
     import { outputStore } from "/src/stores/ConsoleStore";
     // @ts-ignore
     import { pathStore } from "/src/stores/PathStore";
-    // @ts-ignore
-    import { buttonsStore } from "/src/stores/ButtonsStore.js";
 
     var path = "path";
     pathStore.subscribe((string) => {

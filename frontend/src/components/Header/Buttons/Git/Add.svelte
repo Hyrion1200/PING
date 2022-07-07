@@ -1,6 +1,8 @@
 <script>
     import Modal from "./Modal.svelte";
-    import { pathStore } from "../../../../stores/PathStore";
+
+    // @ts-ignore
+    import { pathStore } from "/src/stores/PathStore";
 
     let isOpenModal = false;
     let text = "default";

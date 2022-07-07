@@ -1,6 +1,4 @@
 <script>
-    import { onMount } from "svelte";
-
     // @ts-ignore
     import Popup from "/src/components/Popup/Popup.svelte";
     // @ts-ignore
