@@ -1,5 +1,5 @@
 // @ts-ignore
-import { TabConfig, addTab } from "/src/stores/TabStore";
+import { TabConfig, addTab, removeAllTabs } from "/src/stores/TabStore";
 // @ts-ignore
 import { editorStore } from "/src/stores/EditorStore.js";
 // @ts-ignore
@@ -50,6 +50,7 @@ export async function loadProject(path) {
         const data = await resp.json();
         if (data.status == "SUCCESS") {
             project.set(data.content);
+            removeAllTabs();
             console.log('Load successful', data.content);
         } else {
             console.error('Load failed: content = ' + data.content);

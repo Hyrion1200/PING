@@ -40,13 +40,22 @@ function setTabOn(tab) {
     })
 }
 
-export function saveTabContent() {
+export function removeAllTabs() {
+    tabStore.update(tabs => {
+        tabs.map(t => saveTabContent(t));
+        return [];
+    });
+
+    resetTabs();
+}
+
+export function saveTabContent(tab) {
     let content;
 
     let unsubscribe = editorStore.subscribe(val => content = val);
 
     tabStore.update(tabs => {
-        let index = tabs.findIndex(t => tabOn(t));
+        let index = tabs.findIndex(t => tabEqual(t, tab));
 
         if (index !== -1)
             tabs[index].content = content;
@@ -71,7 +80,7 @@ export function addTab(tab) {
 export function removeTab(tab) {
     tabStore.update(tabs => {
         if (tab.on) {
-            let tabIndex = tabs.findIndex(elt => tabEqual(elt, tab));
+            let tabIndex = tabs.findIndex(t => tabEqual(t, tab));
             let newTabIndex = tabIndex + 1;
 
             if (newTabIndex === tabs.length)
@@ -88,12 +97,17 @@ export function removeTab(tab) {
 }
 
 export function switchTab(tab) {
-    saveTabContent();
-
     tabStore.update(tabs => {
+        let previousTab = tabs.find(t => tabOn(t));
+
+        if (previousTab)
+            saveTabContent(previousTab);
+
         setTabOn(tab);
+
         editorStore.set(tab.content);
         pathStore.set(tab.path);
+
         return tabs;
     })
 }
