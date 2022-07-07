@@ -1,29 +1,51 @@
 <script>
-    // @ts-ignore
-    import { consoleStore, outputStore } from "/src/stores/ConsoleStore.js";
-
-    let Prompt = "/home/hugo ~ Prompt";
-    let console = true;
+    import {
+        showOutput,
+        consoleStore,
+        outputStore,
+        // @ts-ignore
+    } from "/src/stores/ConsoleStore.js";
 
     function switchConsole() {
-        console = true;
+        $showOutput = false;
     }
 
     function switchOutput() {
-        console = false;
+        $showOutput = true;
     }
 </script>
 
 <div>
     <nav>
-        <button on:click={switchConsole}> Console </button>
-        <button on:click={switchOutput}> Output </button>
+        {#if !$showOutput}
+            <button
+                style:background-color="#bcb086"
+                style:color="white"
+                on:click={switchConsole}
+            >
+                Console
+            </button>
+        {:else}
+            <button on:click={switchConsole}> Console </button>
+        {/if}
+
+        {#if $showOutput}
+            <button
+                style:background-color="#bcb086"
+                style:color="white"
+                on:click={switchOutput}
+            >
+                Output
+            </button>
+        {:else}
+            <button on:click={switchOutput}> Output </button>
+        {/if}
     </nav>
 
-    {#if console}
+    {#if !$showOutput}
         <p>{$consoleStore}</p>
     {:else}
-        <p>{$outputStore}</p>
+        <p>{@html $outputStore}</p>
     {/if}
 </div>
 
