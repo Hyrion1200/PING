@@ -24,7 +24,10 @@
 
     function handleKey(event) {
         if (event.key === "Enter") {
-            onClick(ok);
+            doFunc(ok);
+        } else if (event.key === "Escape") {
+            doFunc(cancel);
+            console.log("Alo ?");
         }
     }
 
@@ -35,7 +38,7 @@
         cancel = cancelFunc;
     }
 
-    async function onClick(func) {
+    async function doFunc(func) {
         try {
             await func();
         } catch (error) {
@@ -57,13 +60,13 @@
                 id="input"
                 bind:this={input}
                 type="text"
-                on:keypress={handleKey}
+                on:keydown={handleKey}
                 bind:value={answer}
             />
 
             <nav>
-                <button id="ok" on:click={() => onClick(ok)}> OK </button>
-                <button id="cancel" on:click={() => onClick(cancel)}>
+                <button id="ok" on:click={() => doFunc(ok)}> OK </button>
+                <button id="cancel" on:click={() => doFunc(cancel)}>
                     Cancel
                 </button>
             </nav>
