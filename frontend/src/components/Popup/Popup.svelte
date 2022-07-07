@@ -15,6 +15,7 @@
     let show = false;
 
     export function prompt(okFunc, cancelFunc = () => {}) {
+        answer = "";
         show = true;
         ok = okFunc;
         cancel = cancelFunc;

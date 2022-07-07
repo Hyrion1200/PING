@@ -5,6 +5,8 @@
     import { outputStore } from "/src/stores/ConsoleStore";
     // @ts-ignore
     import { pathStore } from "/src/stores/PathStore";
+    // @ts-ignore
+    import { buttonsStore } from "/src/stores/ButtonsStore.js";
 
     var path = "path";
     pathStore.subscribe((string) => {
@@ -13,18 +15,15 @@
 
     let git = false;
     let files = false;
-    let maven = false;
 
     function displayGit() {
         git = !git;
         files = false;
-        maven = false;
     }
 
     function displayFiles() {
         files = !files;
         git = false;
-        maven = false;
     }
 
     async function run() {
