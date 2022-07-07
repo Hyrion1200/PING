@@ -1,41 +1,31 @@
 <script>
-    import Modal from "./Modal.svelte";
+    // @ts-ignore
+    import { gitPush } from "/src/scripts/git";
+    // @ts-ignore
+    import Popup from "/src/components/Popup/Popup.svelte";
 
-    let isOpenModal = false;
-    let text = "default";
+    let usernamePopup;
+    let passwordPopup;
 
-    async function handlePush() {
-        let user = window.prompt("Git username: ");
-        if (user === null) return;
+    function askUsername() {
+        usernamePopup.prompt(askPassword);
+    }
 
-        let password = window.prompt("Git password: ");
-        if (password === null) return;
-
-        // @ts-ignore
-        let url = `${window.BASE_URL}/ide/git/push?user=${user}&password=${password}`;
-        const resp = await fetch(url)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                if (data.status === "ERROR") {
-                    console.log("Error");
-                    isOpenModal = true;
-                    text = data.message;
-                }
-                document.getElementById("editor").textContent = data.content;
-            });
+    function askPassword() {
+        passwordPopup.prompt(gitPush);
     }
 </script>
 
-<button id="push" on:click={handlePush}> Git push </button>
-<Modal {isOpenModal} {text} />
+<Popup bind:this={usernamePopup} sentence="Git username: " />
+<Popup bind:this={passwordPopup} sentence="Git password: " />
+
+<button id="push" on:click={askUsername}> Git push </button>
 
 <style>
     button {
         cursor: pointer;
         border: none;
-        background-color: #2d2d2d;
+        background-color: #202020;
         color: white;
         padding: 10px;
     }

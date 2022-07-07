@@ -4,25 +4,19 @@
 	import Path from "./components/Path/Path.svelte";
 	import Spotify from "./components/Spotify/Spotify.svelte";
 	import Tree from "./components/Tree/Tree.svelte";
-	import Output from "./components/Console/Output.svelte";
-	import Terminal from "./components/Console/Terminal.svelte";
-	import ConsoleHeader from "./components/Console/ConsoleHeader.svelte";
 	import Sound from "./components/sound/Sound.svelte";
+	import Console from "./components/Console/Console.svelte";
 </script>
 
 <main>
 	<Tree />
 	<Sound />
 
-	<div>
+	<div id="center">
 		<Header />
 		<Path />
 		<Editor />
-		<ConsoleHeader />
-		<div id="bottom">
-			<Terminal />
-			<Output />
-		</div>
+		<Console />
 	</div>
 
 	<Spotify />
@@ -30,19 +24,14 @@
 
 <style>
 	main {
-		height: 100vh;
-		width: 100vw;
+		height: 100%;
+		width: 100%;
 		display: flex;
 	}
 
-	div {
+	#center {
 		display: flex;
-		flex-direction: column;
-		height: 100%;
-		width: 100%;
-	}
-	#bottom {
-		height: 20%;
-		width: 100%;
+		flex-flow: column;
+		width: calc(100% - 500px);
 	}
 </style>

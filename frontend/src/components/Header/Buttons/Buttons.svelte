@@ -1,8 +1,14 @@
 <script>
     import Git from "./Git/Git.svelte";
     import Files from "./Files/Files.svelte";
-    import { output_content } from "../../../stores/OutputStore";
-    import { pathStore } from "../../../stores/PathStore";
+    // @ts-ignore
+    import { outputStore } from "/src/stores/ConsoleStore";
+    // @ts-ignore
+    import { pathStore } from "/src/stores/PathStore";
+    // @ts-ignore
+    import { editorStore } from "/src/stores/EditorStore";
+    // @ts-ignore
+    import { saveFile } from "/src/scripts/files";
 
     var path = "path";
     pathStore.subscribe((string) => {
@@ -11,46 +17,37 @@
 
     let git = false;
     let files = false;
-    let maven = false;
 
     function displayGit() {
         git = !git;
         files = false;
-        maven = false;
     }
 
     function displayFiles() {
         files = !files;
         git = false;
-        maven = false;
-    }
-
-    function displayMaven() {
-        maven = !maven;
-        files = false;
-        git = false;
     }
 
     async function run() {
         //get the current file path
-        if (path == "")
-        {
-            output_content.set("No file is currently opened, open a file in the editor to run it.")
+        if (path == "") {
+            outputStore.set(
+                "No file is currently opened, open a file in the editor to run it."
+            );
             return;
         }
-        var Content_header = "Executed file at " + path + ":\n";
+
+        saveFile($pathStore, $editorStore);
+
         // @ts-ignore
         fetch(`${window.BASE_URL}/ide/files/exec?path=${path}`)
             .then((response) => response.json())
             .then((data) => {
-                if (data.content) 
-                {
-                    output_content.set(Content_header + data.content);
-                }
-                else
-                {
-                    output_content.set(
-                        "Couldn't execute file at " + path + `: ${data.message}` 
+                if (data.content) {
+                    outputStore.set(data.content);
+                } else {
+                    outputStore.set(
+                        "Couldn't execute file at " + path + `: ${data.message}`
                     );
                 }
             });
@@ -61,9 +58,6 @@
     <button on:click={displayFiles}>
         <img src="images/directory.png" alt="directory" />
     </button>
-    <button on:click={displayMaven}
-        ><img src="images/maven.png" alt="maven" /></button
-    >
     <button on:click={displayGit}><img src="images/git.png" alt="git" /></button
     >
     <button id="run" on:click={run}>
@@ -83,6 +77,7 @@
     div {
         display: flex;
         flex-wrap: nowrap;
+        width: 135px;
     }
 
     img {

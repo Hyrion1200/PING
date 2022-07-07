@@ -17,16 +17,19 @@ public class Add extends Git_features {
     @Override public ExecutionReport execute(Project project, Object... params) {
         StringBuilder args = new StringBuilder();
         for (Object param : params) {
-            File file = new File(project.getRootNode().getPath() + "/" + param);
-            if (!file.exists())
-                return new ExecReport(ExecReport.Status.ERROR, "fatal: pathspec '" + param + "' did not match any files");
-            args.append(param).append(" ");
+            String root = project.getRootNode().getPath().toString();
+            String path = (String) param;
+
+            String relative = new File(root).toURI().relativize(new File(path).toURI()).getPath();
+
+            args.append(relative).append(" ");
         }
 
         Git git = getGit(project);
         try {
             StringBuilder res = new StringBuilder("File added:\n");
             for (String arg : args.toString().split(" ")) {
+                System.out.println(arg);
                 git.add().addFilepattern(arg).call();
                 res.append(arg).append("\n");
             }

@@ -1,9 +1,23 @@
 <script>
+    import { onMount } from "svelte";
+
     import Tab from "./Tab.svelte";
-    import { TabConfig, tabStore, addTab } from "./TabStore.js";
+    // @ts-ignore
+    import { tabStore } from "/src/stores/TabStore.js";
+
+    let tabs;
+
+    onMount(() => {
+        console.log(tabs);
+
+        tabs.addEventListener("wheel", (evt) => {
+            evt.preventDefault();
+            tabs.scrollLeft += evt.deltaY;
+        });
+    });
 </script>
 
-<ul>
+<ul bind:this={tabs}>
     {#each $tabStore as tab}
         <Tab tabConfig={tab} />
     {/each}
@@ -11,11 +25,15 @@
 
 <style>
     ul {
+        width: calc(100% - 135px);
+        max-width: calc(100% - 135px);
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         margin: 0;
         padding: 0;
         list-style: none;
+        overflow: hidden;
+        scrollbar-width: none;
     }
 </style>

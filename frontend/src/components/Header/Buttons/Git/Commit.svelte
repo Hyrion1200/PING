@@ -1,42 +1,30 @@
 <script>
-    import Modal from "./Modal.svelte";
+    // @ts-ignore
+    import { gitCommit } from "/src/scripts/git";
 
-    let isOpenModal = false;
-    let text = "default";
+    // @ts-ignore
+    import Popup from "/src/components/Popup/Popup.svelte";
+
+    let popup;
 
     async function handleCommit() {
-        isOpenModal = false;
+        await gitCommit(popup.answer);
+    }
 
-        let msg = window.prompt("Commit message: ");
-
-        if (msg === null) return;
-
-        // @ts-ignore
-        let url = `${window.BASE_URL}/ide/git/commit?message=${msg}`;
-        const resp = await fetch(url)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                if (data.status === "ERROR") {
-                    console.log("Error");
-                    isOpenModal = true;
-                    text = data.message;
-                }
-                document.getElementById("editor").textContent = data.content;
-            });
+    function askCommitMessage() {
+        popup.prompt(handleCommit);
     }
 </script>
 
-<button id="commit" on:click={handleCommit}> Git commit </button>
+<Popup bind:this={popup} sentence="Commit message: " />
 
-<Modal {isOpenModal} {text} />
+<button id="commit" on:click={askCommitMessage}> Git commit </button>
 
 <style>
     button {
         cursor: pointer;
         border: none;
-        background-color: #2d2d2d;
+        background-color: #202020;
         color: white;
         padding: 10px;
     }

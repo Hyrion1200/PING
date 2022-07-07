@@ -1,7 +1,7 @@
 <script>
     // @ts-ignore
-    import { editorStore, editorAdd } from "./EditorStore";
-    import { afterUpdate } from "svelte";
+    import { editorStore, editorAdd } from "/src/stores/EditorStore";
+
     let lines = "";
 
     let numberArea;
@@ -25,7 +25,6 @@
 
         editorAdd("    ");
     }
-
 </script>
 
 <div>
@@ -42,8 +41,8 @@
 
 <style>
     div {
+        height: 100%;
         display: flex;
-        height: 70%;
     }
 
     textarea {
