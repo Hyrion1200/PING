@@ -57,13 +57,39 @@
     .container {
         background-color: #17212f;
         min-width: 250px;
+        max-width: 250px;
+        max-height: 100%;
         align-content: inherit;
     }
 
     .tree {
+        max-height: calc(100% - 100px);
+        overflow: scroll;
         padding-top: 15px;
         padding-left: 10%;
         background-color: #17212f;
+    }
+
+    .tree::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    .tree::-webkit-scrollbar-corner {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    .tree::-webkit-scrollbar-thumb {
+        background-color: #bcb086;
+        border-radius: 6px;
+        border: 4px solid rgba(0, 0, 0, 0);
+        background-clip: content-box;
+        min-width: 32px;
+        min-height: 32px;
+    }
+
+    .tree::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0);
     }
 
     .project-name {
