@@ -3,10 +3,10 @@
     let trumpet = new Audio("sounds/trompette.mp3");
 
     document.onkeydown = async function(e) {
-        if (e.key == "q") {
+        if (e.key == "a") {
             trumpet.play();
         }
-        if (e.key == "s") {
+        if (e.key == "p") {
             saxophone.play();
         }
         if (e.key.match(/^[a-z]$/i)) {
