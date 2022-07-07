@@ -1,6 +1,8 @@
 <svelte:options accessors={true} />
 
 <script>
+    import { afterUpdate, onMount } from "svelte";
+
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
     const popUpWidth = 400;
@@ -14,6 +16,21 @@
     let cancel = undefined;
     let show = false;
 
+    let input;
+
+    function setFocus() {
+        if (input) input.focus();
+    }
+
+    function handleKey(event) {
+        if (event.key === "Enter") {
+            doFunc(ok);
+        } else if (event.key === "Escape") {
+            doFunc(cancel);
+            console.log("Alo ?");
+        }
+    }
+
     export function prompt(okFunc, cancelFunc = () => {}) {
         answer = "";
         show = true;
@@ -21,7 +38,7 @@
         cancel = cancelFunc;
     }
 
-    async function onClick(func) {
+    async function doFunc(func) {
         try {
             await func();
         } catch (error) {
@@ -30,6 +47,8 @@
             show = false;
         }
     }
+
+    afterUpdate(setFocus);
 </script>
 
 {#if show}
@@ -37,11 +56,17 @@
         <article style="top: {popUpPosY}px; left: {popUpPosX}px;">
             <p>{sentence}</p>
 
-            <input type="text" bind:value={answer} />
+            <input
+                id="input"
+                bind:this={input}
+                type="text"
+                on:keydown={handleKey}
+                bind:value={answer}
+            />
 
             <nav>
-                <button id="ok" on:click={() => onClick(ok)}> OK </button>
-                <button id="cancel" on:click={() => onClick(cancel)}>
+                <button id="ok" on:click={() => doFunc(ok)}> OK </button>
+                <button id="cancel" on:click={() => doFunc(cancel)}>
                     Cancel
                 </button>
             </nav>

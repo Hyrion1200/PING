@@ -5,6 +5,10 @@
     import { outputStore } from "/src/stores/ConsoleStore";
     // @ts-ignore
     import { pathStore } from "/src/stores/PathStore";
+    // @ts-ignore
+    import { editorStore } from "/src/stores/EditorStore";
+    // @ts-ignore
+    import { saveFile } from "/src/scripts/files";
 
     var path = "path";
     pathStore.subscribe((string) => {
@@ -32,6 +36,9 @@
             );
             return;
         }
+
+        saveFile($pathStore, $editorStore);
+
         // @ts-ignore
         fetch(`${window.BASE_URL}/ide/files/exec?path=${path}`)
             .then((response) => response.json())

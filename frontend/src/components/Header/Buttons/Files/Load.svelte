@@ -2,29 +2,12 @@
     // @ts-ignore
     import Popup from "/src/components/Popup/Popup.svelte";
     // @ts-ignore
-    import { editorStore } from "/src/stores/EditorStore";
-    // @ts-ignore
-    import { project } from "/src/stores/project.js";
+    import { loadProject } from "/src/scripts/files.js";
 
     let popup;
 
     async function handleLoad() {
-        let path = popup.answer;
-        //let url = window.BASE_URL + "/ide/files/open?path=" + path;
-        // @ts-ignore
-        let url = `${window.BASE_URL}/ide/load?path=${path}`;
-        console.log(url);
-        console.log(editorStore);
-        const resp = await fetch(url)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                if (data.status == "SUCCESS") {
-                    project.set(data.content);
-                }
-                console.log(data.content);
-            });
+        await loadProject(popup.answer);
     }
 
     function askProjectPath() {

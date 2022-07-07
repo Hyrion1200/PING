@@ -1,28 +1,14 @@
 <script>
     // @ts-ignore
+    import { saveFile } from "/src/scripts/files.js";
+    // @ts-ignore
     import { editorStore } from "/src/stores/EditorStore";
     // @ts-ignore
     import Popup from "/src/components/Popup/Popup.svelte";
 
     let popup;
-
     async function handleSave() {
-        //let url = window.BASE_URL + "/ide/files/open?path=" + path;
-        let path = popup.answer;
-        // @ts-ignore
-        let url = `${window.BASE_URL}/ide/files/save?path=${path}`;
-        console.log(url);
-        console.log($editorStore);
-        const resp = await fetch(url, {
-            method: "POST",
-            body: $editorStore,
-        })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                console.log(data);
-            });
+        await saveFile(popup.answer, $editorStore);
     }
 
     function askFilePath() {

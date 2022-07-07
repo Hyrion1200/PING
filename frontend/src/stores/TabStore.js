@@ -40,7 +40,7 @@ function setTabOn(tab) {
     })
 }
 
-function saveTabContent() {
+export function saveTabContent() {
     let content;
 
     let unsubscribe = editorStore.subscribe(val => content = val);
