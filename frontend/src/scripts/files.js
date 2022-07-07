@@ -45,16 +45,16 @@ export async function loadProject(path) {
     //let url = window.BASE_URL + "/ide/files/open?path=" + path;
     // @ts-ignore
     let url = `${window.BASE_URL}/ide/load?path=${path}`;
-    console.log(url);
-    console.log(editorStore);
-    const resp = await fetch(url)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            if (data.status == "SUCCESS") {
-                project.set(data.content);
-            }
-            console.log(data.content);
-        });
+    try {
+        const resp = await fetch(url);
+        const data = await resp.json();
+        if (data.status == "SUCCESS") {
+            project.set(data.content);
+            console.log('Load successful', data.content);
+        } else {
+            console.error('Load failed: content = ' + data.content);
+        }
+    } catch (err) {
+        console.error('Error fetching load:', err);
+    }
 }
