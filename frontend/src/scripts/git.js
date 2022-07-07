@@ -10,7 +10,6 @@ export async function gitAdd(path) {
             if (data.status === "ERROR") {
                 console.log("Error");
             }
-            document.getElementById("editor").textContent = data.content;
         });
 }
 
@@ -27,7 +26,6 @@ export async function gitCommit(msg) {
             if (data.status === "ERROR") {
                 console.log("Error");
             }
-            document.getElementById("editor").textContent = data.content;
         });
 }
 
@@ -42,7 +40,6 @@ export async function gitPull(user, password) {
             if (data.status === "ERROR") {
                 console.log("Error");
             }
-            document.getElementById("editor").textContent = data.content;
         });
 }
 
@@ -57,6 +54,5 @@ export async function gitPush(user, password) {
             if (data.status === "ERROR") {
                 console.log("Error");
             }
-            document.getElementById("editor").textContent = data.content;
         });
 }

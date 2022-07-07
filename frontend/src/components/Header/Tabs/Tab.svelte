@@ -1,5 +1,9 @@
 <script>
     // @ts-ignore
+    import { saveFile } from "/src/scripts/files";
+    // @ts-ignore
+    import { saveTabContent } from "/src/stores/TabStore";
+    // @ts-ignore
     import { editorStore } from "/src/stores/EditorStore.js";
     // @ts-ignore
     import { pathStore } from "/src/stores/PathStore.js";
@@ -38,7 +42,14 @@
     }
 
     function closeClick(event) {
+        handleSave(event);
         removeTab(tabConfig);
+        event.stopPropagation();
+    }
+
+    async function handleSave(event) {
+        saveTabContent(tabConfig);
+        saveFile(tabConfig.path, tabConfig.content);
         event.stopPropagation();
     }
 
@@ -59,10 +70,16 @@
     on:mouseenter={tabHover}
     on:mouseleave={hoverLeave}
 >
-    <button id="save" on:mouseenter={saveHover} on:mouseleave={hoverLeave}
+    <button
+        id="save"
+        on:click={handleSave}
+        on:mouseenter={saveHover}
+        on:mouseleave={hoverLeave}
         ><img src="images/save.png" alt="save" /></button
     >
+
     {tabConfig.name}
+
     <button
         id="close"
         on:click={closeClick}
