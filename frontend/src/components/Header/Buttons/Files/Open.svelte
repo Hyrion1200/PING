@@ -1,11 +1,16 @@
 <script>
-    import { editorStore } from "../../../Editor/EditorStore";
-    import Tab from "../../Tabs/Tab.svelte";
-    import { TabConfig, tabStore, addTab } from "../../Tabs/TabStore.js";
-    let path;
+    // @ts-ignore
+    import { editorStore } from "/src/stores/EditorStore";
+    // @ts-ignore
+    import { TabConfig, addTab } from "/src/stores/TabStore.js";
+    // @ts-ignore
+    import Popup from "/src/components/Popup/Popup.svelte";
+
+    let popup;
 
     async function handleOpen() {
         //let url = window.BASE_URL + "/ide/files/open?path=" + path;
+        let path = popup.answer;
         // @ts-ignore
         let url = `${window.BASE_URL}/ide/files/open?path=${path}`;
         console.log(url);
@@ -22,16 +27,21 @@
                 console.log(data.content);
             });
     }
+
+    function askFilePath() {
+        popup.prompt(handleOpen);
+    }
 </script>
 
-<input type="text" bind:value={path} />
-<button id="open" on:click={handleOpen}>Open</button>
+<Popup bind:this={popup} sentence="File path: " />
+
+<button id="open" on:click={askFilePath}>Open</button>
 
 <style>
     button {
         cursor: pointer;
         border: none;
-        background-color: #2d2d2d;
+        background-color: #202020;
         color: white;
         padding: 10px;
     }

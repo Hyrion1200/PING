@@ -1,13 +1,24 @@
 <script>
-    import { editorStore } from "../../Editor/EditorStore.js";
-    import { pathStore } from "../../../stores/PathStore.js";
-    import { removeTab, switchTab } from "./TabStore";
+    // @ts-ignore
+    import { editorStore } from "/src/stores/EditorStore.js";
+    // @ts-ignore
+    import { pathStore } from "/src/stores/PathStore.js";
+    // @ts-ignore
+    import { removeTab, switchTab } from "/src/stores/TabStore";
     export let tabConfig;
     let li;
 
     if (tabConfig.on) {
         editorStore.set(tabConfig.content);
         pathStore.set(tabConfig.path);
+    }
+
+    function tabHoverEnter() {
+        li.style.backgroundColor = "#3d3d3d";
+    }
+
+    function tabHoverLeave() {
+        li.style.backgroundColor = "#2d2d2d";
     }
 
     function btnHoverEnter(event) {
@@ -31,7 +42,6 @@
 
     $: {
         if (li) {
-            console.log(tabConfig);
             if (tabConfig.on) {
                 li.style.borderColor = "white";
             } else {
@@ -41,17 +51,20 @@
     }
 </script>
 
-<li bind:this={li} on:click={tabClick}>
-    <span>
-        {tabConfig.name}
-        <button
-            on:click={closeClick}
-            on:mouseenter={btnHoverEnter}
-            on:mouseleave={btnHoverLeave}
-        >
-            <img src="images/cross.png" alt="cross" />
-        </button>
-    </span>
+<li
+    bind:this={li}
+    on:click={tabClick}
+    on:mouseenter={tabHoverEnter}
+    on:mouseleave={tabHoverLeave}
+>
+    {tabConfig.name}
+    <button
+        on:click={closeClick}
+        on:mouseenter={btnHoverEnter}
+        on:mouseleave={btnHoverLeave}
+    >
+        <img src="images/cross.png" alt="cross" />
+    </button>
 </li>
 
 <style>
@@ -65,29 +78,21 @@
         visibility: hidden;
         position: relative;
         right: -5px;
-        top: -5px;
+        top: -8px;
         border: none;
         background-color: inherit;
         padding: 0;
-    }
-
-    button:hover {
         cursor: pointer;
     }
 
     li {
+        display: flex;
         margin: 0;
         color: grey;
-        height: 25px;
+        height: 45px;
         border-bottom: 1px solid #2d2d2d;
         padding: 10px 10px 10px 30px;
-    }
-
-    li:hover {
-        border-color: white;
-        transition: 0.1s;
-        cursor: default;
-        background-color: #3d3d3d;
+        cursor: pointer;
     }
 
     li:hover button {

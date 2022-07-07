@@ -1,6 +1,8 @@
 <script>
     import Modal from "./Modal.svelte";
-    import { pathStore } from "../../../../stores/PathStore"
+
+    // @ts-ignore
+    import { pathStore } from "/src/stores/PathStore";
 
     let isOpenModal = false;
     let text = "default";
@@ -31,7 +33,7 @@
     button {
         cursor: pointer;
         border: none;
-        background-color: #2d2d2d;
+        background-color: #202020;
         color: white;
         padding: 10px;
     }

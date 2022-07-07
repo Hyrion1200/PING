@@ -57,15 +57,13 @@
     /* TODO propper gestion of resizing and simply scrolling */
     .container {
         background-color: #17212f;
-        height: 100%;
-        width: 20%;
+        min-width: 250px;
         align-content: inherit;
     }
 
     .tree {
         padding-top: 15px;
         padding-left: 10%;
-        height: 100%;
         background-color: #17212f;
     }
 
@@ -84,20 +82,19 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 80%;
         width: 95%;
         background-color: #17212f;
     }
 
     p {
-        color: rgb(198, 196, 196);
+        color: #ffffe0;
         font-size: 1em;
         font-weight: bold;
         text-align: center;
     }
 
     h2 {
-        color: aliceblue;
+        color: #ffffe0;
         margin: 0;
         font-size: 12;
         text-align: center;
