@@ -11,26 +11,36 @@
     "start": "electron-forge start",
     "electron": "npm run build && electron .",
     "package": "electron-forge package",
-    "make": "npm run build && electron-forge make"
+    "make": "npm run build && electron-forge make",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
+    "@codemirror/lang-javascript": "^6.0.1",
+    "@codemirror/lang-python": "^6.0.0",
     "@electron-forge/cli": "^6.0.0-beta.64",
     "@electron-forge/maker-deb": "^6.0.0-beta.64",
     "@electron-forge/maker-rpm": "^6.0.0-beta.64",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.64",
     "@electron-forge/maker-zip": "^6.0.0-beta.64",
+    "@replit/codemirror-vim": "^6.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "@tsconfig/svelte": "^2.0.0",
+    "codemirror": "^6.0.1",
     "electron": "^19.0.6",
     "svelte": "^3.44.0",
-    "vite": "^2.9.9",
-    "codemirror": "^6.0.1",
-    "@codemirror/lang-javascript": "^6.0.1",
-    "@codemirror/lang-python": "^6.0.0",
-    "@replit/codemirror-vim": "^6.0.0"
+    "svelte-check": "^2.0.0",
+    "svelte-preprocess": "^4.0.0",
+    "sveltekit-embed": "^0.0.5",
+    "tslib": "^2.0.0",
+    "typescript": "^4.0.0",
+    "vite": "^2.9.9"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "get-port": "^6.1.2"
+    "embedgenerator": "^1.0.0",
+    "get-port": "^6.1.2",
+    "svelte-spotify-web-playback": "^1.0.3"
   },
   "config": {
     "forge": {
