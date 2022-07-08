@@ -1,7 +1,7 @@
 // @ts-ignore
 import { TabConfig, addTab, removeAllTabs } from "/src/stores/TabStore";
 // @ts-ignore
-import { editorStore } from "/src/stores/EditorStore.js";
+import { editorSetContent } from "/src/stores/EditorStore.js";
 // @ts-ignore
 import { project } from "/src/stores/ProjectStore";
 // @ts-ignore
@@ -16,13 +16,13 @@ export async function saveFile(path, content) {
     console.log(url);
     console.log(content);
     const resp = await fetch(url, {
-        method: "POST",
-        body: content,
-    })
-        .then(function (response) {
+            method: "POST",
+            body: content,
+        })
+        .then(function(response) {
             return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
             if (data.status === "ERROR") {
                 addOutput("Couldn't save file '" + path + "': " + data.message);
             }
@@ -35,15 +35,13 @@ export async function openFile(path) {
     let url = `${window.BASE_URL}/ide/files/open?path=${path}`;
     console.log(url);
     const resp = await fetch(url)
-        .then(function (response) {
+        .then(function(response) {
             return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
             if (data.status == "SUCCESS") {
                 addTab(new TabConfig(path, path, data.content));
-                editorStore.update((value) => (value = data.content));
-            } else {
-                addOutput("Couldn't open file '" + path + "': " + data.message);
+                editorSetContent(data.content)
             }
         });
 }
