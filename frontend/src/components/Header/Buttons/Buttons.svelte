@@ -28,6 +28,11 @@
         git = false;
     }
 
+    function toggle_light_mode(){
+        window.document.body.classList.toggle('dark-mode');
+         
+    }
+
     async function run() {
         //get the current file path
         if (path == "") {
@@ -49,6 +54,9 @@
 </script>
 
 <div id="main">
+    <button on:click={toggle_light_mode}>
+       theme 
+    </button>
     <button on:click={displayFiles}>
         <img src="images/directory.png" alt="directory" />
     </button>
@@ -71,7 +79,7 @@
     div {
         display: flex;
         flex-wrap: nowrap;
-        width: 135px;
+        width: 200px;
     }
 
     img {

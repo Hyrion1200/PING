@@ -93,6 +93,10 @@
         padding: 0;
     }
 
+    :global(body.dark-mode) div {
+        background-color: gray;
+    }
+
     nav {
         display: flex;
         flex-direction: row;
@@ -120,6 +124,10 @@
         margin: 0;
         color: white;
         height: calc(100% - 30px);
+    }
+
+    :global(body.dark-mode) p {
+        color : black;
     }
 
     #terminalParent {

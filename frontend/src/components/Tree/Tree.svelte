@@ -226,6 +226,10 @@
         max-height: 100%;
         align-content: inherit;
     }
+    :global(body.dark-mode) .container{
+        background-color: lightgray;
+        color: black;
+    }
 
     .tree {
         max-height: calc(100% - 100px);
@@ -233,6 +237,11 @@
         padding-top: 15px;
         padding-left: 10%;
         background-color: #17212f;
+    }
+
+    :global(body.dark-mode) .tree{
+        background-color: lightgray;
+        color: black;
     }
 
     .tree::-webkit-scrollbar {
@@ -266,6 +275,12 @@
         border-bottom: 1px solid #ffff;
         background-color: #17212f;
     }
+    
+    :global(body.dark-mode) .project-name{
+        background-color: lightgray;
+        color: black;
+        border-bottom: 1px solid black;
+    }
 
     #no_project {
         display: flex;
@@ -276,11 +291,23 @@
         background-color: #17212f;
     }
 
+    :global(body.dark-mode) #no_project{
+        background-color: lightgray;
+        color: black;
+    }
+
+
+
     p {
         color: #ffffe0;
         font-size: 1em;
         font-weight: bold;
         text-align: center;
+    }
+
+    :global(body.dark-mode) p{
+        background-color: lightgray;
+        color: black;
     }
 
     h2 {
@@ -289,4 +316,11 @@
         font-size: 12;
         text-align: center;
     }
+
+    :global(body.dark-mode) h2{
+        background-color: lightgray;
+        color: black;
+    }
+
+
 </style>

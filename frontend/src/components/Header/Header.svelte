@@ -22,4 +22,8 @@
         justify-content: space-between;
         background-color: #2d2d2d;
     }
+
+    :global(body.dark-mode) div{
+        background-color: gray;
+    }
 </style>

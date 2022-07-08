@@ -44,4 +44,10 @@
         background: 0 0.1em no-repeat;
         background-size: contain;
     }
+    
+    :global(body.dark-mode) button{
+        color: black;
+    }
+
+
 </style>

@@ -28,11 +28,9 @@ export const oneDarkTheme = EditorView.theme({
     color: ivory,
     backgroundColor: background
   },
-
   ".cm-content": {
     caretColor: cursor
   },
-
   ".cm-cursor, .cm-dropCursor": {borderLeftColor: cursor},
   "&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection": {backgroundColor: selection},
 
@@ -90,7 +88,7 @@ export const oneDarkTheme = EditorView.theme({
       color: ivory
     }
   }
-}, {dark: true})
+}, {dark: true});
 
 /// The highlighting style for code in the One Dark theme.
 export const oneDarkHighlightStyle = HighlightStyle.define([

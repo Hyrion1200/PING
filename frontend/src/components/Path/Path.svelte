@@ -16,4 +16,9 @@
         background-color: #2d2d2d;
         color: grey;
     }
+    
+    :global(body.dark-mode) p {
+        background-color: grey;
+        color: black;
+    }
 </style>
