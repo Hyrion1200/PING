@@ -1,4 +1,5 @@
 <script>
+    // @ts-ignore
     import { settings } from "/src/stores/SettingsStore.js";
     let saxophone = new Audio("sounds/saxophone.mp3");
     let trumpet = new Audio("sounds/trompette.mp3");
