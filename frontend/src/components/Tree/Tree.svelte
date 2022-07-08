@@ -2,6 +2,8 @@
     // @ts-ignore
     import { project } from "/src/stores/ProjectStore.js";
     import Folder from "./Folder.svelte";
+    // @ts-ignore
+    import { updateSettings } from "/src/scripts/files.js";
 
     function parseNodes(root, i = 0) {
         let name = root.path;
@@ -21,14 +23,177 @@
             children = root.children.map((child) => {
                 return parseNodes(child, i + 1);
             });
-            return { name, children };
+            return { name, children, expanded: false };
         }
 
         return { name, path: root.path.slice(7), relativePath }; // Remove file:// before absolute path
     }
 
-    $: root =
-        $project !== undefined ? parseNodes($project.rootNode) : undefined;
+    let root = undefined;
+
+    // Add element to the root, and all necessary intermediate directories
+    function addToRoot(path, isDir) {
+        if (root === undefined) return;
+
+        let current = root;
+        let pathSplitted = path
+            .split(root.name)[1]
+            .replace(/^\/+|\/+$/g, "")
+            .split("/");
+        for (let i = 0; i < pathSplitted.length - 1; i++) {
+            let name = pathSplitted[i];
+            if (current.children) {
+                // On a Folder
+                let child = current.children.find(
+                    (child) => child.name === name
+                );
+                if (child === undefined) {
+                    child = {
+                        name,
+                        children: [],
+                    };
+                    current.children.push(child);
+                }
+                current = child;
+            } else {
+                // Not supposed to happen, it means that a file became a directory
+                console.debug("File became a directory (AddToRoot)");
+            }
+        }
+
+        // All the path has been either checked or created up to the final file / directory to create
+        if (current.children) {
+            // On a Folder
+            let child = current.children.find(
+                (child) => child.name === pathSplitted[pathSplitted.length - 1]
+            );
+            if (child === undefined) {
+                if (isDir) {
+                    child = {
+                        name: pathSplitted[pathSplitted.length - 1],
+                        children: [],
+                    };
+                } else {
+                    child = {
+                        name: pathSplitted[pathSplitted.length - 1],
+                        path: path,
+                        relativePath: pathSplitted.join("/"),
+                    };
+                }
+                console.debug("Created child file:", child);
+                current.children.push(child);
+            } else {
+                console.debug("File already existed (AddToRoot)");
+            }
+        } else {
+            // Not supposed to happen, it means that a file became a directory
+            console.debug("File became a directory (AddToRoot end)");
+        }
+        root = root;
+    }
+
+    function removeFromRoot(path) {
+        if (root === undefined) return;
+
+        let current = root;
+        let pathSplitted = path
+            .split(root.name)[1]
+            .replace(/^\/+|\/+$/g, "")
+            .split("/");
+        for (let i = 0; i < pathSplitted.length - 1; i++) {
+            let name = pathSplitted[i];
+            if (current.children) {
+                // On a Folder
+                let child = current.children.find(
+                    (child) => child.name === name
+                );
+                if (child === undefined) {
+                    child = {
+                        name,
+                        children: [],
+                    };
+                    current.children.push(child);
+                }
+                current = child;
+            } else {
+                // Not supposed to happen, it means that a file became a directory
+                console.debug("File became a directory (RemoveFromRoot)");
+            }
+        }
+
+        const index = current.children.findIndex(
+            (child) => child.name === pathSplitted[pathSplitted.length - 1]
+        );
+        if (current.children && index !== -1) {
+            current.children.splice(index, 1);
+        } else {
+            // Not supposed to happen, it means that a file became a directory
+            console.debug(
+                "Last directory of path does not exists (RemoveFromRoot end)"
+            );
+        }
+
+        root = root;
+    }
+
+    let watcher = undefined;
+
+    async function watchRoot() {
+        if (watcher !== undefined) return;
+        // @ts-ignore
+        watcher = new EventSource(`${window.BASE_URL}/ide/watch`);
+
+        watcher.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.debug(data);
+            // FIXME : backend does not detect subdirectory on creation
+            // (mkdir -p a/b/c => CREATE a)
+            // (mv fullDir . => CREATE fullDir)
+            if (data.type === "ENTRY_MODIFY") {
+                // TODO : handle file modification on disk
+                console.debug("ENTRY_MODIFY", data);
+                if (
+                    !data.folder &&
+                    data.path.split("/").pop() === ".pingsettings"
+                ) {
+                    updateSettings();
+                }
+            } else if (data.type === "ENTRY_CREATE") {
+                const fullPath = data.path;
+                const isDir = data.folder;
+                addToRoot(fullPath, isDir);
+                if (
+                    !data.folder &&
+                    data.path.split("/").pop() === ".pingsettings"
+                ) {
+                    updateSettings();
+                }
+            } else if (data.type === "ENTRY_DELETE") {
+                const fullPath = data.path;
+                removeFromRoot(fullPath);
+            } else {
+                console.debug("Ignoring event:", data);
+            }
+        };
+    }
+
+    function wrapParseNodes(rootNode, toUndefined = false) {
+        console.log("called: " + toUndefined);
+        if (toUndefined) {
+            root = undefined;
+            return;
+        }
+        root = parseNodes(rootNode);
+        watchRoot();
+    }
+
+    $: {
+        if ($project !== undefined) {
+            wrapParseNodes($project.rootNode);
+        } else {
+            wrapParseNodes(undefined, true);
+        }
+    }
 
     $: console.log("root", root);
 </script>
