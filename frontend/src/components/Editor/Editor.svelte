@@ -5,11 +5,17 @@
         // @ts-ignore
     } from "/src/stores/EditorStore";
 
+    // @ts-ignore
     import { EditorState, Compartment } from "@codemirror/state";
+    // @ts-ignore
     import { EditorView, keymap } from "@codemirror/view";
+    // @ts-ignore
     import { basicSetup } from "codemirror";
+    // @ts-ignore
     import { indentWithTab } from "@codemirror/commands";
+    // @ts-ignore
     import { syntaxHighlighting, indentUnit } from "@codemirror/language";
+    // @ts-ignore
     import { vim } from "@replit/codemirror-vim";
     // @ts-ignore
     import { oneDarkTheme, oneDarkHighlightStyle } from "./theme";
