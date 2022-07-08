@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Editor from "./components/Editor/Editor.svelte";
 	import Header from "./components/Header/Header.svelte";
 	import Path from "./components/Path/Path.svelte";
