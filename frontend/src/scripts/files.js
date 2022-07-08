@@ -1,7 +1,7 @@
 // @ts-ignore
 import { TabConfig, addTab, removeAllTabs } from "/src/stores/TabStore";
 // @ts-ignore
-import { editorStore } from "/src/stores/EditorStore.js";
+import { editorSetContent } from "/src/stores/EditorStore.js";
 // @ts-ignore
 import { project } from "/src/stores/ProjectStore";
 
@@ -35,7 +35,7 @@ export async function openFile(path) {
         .then(function(data) {
             if (data.status == "SUCCESS") {
                 addTab(new TabConfig(path, path, data.content));
-                editorStore.update((value) => (value = data.content));
+                editorSetContent(data.content)
             }
             console.log(data.content);
         });

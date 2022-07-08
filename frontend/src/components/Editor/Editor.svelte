@@ -1,70 +1,49 @@
 <script>
-    // @ts-ignore
-    import { editorStore, editorAdd } from "/src/stores/EditorStore";
+    import {
+        editorStore,
+        languageStore,
+        // @ts-ignore
+    } from "/src/stores/EditorStore";
 
-    let lines = "";
+    import { EditorState, Compartment } from "@codemirror/state";
+    import { EditorView, keymap } from "@codemirror/view";
+    import { basicSetup } from "codemirror";
+    import { indentWithTab } from "@codemirror/commands";
+    import { syntaxHighlighting, indentUnit } from "@codemirror/language";
+    import { vim } from "@replit/codemirror-vim";
+    import { oneDarkTheme, oneDarkHighlightStyle } from "./theme";
 
-    let numberArea;
-    let editorArea;
+    import { onMount } from "svelte";
 
-    $: {
-        lines = "";
-        for (let i = 1; i < $editorStore.split("\n").length + 1; i++)
-            lines += i + "\n";
-    }
+    $languageStore = new Compartment();
 
-    function handleScroll() {
-        numberArea.scrollTop = editorArea.scrollTop;
-    }
+    let editorState = EditorState.create({
+        extensions: [
+            $languageStore.of([]),
+            vim(),
+            basicSetup,
+            keymap.of([indentWithTab]),
+            oneDarkTheme,
+            syntaxHighlighting(oneDarkHighlightStyle),
+            indentUnit.of("    "),
+        ],
+    });
 
-    function handleTab(event) {
-        //editorContent.update(value => value = event.currentTarget.value);
-        if (event.key !== "Tab") return;
+    let editorParent;
 
-        event.preventDefault();
-
-        editorAdd("    ");
-    }
+    onMount(() => {
+        $editorStore = new EditorView({
+            state: editorState,
+            parent: editorParent,
+        });
+    });
 </script>
 
-<div>
-    <textarea id="number" bind:this={numberArea} bind:value={lines} readonly />
-    <textarea
-        id="editor"
-        bind:this={editorArea}
-        bind:value={$editorStore}
-        on:keydown={handleTab}
-        on:scroll={handleScroll}
-        spellcheck="false"
-    />
-</div>
+<div bind:this={editorParent} />
 
 <style>
     div {
-        height: 100%;
-        display: flex;
-    }
-
-    textarea {
-        font-size: 15px;
-        border: none;
-        resize: none;
-        margin: 0;
-        background-color: #2d2d2d;
-        color: white;
-        outline: none;
-    }
-
-    #editor {
-        padding: 5px 20px 5px 20px;
-        width: 100%;
-    }
-
-    #number {
-        overflow: hidden;
-        padding: 5px;
-        width: 3em;
-        text-align: center;
-        border-right: 1px solid grey;
+        height: calc(100% - 200px - 85px);
+        background-color: black;
     }
 </style>

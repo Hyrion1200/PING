@@ -2,7 +2,6 @@
     // @ts-ignore
     import { consoleStore, outputStore } from "/src/stores/ConsoleStore.js";
 
-    let Prompt = "/home/hugo ~ Prompt";
     let console = true;
 
     function switchConsole() {
