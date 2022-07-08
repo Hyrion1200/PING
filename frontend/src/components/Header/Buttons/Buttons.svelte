@@ -6,7 +6,7 @@
     // @ts-ignore
     import { pathStore } from "/src/stores/PathStore";
     // @ts-ignore
-    import { editorStore } from "/src/stores/EditorStore";
+    import { editorGetContent } from "/src/stores/EditorStore";
     // @ts-ignore
     import { saveFile } from "/src/scripts/files";
 
@@ -37,19 +37,13 @@
             return;
         }
 
-        saveFile($pathStore, $editorStore);
+        saveFile($pathStore, editorGetContent());
 
         // @ts-ignore
         fetch(`${window.BASE_URL}/ide/files/exec?path=${path}`)
             .then((response) => response.json())
             .then((data) => {
-                if (data.content) {
-                    outputStore.set(data.content);
-                } else {
-                    outputStore.set(
-                        "Couldn't execute file at " + path + `: ${data.message}`
-                    );
-                }
+                outputStore.set(data.content);
             });
     }
 </script>
