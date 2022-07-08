@@ -21,7 +21,7 @@
             children = root.children.map((child) => {
                 return parseNodes(child, i + 1);
             });
-            return { name, children };
+            return { name, children, expanded: false };
         }
 
         return { name, path: root.path.slice(7), relativePath }; // Remove file:// before absolute path
@@ -55,7 +55,7 @@
                 current = child;
             } else {
                 // Not supposed to happen, it means that a file became a directory
-                console.error("File became a directory (AddToRoot)");
+                console.debug("File became a directory (AddToRoot)");
             }
         }
 
@@ -81,12 +81,13 @@
                 console.debug("Created child file:", child);
                 current.children.push(child);
             } else {
-                console.error("File already existed (AddToRoot)");
+                console.debug("File already existed (AddToRoot)");
             }
         } else {
             // Not supposed to happen, it means that a file became a directory
-            console.error("File became a directory (AddToRoot end)");
+            console.debug("File became a directory (AddToRoot end)");
         }
+        root = root;
     }
 
     function removeFromRoot(path) {
@@ -114,7 +115,7 @@
                 current = child;
             } else {
                 // Not supposed to happen, it means that a file became a directory
-                console.error("File became a directory (RemoveFromRoot)");
+                console.debug("File became a directory (RemoveFromRoot)");
             }
         }
 
@@ -125,10 +126,12 @@
             current.children.splice(index, 1);
         } else {
             // Not supposed to happen, it means that a file became a directory
-            console.error(
+            console.debug(
                 "Last directory of path does not exists (RemoveFromRoot end)"
             );
         }
+
+        root = root;
     }
 
     let watcher = undefined;
@@ -139,7 +142,7 @@
 
         watcher.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            // console.debug(data);
+            console.debug(data);
             // FIXME : backend does not detect subdirectory on creation
             // (mkdir -p a/b/c => CREATE a)
             // (mv fullDir . => CREATE fullDir)
@@ -159,12 +162,21 @@
         };
     }
 
+    function wrapParseNodes(rootNode, toUndefined = false) {
+        console.log("called: " + toUndefined);
+        if (toUndefined) {
+            root = undefined;
+            return;
+        }
+        root = parseNodes(rootNode);
+        watchRoot();
+    }
+
     $: {
         if ($project !== undefined) {
-            root = parseNodes($project.rootNode);
-            watchRoot();
+            wrapParseNodes($project.rootNode);
         } else {
-            root = undefined;
+            wrapParseNodes(undefined, true);
         }
     }
 
