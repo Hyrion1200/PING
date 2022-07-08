@@ -46,6 +46,10 @@
         cursor: pointer;
     }
 
+    :global(body.dark-mode) span{
+        color: black;
+    }
+
     ul {
         padding: 0.2em 0 0 0.5em;
         margin: 0 0 0 0.5em;

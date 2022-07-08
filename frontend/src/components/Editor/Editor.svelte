@@ -44,6 +44,7 @@
             parent: editorParent,
         });
     });
+
 </script>
 
 <div bind:this={editorParent} />
