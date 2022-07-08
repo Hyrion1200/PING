@@ -162,6 +162,12 @@
                 const fullPath = data.path;
                 const isDir = data.folder;
                 addToRoot(fullPath, isDir);
+                if (
+                    !data.folder &&
+                    data.path.split("/").pop() === ".pingsettings"
+                ) {
+                    updateSettings();
+                }
             } else if (data.type === "ENTRY_DELETE") {
                 const fullPath = data.path;
                 removeFromRoot(fullPath);
