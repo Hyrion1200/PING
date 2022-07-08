@@ -104,13 +104,13 @@ public class ProjectServ implements ProjectService {
         File rootDir = new File(root.toString());
         if (!rootDir.exists())
             return null;
-        Node rootNode = get_nodes(new File(root.toString()));
+        File ro = new File(root.toString());
         Settings settings = null;
-        for (Node node : rootNode.getChildren()) {
-            if (node.getPath().getFileName().toString().equals(".pingsettings")) {
+        for (File cur : ro.listFiles()) {
+            if (cur.getName().equals(".pingsettings")) {
                 try {
                     ObjectMapper mapper = new ObjectMapper();
-                    settings = mapper.readValue(node.getPath().toFile(), Settings.class);
+                    settings = mapper.readValue(Paths.get(cur.getPath()).toFile(), Settings.class);
                     System.out.println(settings);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -133,6 +133,7 @@ public class ProjectServ implements ProjectService {
                 settings = null;
             }
         }
+        Node rootNode = get_nodes(ro);
         return new Project_Entity(rootNode, get_aspect(rootDir), settings);
     }
 
