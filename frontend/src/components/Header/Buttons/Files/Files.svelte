@@ -15,8 +15,8 @@
         display: flex;
         flex-direction: column;
         position: absolute;
-        right: 14.3%;
-        top: 48.5px;
-        width: 180px;
+        right: 250px;
+        top: 45px;
+        width: 135px;
     }
 </style>

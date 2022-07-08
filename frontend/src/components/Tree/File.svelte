@@ -1,5 +1,6 @@
 <script>
-    import { addTab, TabConfig } from "../Header/Tabs/TabStore.js";
+    // @ts-ignore
+    import { addTab, TabConfig } from "/src/stores/TabStore.js";
     export let name;
     export let path;
     export let relativePath;
@@ -10,7 +11,7 @@
     async function getContent() {
         const response = await fetch(
             // @ts-ignore
-            `${window.BASE_URL}/ide/files/open?path=${relativePath}`
+            `${window.BASE_URL}/ide/files/open?path=${path}` 
         );
         const report = await response.json();
 
@@ -38,7 +39,7 @@
     button {
         all: unset;
         cursor: pointer;
-        color: rgb(198, 196, 196);
+        color: #ffffe0;
         padding: 0 0 0 1.5em;
         background: 0 0.1em no-repeat;
         background-size: contain;

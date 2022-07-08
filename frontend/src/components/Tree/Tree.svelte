@@ -1,6 +1,6 @@
 <script>
     // @ts-ignore
-    import { project } from "/src/stores/project.js";
+    import { project } from "/src/stores/ProjectStore.js";
     import Folder from "./Folder.svelte";
 
     function parseNodes(root, i = 0) {
@@ -24,31 +24,13 @@
             return { name, children };
         }
 
-        return { name, path: root.path, relativePath };
+        return { name, path: root.path.slice(7), relativePath }; // Remove file:// before absolute path
     }
 
     $: root =
         $project !== undefined ? parseNodes($project.rootNode) : undefined;
 
     $: console.log("root", root);
-
-    async function load() {
-        if (root === undefined) {
-            let loadedProject = await fetch(
-                // @ts-ignore
-                `${window.BASE_URL}/ide/load?path=.`
-            );
-            let jsonObj = await loadedProject.json();
-            project.set(jsonObj.content);
-        }
-    }
-
-    // // FIXME REMOVE ME
-    // try {
-    //     load();
-    // } catch (e) {
-    //     console.log(e);
-    // }
 </script>
 
 <div class="container">
@@ -74,16 +56,40 @@
     /* TODO propper gestion of resizing and simply scrolling */
     .container {
         background-color: #17212f;
-        height: 100%;
-        width: 20%;
+        min-width: 250px;
+        max-width: 250px;
+        max-height: 100%;
         align-content: inherit;
     }
 
     .tree {
+        max-height: calc(100% - 100px);
+        overflow: scroll;
         padding-top: 15px;
         padding-left: 10%;
-        height: 100%;
         background-color: #17212f;
+    }
+
+    .tree::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    .tree::-webkit-scrollbar-corner {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    .tree::-webkit-scrollbar-thumb {
+        background-color: #bcb086;
+        border-radius: 6px;
+        border: 4px solid rgba(0, 0, 0, 0);
+        background-clip: content-box;
+        min-width: 32px;
+        min-height: 32px;
+    }
+
+    .tree::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0);
     }
 
     .project-name {
@@ -101,20 +107,19 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 80%;
         width: 95%;
         background-color: #17212f;
     }
 
     p {
-        color: rgb(198, 196, 196);
+        color: #ffffe0;
         font-size: 1em;
         font-weight: bold;
         text-align: center;
     }
 
     h2 {
-        color: aliceblue;
+        color: #ffffe0;
         margin: 0;
         font-size: 12;
         text-align: center;

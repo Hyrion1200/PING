@@ -37,27 +37,26 @@ public class Exec extends Features {
         }
         String result = null;
         try {
+            ProcessBuilder processBuilder;
             if (Pattern.matches(".*.py", path.getFileName().toString())) {
-                ProcessBuilder processBuilder = new ProcessBuilder("python3", path.toString());
-                processBuilder.redirectErrorStream(true);
-                Process process = processBuilder.start();
-               BufferedReader reader =
-                new BufferedReader(new InputStreamReader(process.getInputStream()));
-                StringBuilder builder = new StringBuilder();
-                String line;
-                while ( (line = reader.readLine()) != null) {
-                    builder.append(line);
-                    builder.append(System.getProperty("line.separator"));
-                }
-                result = builder.toString();
-                } else if (Pattern.matches(".*.js", path.getFileName().toString())) {
-                ProcessBuilder processBuilder = new ProcessBuilder("node", path.toString());
-                processBuilder.redirectErrorStream(true);
-                Process process = processBuilder.start();
-                result = process.getOutputStream().toString();
+                processBuilder = new ProcessBuilder("python3", path.toString());
+               } else if (Pattern.matches(".*.js", path.getFileName().toString())) {
+                processBuilder = new ProcessBuilder("node", path.toString());
             } else {
                 return new ExecReport(ExecReport.Status.ERROR, "File given is nether a python file or javascript file");
             }
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+            BufferedReader reader =
+            new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder builder = new StringBuilder();
+            String line;
+            while ( (line = reader.readLine()) != null) {
+                builder.append(line);
+                builder.append(System.getProperty("line.separator"));
+            }
+            result = builder.toString();
+            
         } catch (IOException e){
             return new ExecReport(ExecReport.Status.ERROR, "error when building process");
         }

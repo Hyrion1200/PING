@@ -4,6 +4,7 @@ import java.io.Console;
 import java.nio.file.Paths;
 import java.util.List;
 import java.io.File;
+import java.util.Optional;
 
 import fr.epita.assistants.myide.domain.entity.Mandatory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class ProjetServiceController {
     {
         System.out.println("Load");
         Project_Entity project = (Project_Entity) projectServ.load(Paths.get(path));
+        if (project == null)
+            return new ExecReport(Status.ERROR, "Failed to load project at: " + path);
         projectServ.setProject(project);
         return new ExecReport(Status.SUCCESS, projectServ.getProject());
     }
@@ -57,15 +60,18 @@ public class ProjetServiceController {
     }
 
     @PostMapping("ide/files/save")
-    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path, @RequestBody String content)
+    public ExecReport save(@RequestParam(value="path", defaultValue = "./tmp") String path, @RequestBody Optional<String> content)
     {
-        Project project = projectServ.getProject();
-        String params = path;
-        // TODO
+        String actual_content = "";
+        if (content.isPresent()){
+            actual_content = content.get();
+        }
 
-        Node node = projectServ.get_nodes(new File(path));
         try {
-            projectServ.getNodeService().update(node, content);
+            Project project = projectServ.getProject();
+            String params = path;
+            Node node = projectServ.get_nodes(new File(path));
+            projectServ.getNodeService().update(node, actual_content); 
         } catch (Exception e){
             return new ExecReport(Status.ERROR, "Couldn't save file");
         }

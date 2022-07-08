@@ -15,6 +15,7 @@
 
 <style>
     div {
+        height: 45px;
         display: flex;
         flex-wrap: nowrap;
         flex-direction: row;

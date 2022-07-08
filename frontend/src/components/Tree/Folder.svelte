@@ -4,6 +4,9 @@
     export let expanded = false;
     export let name;
     export let children;
+    let theme = "default";
+    let folder;
+    $: folder = expanded ? "opened-folder.svg" : "folder.svg";
 
     function toggle() {
         expanded = !expanded;
@@ -11,7 +14,13 @@
 </script>
 
 <!-- TODO crop text depending on size -->
-<span class:expanded on:click={toggle}>{name}</span>
+<span
+    class:expanded
+    style="background-image: url(assets/themes/{theme}/icons/{folder});"
+    on:click={toggle}
+>
+    {name}</span
+>
 
 {#if expanded}
     <ul>
@@ -27,20 +36,14 @@
     </ul>
 {/if}
 
-<!-- TODO background image use variables -->
 <style>
     span {
-        color: rgb(198, 196, 196);
+        color: #ffffe0;
         padding: 0 0 0 1.5em;
-        background: url(assets/themes/default/icons/folder.svg) 0 0.1em
-            no-repeat;
+        background: 0 0.1em no-repeat;
         background-size: 1em 1em;
         font-weight: bold;
         cursor: pointer;
-    }
-
-    .expanded {
-        background-image: url(assets/themes/default/icons/opened-folder.svg);
     }
 
     ul {
