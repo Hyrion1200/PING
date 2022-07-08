@@ -1,25 +1,12 @@
 // import { app, BrowserWindow } from 'electron';
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const { spawn } = require('node:child_process');
 const path = require('path');
+const os = require('os');
+const pty = require('node-pty');
 
-let pty = require('node-pty');
-
-let ptyProc = pty.spawn("bash", [], {
-    name: "xterm-color",
-    cols: 80,
-    rows: 30,
-    cwd: process.env.HOME,
-    env: process.env
-});
-
-ptyProc.on('data', function(data) {
-    process.stdout.write(data);
-});
-
-ptyProc.write('ls\r');
-ptyProc.resize(100, 40);
-ptyProc.write('lr\r');
+let mainWindow;
+let shell = os.platform() === "win32" ? "powershell.exe" : "bash";
 
 const backend_version = '1.0.0';
 if (process.env.NODE_ENV !== 'production') {
@@ -27,8 +14,27 @@ if (process.env.NODE_ENV !== 'production') {
     console.debug('Resources path: ' + process.resourcesPath);
 }
 
+function createPty() {
+    let ptyProc = pty.spawn(shell, [], {
+        name: "xterm-color",
+        cols: 80,
+        rows: 24,
+        cwd: process.env.HOME,
+        env: process.env
+    });
+
+    ptyProc.onData(function(data) {
+        mainWindow.webContents.send("terminal.incData", data);
+    });
+
+    ipcMain.on("terminal.toTerm", function(event, data) {
+        ptyProc.write(data);
+    })
+
+}
+
 function createWindow() {
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -36,7 +42,9 @@ function createWindow() {
         }
     })
 
-    win.loadFile('dist/index.html')
+    mainWindow.loadFile('dist/index.html')
+
+    createPty();
 }
 
 async function sleep(ms) {

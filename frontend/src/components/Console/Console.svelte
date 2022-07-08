@@ -8,7 +8,7 @@
 
     import { Terminal } from "xterm";
     import { FitAddon } from "xterm-addon-fit";
-    import { afterUpdate } from "svelte";
+    import { afterUpdate, onMount } from "svelte";
 
     import "xterm/css/xterm.css";
 
@@ -18,9 +18,21 @@
 
     term.loadAddon(fitAddon);
 
-    term.onKey((val) => {
-        term.write(val.key);
-    });
+    // @ts-ignore
+    if (window.tamere) {
+        term.onData((data) => {
+            // @ts-ignore
+            window.ipcTamere.send("terminal.toTerm", data);
+        });
+
+        // @ts-ignore
+        window.tamere("terminal.incData", function (event, data) {
+            term.write(data);
+        });
+
+        // @ts-ignore
+        window.ipcTamere.send("terminal.toTerm", "clear\r");
+    }
 
     function switchConsole() {
         $showOutput = false;
@@ -33,6 +45,7 @@
     afterUpdate(() => {
         if (!$showOutput) {
             term.open(termParent);
+
             fitAddon.fit();
         }
     });
@@ -103,17 +116,15 @@
     }
 
     p {
+        padding: 10px;
         margin: 0;
         color: white;
         height: calc(100% - 30px);
     }
 
-    #output {
-        padding: 10px;
-    }
-
     #terminalParent {
         background-color: black;
         padding: 0;
+        overflow: hidden;
     }
 </style>
