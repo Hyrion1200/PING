@@ -47,7 +47,8 @@
                     "./resources/ping_backend-1.0.0.jar"
                 ]
             },
-            "makers": [{
+            "makers": [
+                {
                     "name": "@electron-forge/maker-squirrel",
                     "config": {
                         "authors": "The Holidays tream",

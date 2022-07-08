@@ -86,6 +86,9 @@
         padding: 0;
         cursor: pointer;
     }
+    :global(body.dark-mode) button{
+        background-color: black;
+    }
 
     li {
         display: flex;
@@ -95,6 +98,11 @@
         border-bottom: 1px solid #2d2d2d;
         cursor: pointer;
         padding: 10px 10px 10px 25px;
+    }
+
+    :global(body.dark-mode) li{
+        background-color: grey;
+        color: black;
     }
 
     li:hover button {
