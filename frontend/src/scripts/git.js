@@ -1,3 +1,6 @@
+// @ts-ignore
+import { addOutput } from "/src/stores/ConsoleStore";
+
 export async function gitAdd(path) {
     // @ts-ignore
     let url = `${window.BASE_URL}/ide/git/add?path=${path}`;
@@ -8,7 +11,7 @@ export async function gitAdd(path) {
         })
         .then(function(data) {
             if (data.status === "ERROR") {
-                console.log("Error");
+                addOutput("Couldn't add: " + data.message);
             }
         });
 }
@@ -24,7 +27,7 @@ export async function gitCommit(msg) {
         })
         .then(function(data) {
             if (data.status === "ERROR") {
-                console.log("Error");
+                addOutput("Couldn't commit: " + data.message);
             }
         });
 }
@@ -38,7 +41,7 @@ export async function gitPull(user, password) {
         })
         .then(function(data) {
             if (data.status === "ERROR") {
-                console.log("Error");
+                addOutput("Couldn't pull: " + data.message);
             }
         });
 }
@@ -52,7 +55,7 @@ export async function gitPush(user, password) {
         })
         .then(function(data) {
             if (data.status === "ERROR") {
-                console.log("Error");
+                addOutput("Couldn't push: " + data.message);
             }
         });
 }

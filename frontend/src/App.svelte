@@ -4,11 +4,13 @@
 	import Path from "./components/Path/Path.svelte";
 	import Spotify from "./components/Spotify/Spotify.svelte";
 	import Tree from "./components/Tree/Tree.svelte";
+	import Sound from "./components/sound/Sound.svelte";
 	import Console from "./components/Console/Console.svelte";
 </script>
 
 <main>
 	<Tree />
+	<Sound />
 
 	<div id="center">
 		<Header />

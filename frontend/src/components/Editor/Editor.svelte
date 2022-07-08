@@ -11,6 +11,7 @@
     import { indentWithTab } from "@codemirror/commands";
     import { syntaxHighlighting, indentUnit } from "@codemirror/language";
     import { vim } from "@replit/codemirror-vim";
+    // @ts-ignore
     import { oneDarkTheme, oneDarkHighlightStyle } from "./theme";
 
     import { onMount } from "svelte";
