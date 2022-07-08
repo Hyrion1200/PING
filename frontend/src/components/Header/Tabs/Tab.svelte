@@ -4,27 +4,22 @@
     // @ts-ignore
     import { saveTabContent } from "/src/stores/TabStore";
     // @ts-ignore
-    import { editorStore } from "/src/stores/EditorStore.js";
-    // @ts-ignore
     import { pathStore } from "/src/stores/PathStore.js";
     // @ts-ignore
     import { removeTab, switchTab } from "/src/stores/TabStore";
+    // @ts-ignore
+    import { editorSetContent } from "/src/stores/EditorStore";
 
     export let tabConfig;
     let li;
 
     if (tabConfig.on) {
-        editorStore.set(tabConfig.content);
+        editorSetContent(tabConfig.content, tabConfig.path);
         pathStore.set(tabConfig.path);
     }
 
     function tabHover() {
         li.style.backgroundColor = "#3d3d3d";
-    }
-
-    function saveHover() {
-        li.style.backgroundColor = "#51AC71";
-        li.style.color = "black";
     }
 
     function closeHover() {
@@ -39,17 +34,11 @@
 
     function tabClick() {
         switchTab(tabConfig);
-    }
-
-    function closeClick(event) {
-        handleSave(event);
-        removeTab(tabConfig);
         event.stopPropagation();
     }
 
-    async function handleSave(event) {
-        saveTabContent(tabConfig);
-        saveFile(tabConfig.path, tabConfig.content);
+    function closeClick(event) {
+        removeTab(tabConfig);
         event.stopPropagation();
     }
 
@@ -70,16 +59,7 @@
     on:mouseenter={tabHover}
     on:mouseleave={hoverLeave}
 >
-    <button
-        id="save"
-        on:click={handleSave}
-        on:mouseenter={saveHover}
-        on:mouseleave={hoverLeave}
-        ><img src="images/save.png" alt="save" /></button
-    >
-
     {tabConfig.name}
-
     <button
         id="close"
         on:click={closeClick}
@@ -100,18 +80,11 @@
     button {
         visibility: hidden;
         position: relative;
+        right: -5px;
         border: none;
         background-color: inherit;
         padding: 0;
         cursor: pointer;
-    }
-
-    #close {
-        right: -5px;
-    }
-
-    #save {
-        left: -5px;
     }
 
     li {
@@ -120,8 +93,8 @@
         color: grey;
         height: 45px;
         border-bottom: 1px solid #2d2d2d;
-        padding: 10px;
         cursor: pointer;
+        padding: 10px 10px 10px 25px;
     }
 
     li:hover button {

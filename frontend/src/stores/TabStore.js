@@ -1,5 +1,7 @@
-import { editorStore } from "./EditorStore.js";
+import { editorSetContent, editorGetContent } from "./EditorStore.js";
 import { pathStore } from "./PathStore.js"
+// @ts-ignore
+import { saveFile } from "/src/scripts/files.js";
 
 import { writable } from "svelte/store";
 
@@ -15,7 +17,7 @@ export class TabConfig {
 }
 
 function resetTabs() {
-    editorStore.set("");
+    editorSetContent("", "");
     pathStore.set("");
 }
 
@@ -42,28 +44,26 @@ function setTabOn(tab) {
 
 export function removeAllTabs() {
     tabStore.update(tabs => {
-        tabs.map(t => saveTabContent(t));
+        tabs.map(t => removeTab(t));
         return [];
     });
 
     resetTabs();
 }
 
-export function saveTabContent(tab) {
-    let content;
-
-    let unsubscribe = editorStore.subscribe(val => content = val);
+export function saveTabContent() {
+    let content = editorGetContent();
 
     tabStore.update(tabs => {
-        let index = tabs.findIndex(t => tabEqual(t, tab));
+        let index = tabs.findIndex(t => tabOn(t));
 
-        if (index !== -1)
+        if (index !== -1) {
             tabs[index].content = content;
+            saveFile(tabs[index].path, tabs[index].content)
+        }
 
         return tabs;
     })
-
-    unsubscribe();
 }
 
 export function addTab(tab) {
@@ -98,14 +98,12 @@ export function removeTab(tab) {
 
 export function switchTab(tab) {
     tabStore.update(tabs => {
-        let previousTab = tabs.find(t => tabOn(t));
+        tab = tabs.find(t => tabEqual(tab, t));
 
-        if (previousTab)
-            saveTabContent(previousTab);
-
+        saveTabContent();
         setTabOn(tab);
 
-        editorStore.set(tab.content);
+        editorSetContent(tab.content, tab.path);
         pathStore.set(tab.path);
 
         return tabs;

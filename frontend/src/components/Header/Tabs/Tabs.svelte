@@ -8,8 +8,6 @@
     let tabs;
 
     onMount(() => {
-        console.log(tabs);
-
         tabs.addEventListener("wheel", (evt) => {
             evt.preventDefault();
             tabs.scrollLeft += evt.deltaY;
