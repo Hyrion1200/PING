@@ -85,6 +85,20 @@ public class ProjectServ implements ProjectService {
         return aspects;
     }
 
+    public Settings updateSettings() throws IOException {
+        Node rootNode = this.project.getRootNode();
+        Settings settings = null;
+        for (Node node : rootNode.getChildren()) {
+            if (node.getPath().getFileName().toString().equals(".pingsettings")) {
+                ObjectMapper mapper = new ObjectMapper();
+                settings = mapper.readValue(node.getPath().toFile(), Settings.class);
+                System.out.println("Update: " + settings);
+            }
+        }
+
+        return settings;
+    }
+
     @Override
     public Project load(Path root) {
         File rootDir = new File(root.toString());

@@ -2,6 +2,8 @@
     // @ts-ignore
     import { project } from "/src/stores/ProjectStore.js";
     import Folder from "./Folder.svelte";
+    // @ts-ignore
+    import { updateSettings } from "/src/scripts/files.js";
 
     function parseNodes(root, i = 0) {
         let name = root.path;
@@ -138,6 +140,7 @@
 
     async function watchRoot() {
         if (watcher !== undefined) return;
+        // @ts-ignore
         watcher = new EventSource(`${window.BASE_URL}/ide/watch`);
 
         watcher.onmessage = (event) => {
@@ -149,6 +152,12 @@
             if (data.type === "ENTRY_MODIFY") {
                 // TODO : handle file modification on disk
                 console.debug("ENTRY_MODIFY", data);
+                if (
+                    !data.folder &&
+                    data.path.split("/").pop() === ".pingsettings"
+                ) {
+                    updateSettings();
+                }
             } else if (data.type === "ENTRY_CREATE") {
                 const fullPath = data.path;
                 const isDir = data.folder;

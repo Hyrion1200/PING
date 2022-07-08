@@ -162,6 +162,15 @@ public class ProjetServiceController {
         return new ExecReport(Status.SUCCESS);
     }
 
+    @GetMapping("/ide/settings/update")
+    public ExecReport getSettingsUpdate() {
+        try {
+            Settings res = projectServ().updateSettings();
+            return new ExecReport(Status.SUCCESS, res);
+        } catch (Exception e) {
+            return new ExecReport(Status.ERROR, e.getMessage());
+        }
+    }
     public ExecReport getSettings() {
         return new ExecReport(Status.SUCCESS, projectServ.getProject().getSettings());
     }
