@@ -27,8 +27,28 @@
         return { name, path: root.path.slice(7), relativePath }; // Remove file:// before absolute path
     }
 
-    $: root =
-        $project !== undefined ? parseNodes($project.rootNode) : undefined;
+    let watcher = undefined;
+
+    async function watchRoot() {
+        if (watcher !== undefined) return;
+        watcher = new EventSource(`${window.BASE_URL}/ide/watch`);
+
+        watcher.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.debug(data);
+        };
+    }
+
+    let root = undefined;
+
+    $: {
+        if ($project !== undefined) {
+            root = parseNodes($project.rootNode);
+            watchRoot();
+        } else {
+            root = undefined;
+        }
+    }
 
     $: console.log("root", root);
 </script>
