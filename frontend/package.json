@@ -25,6 +25,8 @@
         "@replit/codemirror-vim": "^6.0.0",
         "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
         "codemirror": "^6.0.1",
+        "cm6-theme-solarized-light": "^0.2.0",
+        "cm6-theme-gruvbox-dark": "^0.2.0",
         "electron": "^19.0.6",
         "svelte": "^3.44.0",
         "sveltekit-embed": "^0.0.5",
@@ -48,8 +50,7 @@
                     "./resources/ping_backend-1.0.0.jar"
                 ]
             },
-            "makers": [
-                {
+            "makers": [{
                     "name": "@electron-forge/maker-squirrel",
                     "config": {
                         "authors": "The Holidays tream",

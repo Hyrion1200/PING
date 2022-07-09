@@ -5,6 +5,6 @@ export const outputStore = writable("");
 export const showOutput = writable(false);
 
 export function addOutput(content) {
-    outputStore.update((val) => val = val + content + "<br>");
+    outputStore.set(content);
     showOutput.set(true);
 }
