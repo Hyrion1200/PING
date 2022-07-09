@@ -5,8 +5,11 @@
     import { outputStore } from "/src/stores/ConsoleStore";
     // @ts-ignore
     import { pathStore } from "/src/stores/PathStore";
-    // @ts-ignore
-    import { editorGetContent } from "/src/stores/EditorStore";
+    import {
+        editorSetDarkTheme,
+        editorGetContent,
+        // @ts-ignore
+    } from "/src/stores/EditorStore";
     // @ts-ignore
     import { saveFile } from "/src/scripts/files";
 
@@ -28,9 +31,9 @@
         git = false;
     }
 
-    function toggle_light_mode(){
-        window.document.body.classList.toggle('dark-mode');
-         
+    function toggle_light_mode() {
+        window.document.body.classList.toggle("dark-mode");
+        editorSetDarkTheme();
     }
 
     async function run() {
@@ -54,9 +57,7 @@
 </script>
 
 <div id="main">
-    <button on:click={toggle_light_mode}>
-       theme 
-    </button>
+    <button on:click={toggle_light_mode}> Theme </button>
     <button on:click={displayFiles}>
         <img src="images/directory.png" alt="directory" />
     </button>

@@ -2,6 +2,7 @@
     import {
         editorStore,
         languageStore,
+        themeStore,
         // @ts-ignore
     } from "/src/stores/EditorStore";
 
@@ -14,15 +15,15 @@
     // @ts-ignore
     import { indentWithTab } from "@codemirror/commands";
     // @ts-ignore
-    import { syntaxHighlighting, indentUnit } from "@codemirror/language";
+    import { indentUnit } from "@codemirror/language";
     // @ts-ignore
     import { vim } from "@replit/codemirror-vim";
-    // @ts-ignore
-    import { oneDarkTheme, oneDarkHighlightStyle } from "./theme";
 
+    import { gruvboxDark } from "cm6-theme-gruvbox-dark";
     import { onMount } from "svelte";
 
     $languageStore = new Compartment();
+    $themeStore = new Compartment();
 
     let editorState = EditorState.create({
         extensions: [
@@ -30,8 +31,7 @@
             vim(),
             basicSetup,
             keymap.of([indentWithTab]),
-            oneDarkTheme,
-            syntaxHighlighting(oneDarkHighlightStyle),
+            $themeStore.of(gruvboxDark),
             indentUnit.of("    "),
         ],
     });
@@ -44,7 +44,6 @@
             parent: editorParent,
         });
     });
-
 </script>
 
 <div bind:this={editorParent} />

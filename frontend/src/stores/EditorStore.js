@@ -2,9 +2,14 @@ import {get, writable } from "svelte/store";
 
 import { python } from "@codemirror/lang-python";
 import { javascript } from "@codemirror/lang-javascript"
+import { solarizedLight } from "cm6-theme-solarized-light";
+import { gruvboxDark } from "cm6-theme-gruvbox-dark";
 
 export let editorStore = writable();
 export let languageStore = writable();
+export let themeStore = writable();
+
+let dark = true;
 
 function editorSetHighlight(extension) {
     let language;
@@ -20,6 +25,28 @@ function editorSetHighlight(extension) {
         editor.dispatch(
             editor.state.update({
                 effects: get(languageStore).reconfigure(language)
+            })
+        );
+
+        return editor;
+    })
+}
+
+export function editorSetDarkTheme() {
+    let theme;
+
+    dark = !dark;
+
+    if (dark) {
+        theme = gruvboxDark;
+    } else {
+        theme = solarizedLight;
+    }
+
+    editorStore.update(editor => {
+        editor.dispatch(
+            editor.state.update({
+                effects: get(themeStore).reconfigure(theme)
             })
         );
 
