@@ -9,7 +9,7 @@ export let editorStore = writable();
 export let languageStore = writable();
 export let themeStore = writable();
 
-let dark = true;
+export let darktheme = writable(true);
 
 function editorSetHighlight(extension) {
     let language;
@@ -35,9 +35,9 @@ function editorSetHighlight(extension) {
 export function editorSetDarkTheme() {
     let theme;
 
-    dark = !dark;
+    darktheme.set(!get(darktheme));
 
-    if (dark) {
+    if (get(darktheme)) {
         theme = gruvboxDark;
     } else {
         theme = solarizedLight;

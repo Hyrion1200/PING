@@ -8,7 +8,7 @@
     // @ts-ignore
     import { removeTab, switchTab } from "/src/stores/TabStore";
     // @ts-ignore
-    import { editorSetContent } from "/src/stores/EditorStore";
+    import { editorSetContent, darktheme } from "/src/stores/EditorStore";
 
     export let tabConfig;
     let li;
@@ -16,20 +16,6 @@
     if (tabConfig.on) {
         editorSetContent(tabConfig.content, tabConfig.path);
         pathStore.set(tabConfig.path);
-    }
-
-    function tabHover() {
-        li.style.backgroundColor = "#3d3d3d";
-    }
-
-    function closeHover() {
-        li.style.backgroundColor = "#EB4747";
-        li.style.color = "black";
-    }
-
-    function hoverLeave() {
-        li.style.backgroundColor = "#2d2d2d";
-        li.style.color = "grey";
     }
 
     function tabClick() {
@@ -46,26 +32,18 @@
         if (li) {
             if (tabConfig.on) {
                 li.style.borderColor = "white";
-            } else {
+            } else if ($darktheme) {
                 li.style.borderColor = "#2d2d2d";
+            } else {
+                li.style.borderColor = "darkgrey";
             }
         }
     }
 </script>
 
-<li
-    bind:this={li}
-    on:click={tabClick}
-    on:mouseenter={tabHover}
-    on:mouseleave={hoverLeave}
->
+<li bind:this={li} on:click={tabClick}>
     {tabConfig.name}
-    <button
-        id="close"
-        on:click={closeClick}
-        on:mouseenter={closeHover}
-        on:mouseleave={hoverLeave}
-    >
+    <button id="close" on:click={closeClick}>
         <img src="images/cross.png" alt="cross" />
     </button>
 </li>
@@ -86,9 +64,6 @@
         padding: 0;
         cursor: pointer;
     }
-    :global(body.dark-mode) button{
-        background-color: black;
-    }
 
     li {
         display: flex;
@@ -100,15 +75,22 @@
         padding: 10px 10px 10px 25px;
     }
 
-    :global(body.dark-mode) li{
-        background-color: grey;
+    :global(body.dark-mode) li {
+        background-color: darkgrey;
         color: black;
     }
 
     li:hover button {
         visibility: visible;
     }
+
     li:hover {
+        background-color: #3d3d3d;
+        transition: 0.1s;
+    }
+
+    :global(body.dark-mode) li:hover {
+        background-color: grey;
         transition: 0.1s;
     }
 </style>
