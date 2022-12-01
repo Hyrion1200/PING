@@ -27,7 +27,7 @@
         "codemirror": "^6.0.1",
         "cm6-theme-solarized-light": "^0.2.0",
         "cm6-theme-gruvbox-dark": "^0.2.0",
-        "electron": "^19.0.6",
+        "electron": "^19.1.8",
         "svelte": "^3.44.0",
         "sveltekit-embed": "^0.0.5",
         "vite": "^2.9.9",
